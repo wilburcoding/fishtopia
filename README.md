@@ -1,0 +1,96 @@
+# Fishtopia
+An interactive Slack bot fishing game 
+
+# TODO
+ - [ ] Create bot application and add to channel
+   - [ ] Create slash commands
+ - [ ] Setup database
+   - [ ] 
+
+
+# IDEA DUMP
+ - Commands
+   - /fish -> actually fishing
+     - Going to have a mix of options. Maps
+   - /shop 
+   - /market
+   - /start -> set up user data
+   - /tools -
+   - /boat - 
+   - /equipment -> tools, baits, other equipment
+ - Gameplay
+   - Users start with basic tools and a boat
+   - Use /fish to go fishing
+     - Need to travel to different areas (time to travel varies based on boat, location)
+       - Pick specific equipment (tools, baits) to bring with you (limited storage on boats -> dependent on boat)
+       - Maximum amount of equipment you can bring for each ship 
+     - Before you fish, you can select tools (using buttons) to boost odds
+     - May have to wait some time before anything comes up -> chance of nothing
+       - Odds are different for different types of baits or tools
+     - Shows catch + option to fish again (same tools), change setup, or return home
+     - 
+   - Use /shop to buy equipment 
+   - Use /market to put offers and trade things with other people 
+   - Use /equpment to check out your tools, baits, and other equipment
+     - Options to upgrade, sell, repair tools
+   - Fish species with rarity
+ - Additional gameplay features
+   - Fish
+     - Rarity tags: Common, Uncommon, Rare, Epic, Legendart
+     - Variants for each type (super rare "Chroma", rare "Shiny")
+   - Maps
+     - Different fish for each location
+     - Differnt distances from home location
+     - Max capacity for locations? 
+       - More people = lower chance of catching fish
+     - Different availability times -> or rather different best fishing times
+   - Events
+   - Currency
+       - Coins -> can get from selling catch
+       - Gold -> super rare currency
+   - Boat
+     - Different kinds of boat have different appearence, speed, capacity, fuel
+     - Fuel -> maximum time 
+     - Rowboat, sailboat, motorboat, trawler
+     - Different upgrades to expand boat
+       - Upgraded motor -> faster travel
+         - Only available for motored boats
+       - Cooler -> extra storage 
+       - Extra fuel -> further range for boat (more locations)
+       - Rod holder -> faster fishing
+       - More TBD
+   - Equipment
+     - Tools
+       - Hand
+       - Pole
+       - Spear
+       - Fishing Rod
+       - Net
+       - Speargun
+       - Electric Reel Rig
+       - Harpoon gun
+       - More special tools TBD
+       - Different levels -> increased durability or effect
+     - Baits -> real stuff
+       - No bait
+       - Basic bait
+       - Jumbo bait
+         - Slight boost in size and rarity
+       - Lucky bait
+         - Decent boost in rarity
+       - Scented bait
+         - Slight boost in rarity and faster catch speed. Lower chance of nothing
+       - Golden bait
+         - Boost rarity, even bigger boost for "Chroma" or "shiny" variants
+       - Treasure bait
+         - Major increase in getting items 
+       - Chum bait
+         - Almost instant bite time and dramatically lowers chance of catching nothing
+       - Weighted Bait
+         - Increase in size of fish caught
+       - Mythical bait
+         - Dramatic increase in getting rare fishes
+       - Different levels for each bait -> effect multiplier
+ - Database? -> keep it simple and use local sqlite
+ - Unfortunately it looks like I need to do art for this one
+   - 
