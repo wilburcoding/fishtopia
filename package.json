@@ -10,5 +10,17 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilburcoding/fishtopia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wilburcoding/fishtopia/issues"
+  },
+  "homepage": "https://github.com/wilburcoding/fishtopia#readme",
+  "dependencies": {
+    "@slack/bolt": "^4.7.3",
+    "dotenv": "^17.4.2"
+  }
 }

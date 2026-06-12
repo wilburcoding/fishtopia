@@ -12,11 +12,11 @@ An interactive Slack bot fishing game
  - Commands
    - /fish -> actually fishing
      - Going to have a mix of options. Maps
-   - /shop 
-   - /market
+   - /shop -> buy well anything
+   - /market -> view offers from other people
    - /start -> set up user data
-   - /tools -
-   - /boat - 
+   - /tools -> view your tools (with options)
+   - /boat -> view your boat (with options)
    - /equipment -> tools, baits, other equipment
  - Gameplay
    - Users start with basic tools and a boat
@@ -24,12 +24,14 @@ An interactive Slack bot fishing game
      - Need to travel to different areas (time to travel varies based on boat, location)
        - Pick specific equipment (tools, baits) to bring with you (limited storage on boats -> dependent on boat)
        - Maximum amount of equipment you can bring for each ship 
-     - Before you fish, you can select tools (using buttons) to boost odds
+     - Before you fish, you can select tools/bait (using buttons) to boost odds
      - May have to wait some time before anything comes up -> chance of nothing
        - Odds are different for different types of baits or tools
+       - Can choose to keep or throw back fish
      - Shows catch + option to fish again (same tools), change setup, or return home
-     - 
    - Use /shop to buy equipment 
+     - Boat, tools, baits. Prices in both coins and gold
+     - Some items are only available in gold (rare stuff)
    - Use /market to put offers and trade things with other people 
    - Use /equpment to check out your tools, baits, and other equipment
      - Options to upgrade, sell, repair tools
@@ -47,7 +49,7 @@ An interactive Slack bot fishing game
    - Events
    - Currency
        - Coins -> can get from selling catch
-       - Gold -> super rare currency
+       - Gold -> decently rare currency
    - Boat
      - Different kinds of boat have different appearence, speed, capacity, fuel
      - Fuel -> maximum time 

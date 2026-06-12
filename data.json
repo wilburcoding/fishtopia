@@ -1,6 +1,32 @@
 {
-    "maps":{},
-    "baits":{},
-    "fish":{},
-    "boats":{}
+  "maps": {},
+  "baits": {},
+  "fish": {},
+  "boats": {},
+  "blocks": {
+    "ping": [
+      {
+        "type": "card",
+        "title": {
+          "type": "plain_text",
+          "text": "Bot Ping"
+        },
+        "subtitle": {
+          "type": "plain_text",
+          "text": "1000 ms"
+        },
+        "actions": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Test Again",
+              "emoji": false
+            },
+            "action_id": "test_ping"
+          }
+        ]
+      }
+    ]
+  }
 }
