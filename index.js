@@ -13,6 +13,8 @@ const app = new App({
 //     console.log("Any message received:", message.text);
 // });
 
+
+// ping command -> mostly just for testing
 app.command("/f-ping", async ({ command, ack, respond, client }) => {
   await ack();
 
@@ -38,6 +40,7 @@ app.command("/f-ping", async ({ command, ack, respond, client }) => {
   }
 });
 
+// test ping button action for ping command
 app.action("test_ping", async ({ action, ack, client, body }) => {
   await ack();
   const start = Date.now();

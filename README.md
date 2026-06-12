@@ -2,10 +2,31 @@
 An interactive Slack bot fishing game 
 
 # TODO
- - [ ] Create bot application and add to channel
+ - [x] Create bot application and add to channel
    - [ ] Create slash commands
- - [ ] Setup database
-   - [ ] 
+ - [x] Setup database
+   - [x] Database schema
+ - [ ] Preset data
+   - [ ] Fish 
+     - [ ] Fish artwork
+     - [ ] Balance fishes
+     - [ ] Fish variants
+   - [ ] Equipment (tools + baits)
+     - [ ] Item artwork
+     - [ ] Balance items
+   - [ ] Maps
+     - [ ] Maps artwork
+   - [ ] Boats (hoping for at least like 8)
+     - [ ] Boat artwork
+     - [ ] Balance boats
+ - [ ] Commands 
+   - [ ] /f-fish
+   - [ ] /f-shop
+   - [ ] /f-market
+   - [ ] /f-start
+   - [ ] /f-equipment
+   - [ ] /f-boat
+ - [ ] 
 
 
 # IDEA DUMP
@@ -15,7 +36,6 @@ An interactive Slack bot fishing game
    - /shop -> buy well anything
    - /market -> view offers from other people
    - /start -> set up user data
-   - /tools -> view your tools (with options)
    - /boat -> view your boat (with options)
    - /equipment -> tools, baits, other equipment
  - Gameplay
@@ -96,3 +116,10 @@ An interactive Slack bot fishing game
  - Database? -> keep it simple and use local sqlite
  - Unfortunately it looks like I need to do art for this one
    - 
+
+
+# NOTES
+
+Column "status" of users DB is going to be a object that contains information of where the user is traveling, where they are right now (or headed), and when they will get there. Specific details TBD. 
+
+Scratch that I'm going to put everything into a JSON blob bcs I don't have to query other details really. 

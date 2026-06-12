@@ -21,6 +21,7 @@
   "homepage": "https://github.com/wilburcoding/fishtopia#readme",
   "dependencies": {
     "@slack/bolt": "^4.7.3",
+    "better-sqlite3": "^12.10.0",
     "dotenv": "^17.4.2"
   }
 }
