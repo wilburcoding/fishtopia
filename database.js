@@ -6,7 +6,7 @@ const db = new Database("fishtopia.db", {
 function setUpDatabase() {
     db.prepare(`
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id TEXT PRIMARY KEY,
             username TEXT UNIQUE NOT NULL,
             coins INTEGER DEFAULT 0,
             gold INTEGER DEFAULT 0,
@@ -19,4 +19,13 @@ function setUpDatabase() {
     console.log("Database initialized successfully.");
 }
 
-setUpDatabase();
+// util functions TBD   
+function clearDatabase() {
+    db.prepare("DROP TABLE IF EXISTS users").run();
+    console.log("Database cleared successfully.");
+}
+module.exports = {
+    setup: setUpDatabase,
+    db: db,
+    clear: clearDatabase
+}

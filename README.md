@@ -123,3 +123,5 @@ An interactive Slack bot fishing game
 Column "status" of users DB is going to be a object that contains information of where the user is traveling, where they are right now (or headed), and when they will get there. Specific details TBD. 
 
 Scratch that I'm going to put everything into a JSON blob bcs I don't have to query other details really. 
+
+Make sure to copy blocks when using them from presets (!!)

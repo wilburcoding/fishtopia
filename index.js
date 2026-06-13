@@ -1,4 +1,7 @@
 const { App } = require("@slack/bolt");
+const database = require("./database");
+const fs = require("fs");
+const path = require("path");
 require("dotenv").config();
 
 let DATA = null;
@@ -13,61 +16,43 @@ const app = new App({
 //     console.log("Any message received:", message.text);
 // });
 
+// load commands from /commands folder
+const commandsPath = path.join(__dirname, "commands");
+const commands = fs
+  .readdirSync(commandsPath)
+  .filter((file) => file.endsWith(".js"));
 
-// ping command -> mostly just for testing
-app.command("/f-ping", async ({ command, ack, respond, client }) => {
-  await ack();
+for (const file of commands) {
+  const filePath = path.join(commandsPath, file);
+  const command = require(filePath);
 
-  const start = Date.now();
-  await client.api.test();
-  const ping = Date.now() - start;
-  //   const recievedTime = new Date();
-  //   const eventTime = Math.floor(parseFloat(command.ts) * 1000);
-  //   const latency = recievedTime - eventTime;
-  //   const wsPing = app.receiver.client?.ping + " ms" || "Unknown";
-
-  try {
-    let blocks = DATA.blocks.ping;
-    blocks[0].subtitle.text = `${ping} ms`;
-    console.log(blocks);
-    await client.chat.postMessage({
-      channel: command.channel_id,
-      text: "Pong!",
-      blocks: blocks,
-    });
-  } catch (error) {
-    console.error("Error occured while sending message: ", error);
+  if (
+    command.name &&
+    command.description &&
+    command.execute &&
+    command.actions
+  ) {
+    app.command(command.name, command.execute);
+    for (const actionName of Object.keys(command.actions)) {
+      app.action(actionName, command.actions[actionName]);
+    }
+    console.log(`Command loaded: ${command.name}`);
+  } else {
+    console.error(`Invalid command file: ${file}`);
   }
-});
+}
 
-// test ping button action for ping command
-app.action("test_ping", async ({ action, ack, client, body }) => {
-  await ack();
-  const start = Date.now();
-  await client.api.test();
-  const ping = Date.now() - start;
-  try {
-    let blocks = DATA.blocks.ping;
-    blocks[0].subtitle.text = `${ping} ms`;
-    blocks[0].title.text = "Updated Ping";
-    await client.chat.update({
-        channel: body.channel.id,
-        ts: body.message.ts,
-        text: "Pong!",
-        blocks: blocks
-    })
-
-  } catch (error) {
-    console.error("Error occured while testing ping: " , error);
-  }
-});
+// // test ping button action for ping command
 
 (async () => {
   const { default: data } = await import("./data.json", {
     with: { type: "json" },
   });
   DATA = data;
-  // console.log(data);
+  // database.clear();
+  database.setup();
+  global.db = database.db;
+  global.data = DATA;
 
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);

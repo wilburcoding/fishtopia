@@ -27,6 +27,145 @@
           }
         ]
       }
+    ],
+    "start": {
+      "block": [
+        {
+          "type": "card",
+          "block_id": "intro-card-1",
+          "title": {
+            "type": "mrkdwn",
+            "text": "Introduction to Fishtopia",
+            "verbatim": false
+          },
+          "subtitle": {
+            "type": "mrkdwn",
+            "text": "Fishtopia Guide (1/7)",
+            "verbatim": false
+          },
+          "body": {
+            "type": "mrkdwn",
+            "text": "Welcome to Fishtopia! This is a quick guide to help you get started with this fun and engaging game that exists completely on Slack.",
+            "verbatim": false
+          },
+          "actions": [
+            {
+              "type": "button",
+              "text": {
+                "type": "plain_text",
+                "text": "Back",
+                "emoji": false
+              },
+              "action_id": "prev",
+              "value": "1"
+            },
+            {
+              "type": "button",
+              "text": {
+                "type": "plain_text",
+                "text": "Next",
+                "emoji": false
+              },
+              "action_id": "next",
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "pages": [
+        {
+          "title": "Introduction to Fishtopia",
+          "body": "Welcome to Fishtopia! This is a quick guide to help you get started with this fun and engaging game that exists completely on Slack."
+        },
+        {
+          "title": "Getting Started - Equipment",
+          "body": "Before you can start fishing, you'll need some basic equipment such as a fishing rod and some bait. You can purchase these items from the in-game store, with better options available as you progress."
+        },
+        {
+          "title": "Getting Started - Boats",
+          "body": " Boats allow you to travel to different areas and catch more fish. Better boats will allow you to travel further, hold more items, and catch better fish."
+        },
+        {
+          "title": "Fishing - Maps",
+          "body": "There a variety of different maps available in Fishtopia, each with their own unique fish and availability."
+        },
+        {
+          "title": "Fishing - Fish",
+          "body": "Fishtopia has a huge variety of fish to catch, each with their own characteristics, behaviors, and special variants. You'll be able to sell them for in-game currency. "
+        },
+        {
+          "title": "Market and Shop",
+          "body": "The market is where you can create, manage, or accept trades with other players. The shop is where you can purchase new items and equipment."
+        },
+        {
+          "title": "Next Steps",
+          "body": "You're all set to start your fishing adventure! Happy fishing! Click the 'Finish' button to complete the guide and setup your account."
+        }
+      ]
+    },
+    "start-end": [
+      {
+        "type": "card",
+        "title": {
+          "type": "plain_text",
+          "text": "Guide Complete"
+        },
+        "subtitle": {
+          "type": "plain_text",
+          "text": "Preparing your account..."
+        },
+        "body": {
+          "type": "plain_text",
+          "text": "You've completed the guide! ...⏳"
+        }
+      },
+      {
+        "type": "input",
+        "block_id": "username-input-block",
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "username-input-action"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Choose your username:",
+          "emoji": true
+        },
+        "optional": false
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Select",
+              "emoji": true
+            },
+            "value": "s",
+            "action_id": "select_username"
+          }
+        ]
+      }
+    ],
+    "error": [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "An error occurred while setting up your account."
+        },
+        "accessory": {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Dismiss",
+            "emoji": true
+          },
+          "action_id": "dismiss"
+        }
+      }
     ]
   }
 }
