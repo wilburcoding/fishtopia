@@ -23,7 +23,7 @@ An interactive Slack bot fishing game
    - [ ] /f-fish
    - [ ] /f-shop
    - [ ] /f-market
-   - [ ] /f-start
+   - [x] /f-start
    - [ ] /f-equipment
    - [ ] /f-boat
  - [ ] 
@@ -36,9 +36,12 @@ An interactive Slack bot fishing game
    - /shop -> buy well anything
    - /market -> view offers from other people
    - /start -> set up user data
+   - /ping -> bot ping -> mostly just a testing command
    - /boat -> view your boat (with options)
    - /equipment -> tools, baits, other equipment
+   - /profile -> overview of your equipment, boat
  - Gameplay
+   - Use /start command
    - Users start with basic tools and a boat
    - Use /fish to go fishing
      - Need to travel to different areas (time to travel varies based on boat, location)
@@ -55,6 +58,13 @@ An interactive Slack bot fishing game
    - Use /market to put offers and trade things with other people 
    - Use /equpment to check out your tools, baits, and other equipment
      - Options to upgrade, sell, repair tools
+   - Use /profile to get an overview of your stuff
+     - Multi-paginated with tabs on boat, tools, stats
+       - Money page with net worth + start date + if the user is currently fishing right now
+       - Boats page showing list of owned boats + currently equipped boat stats + addons
+       - Equipment -> tools and baits
+       - Stats -> other usage stats (ex. times fished)
+     - Ability to search up other users
    - Fish species with rarity
  - Additional gameplay features
    - Fish
@@ -73,6 +83,13 @@ An interactive Slack bot fishing game
    - Boat
      - Different kinds of boat have different appearence, speed, capacity, fuel
      - Fuel -> maximum time 
+     - Durability -> for different types of waters
+       - You can enter any water you want but if you're below the durability minimum for the map you may capsize. If you are near the durability minimum, there is a chance you're boat gets damaged
+     - Stats
+       - Speed -> starts at 5 kt and goes up to 60 kt. Though it dosen't always go up with level or cost
+       - Capacity -> starts at 5 slots and goes up to like 100
+       - Fuel -> in minutes. Starts at 5 minutes and goes up to 4 hours (real time)
+       - Durability -> 1-20 (lowest to highest)
      - Rowboat, sailboat, motorboat, trawler
      - Different upgrades to expand boat
        - Upgraded motor -> faster travel
@@ -81,6 +98,7 @@ An interactive Slack bot fishing game
        - Extra fuel -> further range for boat (more locations)
        - Rod holder -> faster fishing
        - More TBD
+     - Tiers: Novice, Amateur, Professional, Elite, Legendary
    - Equipment
      - Tools
        - Hand
@@ -115,7 +133,7 @@ An interactive Slack bot fishing game
        - Different levels for each bait -> effect multiplier
  - Database? -> keep it simple and use local sqlite
  - Unfortunately it looks like I need to do art for this one
-   - 
+ - 
 
 
 # NOTES

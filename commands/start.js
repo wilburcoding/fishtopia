@@ -136,7 +136,12 @@ module.exports = {
           });
           // add user to dtabase
           const db = global.db;
-          db.prepare("INSERT INTO users (username, id) VALUES (?, ?)").run(username, body.user.id);
+          db.prepare("INSERT INTO users (username, id, data) VALUES (?, ?, ?)").run(username, body.user.id, JSON.stringify({
+            inventory: [], // mainly caught fish and other items,
+            boats: [],
+            equipment: [], // tools and baits
+            stats: {}
+          }));
           const block2 = JSON.parse(JSON.stringify(global.data.blocks["start-end"][0]));
           block2.body.text = "You are all set! Welcome to Fishtopia, " + username + "!";
           block2.subtitle.text = "Account created successfully!";

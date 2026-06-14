@@ -2,7 +2,192 @@
   "maps": {},
   "tools": {},
   "fish": {},
-  "boats": {},
+  "boats": {
+    "kayak": {
+      "name": "Fishing Kayak",
+      "description": "A narrow, lightweight boat designed for small-scale fishing in calm waters",
+      "image": "",
+      "tier": 1,
+      "price": 100,
+      "level": 1,
+      "stats": {
+        "speed": 5,
+        "durability": 2,
+        "capacity": 10,
+        "fuel": null
+      }
+    },
+    "rowboat": {
+      "name": "Rowboat",
+      "description": "A simple, sturdy boat for rowing on calm waters",
+      "image": "",
+      "tier":1,
+      "price": 200,
+      "level": 3,
+      "stats": {
+        "speed": 7,
+        "durability": 4,
+        "capacity": 15,
+        "fuel": null
+      }
+    },
+    "motorboat" : {
+      "name": "Motorboat",
+      "description": "A fast, lightweight boat for quick travel on the water",
+      "image": "",
+      "tier": 1,
+      "price": 800,
+      "level": 6,
+      "stats": {
+        "speed": 20,
+        "durability": 6,
+        "capacity": 18, 
+        "fuel": 15
+      }
+    },
+    "pontoon": {
+      "name": "Pontoon",
+      "description": "A stable, spacious boat with moderate speed and decent durability",
+      "image": "",
+      "tier": 1,
+      "price": 1400,
+      "level": 10,
+      "stats": {
+        "speed": 20,
+        "durability": 10,
+        "capacity": 30,
+        "fuel": 25
+      }
+    },
+    "sailboat": {
+      "name": "Sailboat",
+      "description": "A wind-powered boat that can travel quickly across the water",
+      "image": "",
+      "tier": 2,
+      "price": 2000,
+      "level": 15,
+      "stats": {
+        "speed": 25,
+        "durability": 12,
+        "capacity": 30,
+        "fuel": 40
+      }
+    },
+    "yacht": {
+      "name": "Yacht",
+      "description": "A luxurious and spacious boat that has a decent range and durability. More as a flex item.",
+      "image": "",
+      "tier": 2,
+      "price": 2500,
+      "level": 20,
+      "stats": {
+        "speed": 30,
+        "durability": 15,
+        "capacity": 40,
+        "fuel": 40
+      }
+    },
+    "sportfisher": {
+      "name": "Sportfisher",
+      "description": "A versatile boat designed for professional offshore sports fishing.",
+      "image": "",
+      "tier": 3,
+      "price": 5000,
+      "level": 25,
+      "stats": {
+        "speed": 40,
+        "durability": 14,
+        "capacity": 40,
+        "fuel": 55
+      }
+    },
+    "bassboat": {
+      "name": "Bassboat",
+      "description": "A high-speed fiberglass boat designed with for fishing in shallow waters.",
+      "image": "",
+      "tier": 3,
+      "price": 7000,
+      "level": 30,
+      "stats": {
+        "speed": 50,
+        "durability": 12,
+        "capacity": 35,
+        "fuel": 45
+      }
+    },
+    "bayboat": {
+      "name": "Bay Boat",
+      "description": "A versatile, highly durable boat suitable for a variety of water conditions.",
+      "image": "",
+      "tier": 3,
+      "price": 9300,
+      "level": 40,
+      "stats": {
+        "speed": 40,
+        "durability": 16,
+        "capacity": 45,
+        "fuel": 50
+      }
+    },
+    "gillnetter": {
+      "name": "Commercial Gillnetter",
+      "description": "A large, sturdy commerical fishing boat designed for catching large quantities of fish.",
+      "image": "",
+      "tier": 4,
+      "price": 11000,
+      "level": 50,
+      "stats": {
+        "speed": 25,
+        "durability": 16,
+        "capacity": 60,
+        "fuel": 65
+      }
+    },
+    "longliner": {
+      "name": "Longliner Vessel",
+      "description": "A large, specialized fishing vessel designed for long-distance fishing in open waters.",
+      "image": "",
+      "tier": 4,
+      "price": 15000,
+      "level": 65,
+      "stats": {
+        "speed": 20,
+        "durability": 17,
+        "capacity": 75,
+        "fuel": 90
+      }
+    },
+    "crabber": {
+      "name": "Commercial Crabber",
+      "description": "A heavy, reinforced fishing boat designed for catching large quantities of bottom-dwelling crustaceans.",
+      "image": "",
+      "tier": 5,
+      "price": 20000,
+      "level": 75,
+      "stats": {
+        "speed": 25,
+        "durability": 18,
+        "capacity": 85,
+        "fuel": 120
+      }
+    },
+    "trawler": {
+      "name": "Deep-Sea Trawler",
+      "description": "A ultimate fishing vessel for deep-sea fishing.",
+      "image": "",
+      "tier": 5,
+      "price": 50000,
+      "level": 100,
+      "stats": {
+        "speed": 25,
+        "durability": 20,
+        "capacity": 100,
+        "fuel": 150
+      }
+    }
+    
+
+  },
   "blocks": {
     "ping": [
       {
