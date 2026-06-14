@@ -81,14 +81,13 @@ An interactive Slack bot fishing game
        - Coins -> can get from selling catch
        - Gold -> decently rare currency
    - Boat
-     - Different kinds of boat have different appearence, speed, capacity, fuel
-     - Fuel -> maximum time 
+     - Different kinds of boat have different appearence, speed, capacity, range
      - Durability -> for different types of waters
        - You can enter any water you want but if you're below the durability minimum for the map you may capsize. If you are near the durability minimum, there is a chance you're boat gets damaged
      - Stats
        - Speed -> starts at 5 kt and goes up to 60 kt. Though it dosen't always go up with level or cost
        - Capacity -> starts at 5 slots and goes up to like 100
-       - Fuel -> in minutes. Starts at 5 minutes and goes up to 4 hours (real time)
+       - Range -> in miles. Limits where boat can go + how far you can fish for
        - Durability -> 1-20 (lowest to highest)
      - Rowboat, sailboat, motorboat, trawler
      - Different upgrades to expand boat

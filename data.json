@@ -1,5 +1,118 @@
 {
-  "maps": {},
+  "maps": {
+    "pond": {
+      "name": "Sunny Pond",
+      "level": 1,
+      "tier": 1,
+      "distance": 5,
+      "danger": 2,
+      "description": "A peaceful freshwater pond perfect for beginners"
+    },
+    "river": {
+      "name": "Willow River",
+      "level": 3,
+      "tier": 1,
+      "distance": 10,
+      "danger": 4,
+      "description": "A slow-moving river filled with common freshwater fish"
+    },
+    "lake": {
+      "name": "Crystal Lake",
+      "level": 6,
+      "tier": 1,
+      "distance": 20,
+      "danger": 6,
+      "description": "A large lake with deeper waters and larger fish"
+    },
+    "marsh" : {
+      "name": "Foggy Marsh",
+      "level": 10,
+      "tier": 1,
+      "distance": 30,
+      "danger": 8,
+      "description": "A misty, shallow wetland with unknown dangers"
+    },
+    "bay": {
+      "name": "Pelican Bay",
+      "level": 15,
+      "tier": 2,
+      "distance": 40,
+      "danger": 10,
+      "description": "A large, open bay with strong currents and some valuable catches"
+    },
+    "coast": {
+      "name": "Rocky Coast",
+      "level": 20,
+      "tier": 2,
+      "distance": 50,
+      "danger": 12,
+      "description": "A rugged coastline with rocky shores but some great fishing spots"
+    },
+    "reef": {
+      "name": "Coral Reef",
+      "level": 25,
+      "tier": 3,
+      "distance": 70,
+      "danger": 14,
+      "description": "A vibrant coral reef with a diverse array of marine life"
+    },
+    "shoals": {
+      "name": "Sunken Shoals",
+      "level": 30,
+      "tier": 3,
+      "distance": 80,
+      "danger": 15,
+      "description": "A group of sunken rocks and sandbars known for dense fish populations"
+    },
+    "offshore": {
+      "name": "Offshore Waters",
+      "level": 40,
+      "tier": 3,
+      "distance": 90,
+      "danger": 15,
+      "description": "Open ocean waters with strong currents and a variety of marine life"
+    },
+    "deepsea": {
+      "name": "Deep Sea Ridge",
+      "tier": 4,
+      "level": 50,
+      "distance": 120,
+      "danger": 16,
+      "description": "Deep ocean waters great for commercial fishing operations"
+    },
+    "trench": {
+      "name": "Twlight Trench",
+      "tier": 4,
+      "level": 65,
+      "distance": 150,
+      "danger": 17,
+      "description": "A dark underwater trench with large, deep-sea creatures"
+    },
+    "frozen": {
+      "name": "Frozen Frontier",
+      "tier": 5,
+      "level": 75,
+      "distance": 180,
+      "danger": 18,
+      "description": "A harsh, icy region with dangerous waters and rare fish"
+    },
+    "cape": {
+      "name": "Squall Cape",
+      "tier": 5,
+      "level": 85,
+      "distance": 210,
+      "danger": 19,
+      "description": "A treacherous cape with strong storms but also one-of-a-kind fishing opportunities"
+    },
+    "abyss": {
+      "name": "The Abyss",
+      "tier": 5,
+      "level": 100,
+      "distance": 250,
+      "danger": 20,
+      "description": "The ultimate fishing destination...."
+    }
+  },
   "tools": {},
   "fish": {},
   "boats": {
@@ -14,7 +127,7 @@
         "speed": 5,
         "durability": 2,
         "capacity": 10,
-        "fuel": null
+        "range": 10
       }
     },
     "rowboat": {
@@ -28,7 +141,7 @@
         "speed": 7,
         "durability": 4,
         "capacity": 15,
-        "fuel": null
+        "range": 15
       }
     },
     "motorboat" : {
@@ -42,7 +155,7 @@
         "speed": 20,
         "durability": 6,
         "capacity": 18, 
-        "fuel": 15
+        "range": 25
       }
     },
     "pontoon": {
@@ -56,7 +169,7 @@
         "speed": 20,
         "durability": 10,
         "capacity": 30,
-        "fuel": 25
+        "range": 35
       }
     },
     "sailboat": {
@@ -70,7 +183,7 @@
         "speed": 25,
         "durability": 12,
         "capacity": 30,
-        "fuel": 40
+        "range": 50
       }
     },
     "yacht": {
@@ -84,7 +197,7 @@
         "speed": 30,
         "durability": 15,
         "capacity": 40,
-        "fuel": 40
+        "range": 60
       }
     },
     "sportfisher": {
@@ -98,7 +211,7 @@
         "speed": 40,
         "durability": 14,
         "capacity": 40,
-        "fuel": 55
+        "range": 75
       }
     },
     "bassboat": {
@@ -112,7 +225,7 @@
         "speed": 50,
         "durability": 12,
         "capacity": 35,
-        "fuel": 45
+        "range": 65
       }
     },
     "bayboat": {
@@ -126,7 +239,7 @@
         "speed": 40,
         "durability": 16,
         "capacity": 45,
-        "fuel": 50
+        "range": 85
       }
     },
     "gillnetter": {
@@ -140,7 +253,7 @@
         "speed": 25,
         "durability": 16,
         "capacity": 60,
-        "fuel": 65
+        "range": 120
       }
     },
     "longliner": {
@@ -154,7 +267,7 @@
         "speed": 20,
         "durability": 17,
         "capacity": 75,
-        "fuel": 90
+        "range": 150
       }
     },
     "crabber": {
@@ -168,7 +281,7 @@
         "speed": 25,
         "durability": 18,
         "capacity": 85,
-        "fuel": 120
+        "range": 180
       }
     },
     "trawler": {
@@ -182,7 +295,7 @@
         "speed": 25,
         "durability": 20,
         "capacity": 100,
-        "fuel": 150
+        "range": 250
       }
     }
     
