@@ -113,8 +113,2929 @@
       "description": "The ultimate fishing destination...."
     }
   },
-  "tools": {},
-  "fish": {},
+  "tools": {
+    "hand": {
+      "name": "Hand",
+      "description": "Your bare hands, the most basic of fishing tools",
+      "tier": 1,
+      "level": 1,
+      "cost": 0,
+      "effects": {}
+    },
+    "pole": {
+      "name": "Fishing Pole",
+      "description": "A simple fishing pole for catching fish in shallow waters",
+      "cost": 50,
+      "tier": 1,
+      "level": 2,
+      "effects":{}
+    },
+    "spear": {
+      "name": "Fishing Spear",
+      "tier": 1,
+      "level": 4,
+      "cost": 120,
+      "description": "A simple hunting spear for shallow water fishing",
+      "effects": {}
+    },
+    "fishing_rod": {
+      "name": "Fishing Rod",
+      "tier": 2,
+      "level": 6,
+      "cost": 300,
+      "description": "A reliable fishing rod for standard fishing trips",
+      "effects": {}
+    },
+    "net": {
+      "name": "Fishing Net",
+      "tier": 2,
+      "level": 8,
+      "cost": 500,
+      "description": "A large net for catching multiple fish in open water",
+      "effects": {}
+    },
+    "reel": {
+      "name": "Fishing Reel",
+      "tier": 2,
+      "level": 10,
+      "cost": 900,
+      "description": "A reliable fishing reel for deeper waters",
+      "effects": {}
+    },
+    "speargun": {
+      "name": "Spear Gun",
+      "tier": 3,
+      "level": 12,
+      "cost": 1500,
+      "description": "A precision underwater hunting tool",
+      "effects": {}
+    },
+    "weighted_line": {
+      "name": "Weighted Line",
+      "tier": 3,
+      "level": 15,
+      "cost": 2200,
+      "description": "Deep-water fishing line with added weight for better stability",
+      "effects": {}
+    },
+    "trap_cage": {
+      "name": "Fishing Trap",
+      "tier": 3,
+      "level": 18,
+      "cost": 2800,
+      "description": "A rigid cage for trapping large quantities of fish",
+      "effects": {}
+    },
+    "reel_rig": {
+      "name": "Electric Reel Rig",
+      "tier": 3,
+      "level": 22,
+      "cost": 5000,
+      "description": "An automated reel system for efficient catching",
+      "effects": {}
+    },
+    "harpoon_gun": {
+      "name": "Harpoon Gun",
+      "tier": 4,
+      "level": 28,
+      "cost": 7000,
+      "description": "Heavy-duty hunting weapon for large catches",
+      "effects": {}
+    },
+    "sonar": {
+      "name": "Sonar Fishing Rod",
+      "tier": 4,
+      "level": 32,
+      "cost": 8500,
+      "description": "A high-tech fishing rod with sonar capabilities for locating rare fish",
+      "effects": {}
+    },
+    "drift_net": {
+      "name": "Drift Net",
+      "tier": 4,
+      "level": 35,
+      "cost": 10000,
+      "description": "Large-scale fishing net to all kinds of fish at once",
+      "effects": {}
+    },
+    "hydraulic": {
+      "name": "Hydraulic Fishing System",
+      "tier": 5,
+      "level": 45,
+      "cost": 14000,
+      "description": "A powerful hydraulic system for efficient fishing in deep waters",
+      "effects": {}
+    },
+    "magnet": {
+      "name": "Magnet Fishing Rig",
+      "tier": 5,
+      "level": 50,
+      "cost": 16000,
+      "description": "A high-tech fishing rig that allows you to target deep-sea fish with ease",
+      "effects": {}
+    },
+    "deep_sea": {
+      "name": "Deep-Sea Longline",
+      "tier": 5,
+      "level": 60,
+      "cost": 20000,
+      "description": "A specialized fishing tool for targeting large, deep-sea fish",
+      "effects": {}
+    },
+    "plasma": {
+      "name": "Plasma Harpoon Gun",
+      "tier": 5,
+      "level": 75,
+      "cost": 35000,
+      "description": "A high-energy weapon for elite deep-sea hunters",
+      "effects": {}
+    },
+    "drone": {
+      "name": "Autonomous Fishing Drone",
+      "tier": 5,
+      "level": 85,
+      "cost": 50000,
+      "description": "An autonomous drone for smart fishing operations",
+      "effects": {}
+    },
+    "quantum": {
+      "name": "Quantum Fishing Rig",
+      "tier": 5,
+      "level": 100,
+      "cost": 75000,
+      "description": "A cutting-edge fishing rig with quantum technology for unparalleled fishing performance",
+      "effects": {}
+    }
+  },
+  "fish": {
+    "bluegill": {
+      "name": "Bluegill",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 5,
+      "weight": {
+        "min": 0.1,
+        "max": 0.8,
+        "unit": "lbs"
+      },
+      "sell_value": 5,
+      "maps": {
+        "pond": 0.3,
+        "river": 0.05
+      }
+    },
+    "sunfish": {
+      "name": "Sunfish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 5,
+      "weight": {
+        "min": 0.1,
+        "max": 0.6,
+        "unit": "lbs"
+      },
+      "sell_value": 5,
+      "maps": {
+        "pond": 0.25
+      }
+    },
+    "mudskipper": {
+      "name": "Mudskipper",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 6,
+      "weight": {
+        "min": 0.1,
+        "max": 0.4,
+        "unit": "lbs"
+      },
+      "sell_value": 6,
+      "maps": {
+        "pond": 0.15,
+        "marsh": 0.1
+      }
+    },
+    "tadpole_fish": {
+      "name": "Tadpole Fish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 3,
+      "weight": {
+        "min": 0.05,
+        "max": 0.2,
+        "unit": "lbs"
+      },
+      "sell_value": 3,
+      "maps": {
+        "pond": 0.15
+      }
+    },
+    "pond_perch": {
+      "name": "Pond Perch",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 6,
+      "weight": {
+        "min": 0.2,
+        "max": 1,
+        "unit": "lbs"
+      },
+      "sell_value": 6,
+      "maps": {
+        "pond": 0.12
+      }
+    },
+    "carp": {
+      "name": "Carp",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 15,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 20,
+      "maps": {
+        "pond": 0.07,
+        "river": 0.08,
+        "lake": 0.06
+      }
+    },
+    "bullfrog_bass": {
+      "name": "Bullfrog Bass",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 18,
+      "weight": {
+        "min": 0.5,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 22,
+      "maps": {
+        "pond": 0.05
+      }
+    },
+    "golden_roach": {
+      "name": "Golden Roach",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 20,
+      "weight": {
+        "min": 0.2,
+        "max": 1.5,
+        "unit": "lbs"
+      },
+      "sell_value": 25,
+      "maps": {
+        "pond": 0.04,
+        "river": 0.05
+      }
+    },
+    "newt_eel": {
+      "name": "Newt Eel",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 40,
+      "weight": {
+        "min": 0.3,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 55,
+      "maps": {
+        "pond": 0.02,
+        "marsh": 0.04
+      }
+    },
+    "dragonfly_darter": {
+      "name": "Dragonfly Darter",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 45,
+      "weight": {
+        "min": 0.1,
+        "max": 0.5,
+        "unit": "lbs"
+      },
+      "sell_value": 60,
+      "maps": {
+        "pond": 0.015
+      }
+    },
+    "mossy_snapper": {
+      "name": "Mossy Snapper",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 100,
+      "weight": {
+        "min": 2,
+        "max": 10,
+        "unit": "lbs"
+      },
+      "sell_value": 180,
+      "maps": {
+        "pond": 0.005
+      }
+    },
+    "prismatic_koi": {
+      "name": "Prismatic Koi",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 300,
+      "weight": {
+        "min": 5,
+        "max": 20,
+        "unit": "lbs"
+      },
+      "sell_value": 750,
+      "maps": {
+        "pond": 0.001
+      }
+    },
+    "stream_trout": {
+      "name": "Stream Trout",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 8,
+      "weight": {
+        "min": 0.3,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 8,
+      "maps": {
+        "river": 0.28,
+        "lake": 0.08
+      }
+    },
+    "pebble_chub": {
+      "name": "Pebble Chub",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 6,
+      "weight": {
+        "min": 0.1,
+        "max": 0.5,
+        "unit": "lbs"
+      },
+      "sell_value": 6,
+      "maps": {
+        "river": 0.2
+      }
+    },
+    "riffle_dace": {
+      "name": "Riffle Dace",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 7,
+      "weight": {
+        "min": 0.1,
+        "max": 0.4,
+        "unit": "lbs"
+      },
+      "sell_value": 7,
+      "maps": {
+        "river": 0.18
+      }
+    },
+    "mudcat_catfish": {
+      "name": "Mudcat Catfish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 10,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 10,
+      "maps": {
+        "river": 0.12,
+        "lake": 0.08,
+        "marsh": 0.12
+      }
+    },
+    "river_perch": {
+      "name": "River Perch",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 8,
+      "weight": {
+        "min": 0.2,
+        "max": 1.2,
+        "unit": "lbs"
+      },
+      "sell_value": 8,
+      "maps": {
+        "river": 0.1
+      }
+    },
+    "brook_salmon": {
+      "name": "Brook Salmon",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 22,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 30,
+      "maps": {
+        "river": 0.06,
+        "lake": 0.04
+      }
+    },
+    "stone_loach": {
+      "name": "Stone Loach",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 18,
+      "weight": {
+        "min": 0.1,
+        "max": 0.6,
+        "unit": "lbs"
+      },
+      "sell_value": 22,
+      "maps": {
+        "river": 0.04
+      }
+    },
+    "gar_pike": {
+      "name": "Gar Pike",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 25,
+      "weight": {
+        "min": 1,
+        "max": 6,
+        "unit": "lbs"
+      },
+      "sell_value": 35,
+      "maps": {
+        "river": 0.04,
+        "lake": 0.05,
+        "marsh": 0.04
+      }
+    },
+    "silverfin_minnow": {
+      "name": "Silverfin Minnow",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 15,
+      "weight": {
+        "min": 0.05,
+        "max": 0.3,
+        "unit": "lbs"
+      },
+      "sell_value": 18,
+      "maps": {
+        "river": 0.05,
+        "lake": 0.05
+      }
+    },
+    "white_bass": {
+      "name": "White Bass",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 42,
+      "weight": {
+        "min": 0.5,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 60,
+      "maps": {
+        "river": 0.02,
+        "lake": 0.03
+      }
+    },
+    "current_catcher": {
+      "name": "Current Catcher",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 50,
+      "weight": {
+        "min": 1,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 70,
+      "maps": {
+        "river": 0.015
+      }
+    },
+    "river_dragon_eel": {
+      "name": "River Dragon Eel",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 110,
+      "weight": {
+        "min": 3,
+        "max": 15,
+        "unit": "lbs"
+      },
+      "sell_value": 200,
+      "maps": {
+        "river": 0.005,
+        "marsh": 0.003
+      }
+    },
+    "gilded_salmon": {
+      "name": "Gilded Salmon",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 350,
+      "weight": {
+        "min": 8,
+        "max": 30,
+        "unit": "lbs"
+      },
+      "sell_value": 900,
+      "maps": {
+        "river": 0.001
+      }
+    },
+    "largemouth_bass": {
+      "name": "Largemouth Bass",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 12,
+      "weight": {
+        "min": 0.5,
+        "max": 6,
+        "unit": "lbs"
+      },
+      "sell_value": 14,
+      "maps": {
+        "lake": 0.25,
+        "river": 0.05
+      }
+    },
+    "walleye": {
+      "name": "Walleye",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 12,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 14,
+      "maps": {
+        "lake": 0.2
+      }
+    },
+    "lake_perch": {
+      "name": "Lake Perch",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 10,
+      "weight": {
+        "min": 0.2,
+        "max": 1.5,
+        "unit": "lbs"
+      },
+      "sell_value": 10,
+      "maps": {
+        "lake": 0.18
+      }
+    },
+    "crappie": {
+      "name": "Crappie",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 10,
+      "weight": {
+        "min": 0.2,
+        "max": 1.5,
+        "unit": "lbs"
+      },
+      "sell_value": 10,
+      "maps": {
+        "lake": 0.14
+      }
+    },
+    "yellow_bullhead": {
+      "name": "Yellow Bullhead",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 10,
+      "weight": {
+        "min": 0.3,
+        "max": 2.5,
+        "unit": "lbs"
+      },
+      "sell_value": 10,
+      "maps": {
+        "lake": 0.1
+      }
+    },
+    "smallmouth_bass": {
+      "name": "Smallmouth Bass",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 25,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 35,
+      "maps": {
+        "lake": 0.07
+      }
+    },
+    "channel_catfish": {
+      "name": "Channel Catfish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 28,
+      "weight": {
+        "min": 1,
+        "max": 12,
+        "unit": "lbs"
+      },
+      "sell_value": 38,
+      "maps": {
+        "lake": 0.06,
+        "river": 0.04
+      }
+    },
+    "northern_pike": {
+      "name": "Northern Pike",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 30,
+      "weight": {
+        "min": 1,
+        "max": 15,
+        "unit": "lbs"
+      },
+      "sell_value": 40,
+      "maps": {
+        "lake": 0.05
+      }
+    },
+    "lake_trout": {
+      "name": "Lake Trout",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 55,
+      "weight": {
+        "min": 1,
+        "max": 10,
+        "unit": "lbs"
+      },
+      "sell_value": 80,
+      "maps": {
+        "lake": 0.025
+      }
+    },
+    "freshwater_drum": {
+      "name": "Freshwater Drum",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 50,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 70,
+      "maps": {
+        "lake": 0.02
+      }
+    },
+    "muskie": {
+      "name": "Muskie",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 120,
+      "weight": {
+        "min": 5,
+        "max": 30,
+        "unit": "lbs"
+      },
+      "sell_value": 220,
+      "maps": {
+        "lake": 0.004
+      }
+    },
+    "crystal_sturgeon": {
+      "name": "Crystal Sturgeon",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 130,
+      "weight": {
+        "min": 10,
+        "max": 80,
+        "unit": "lbs"
+      },
+      "sell_value": 250,
+      "maps": {
+        "lake": 0.003
+      }
+    },
+    "sapphire_muskellunge": {
+      "name": "Sapphire Muskellunge",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 400,
+      "weight": {
+        "min": 20,
+        "max": 60,
+        "unit": "lbs"
+      },
+      "sell_value": 1100,
+      "maps": {
+        "lake": 0.001
+      }
+    },
+    "swamp_eel": {
+      "name": "Swamp Eel",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 14,
+      "weight": {
+        "min": 0.2,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 12,
+      "maps": {
+        "marsh": 0.25,
+        "river": 0.05
+      }
+    },
+    "marsh_perch": {
+      "name": "Marsh Perch",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 12,
+      "weight": {
+        "min": 0.2,
+        "max": 1,
+        "unit": "lbs"
+      },
+      "sell_value": 10,
+      "maps": {
+        "marsh": 0.2
+      }
+    },
+    "bogfish": {
+      "name": "Bogfish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 10,
+      "weight": {
+        "min": 0.3,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 8,
+      "maps": {
+        "marsh": 0.18
+      }
+    },
+    "cattail_carp": {
+      "name": "Cattail Carp",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 12,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 10,
+      "maps": {
+        "marsh": 0.15
+      }
+    },
+    "fog_crawler": {
+      "name": "Fog Crawler",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 13,
+      "weight": {
+        "min": 0.2,
+        "max": 1.5,
+        "unit": "lbs"
+      },
+      "sell_value": 11,
+      "maps": {
+        "marsh": 0.12
+      }
+    },
+    "mudpuppy": {
+      "name": "Mudpuppy",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 28,
+      "weight": {
+        "min": 0.1,
+        "max": 0.8,
+        "unit": "lbs"
+      },
+      "sell_value": 35,
+      "maps": {
+        "marsh": 0.05
+      }
+    },
+    "snapping_toad_fish": {
+      "name": "Snapping Toad Fish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 30,
+      "weight": {
+        "min": 0.3,
+        "max": 2.5,
+        "unit": "lbs"
+      },
+      "sell_value": 40,
+      "maps": {
+        "marsh": 0.04
+      }
+    },
+    "reed_bass": {
+      "name": "Reed Bass",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 26,
+      "weight": {
+        "min": 0.5,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 32,
+      "maps": {
+        "marsh": 0.04
+      }
+    },
+    "ghost_shiner": {
+      "name": "Ghost Shiner",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 60,
+      "weight": {
+        "min": 0.1,
+        "max": 0.5,
+        "unit": "lbs"
+      },
+      "sell_value": 85,
+      "maps": {
+        "marsh": 0.015
+      }
+    },
+    "bog_serpent": {
+      "name": "Bog Serpent",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 65,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 90,
+      "maps": {
+        "marsh": 0.01
+      }
+    },
+    "duskfin": {
+      "name": "Duskfin",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 140,
+      "weight": {
+        "min": 2,
+        "max": 10,
+        "unit": "lbs"
+      },
+      "sell_value": 270,
+      "maps": {
+        "marsh": 0.004
+      }
+    },
+    "hollow_eye_gar": {
+      "name": "Hollow-Eye Gar",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 135,
+      "weight": {
+        "min": 3,
+        "max": 12,
+        "unit": "lbs"
+      },
+      "sell_value": 260,
+      "maps": {
+        "marsh": 0.003
+      }
+    },
+    "phantom_lurker": {
+      "name": "Phantom Lurker",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 450,
+      "weight": {
+        "min": 10,
+        "max": 40,
+        "unit": "lbs"
+      },
+      "sell_value": 1200,
+      "maps": {
+        "marsh": 0.001
+      }
+    },
+    "bay_anchovy": {
+      "name": "Bay Anchovy",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 8,
+      "weight": {
+        "min": 0.02,
+        "max": 0.1,
+        "unit": "lbs"
+      },
+      "sell_value": 5,
+      "maps": {
+        "bay": 0.28
+      }
+    },
+    "striped_mullet": {
+      "name": "Striped Mullet",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 14,
+      "weight": {
+        "min": 0.5,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 14,
+      "maps": {
+        "bay": 0.2,
+        "coast": 0.08
+      }
+    },
+    "saltwater_perch": {
+      "name": "Saltwater Perch",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 14,
+      "weight": {
+        "min": 0.3,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 13,
+      "maps": {
+        "bay": 0.18
+      }
+    },
+    "croaker": {
+      "name": "Croaker",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 12,
+      "weight": {
+        "min": 0.3,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 12,
+      "maps": {
+        "bay": 0.13,
+        "shoals": 0.1
+      }
+    },
+    "spot": {
+      "name": "Spot",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 10,
+      "weight": {
+        "min": 0.2,
+        "max": 1,
+        "unit": "lbs"
+      },
+      "sell_value": 10,
+      "maps": {
+        "bay": 0.12
+      }
+    },
+    "flounder": {
+      "name": "Flounder",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 35,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 50,
+      "maps": {
+        "bay": 0.05,
+        "coast": 0.05,
+        "shoals": 0.06
+      }
+    },
+    "bluefish": {
+      "name": "Bluefish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 32,
+      "weight": {
+        "min": 0.5,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 45,
+      "maps": {
+        "bay": 0.04,
+        "coast": 0.04
+      }
+    },
+    "weakfish": {
+      "name": "Weakfish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 28,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 38,
+      "maps": {
+        "bay": 0.04
+      }
+    },
+    "redfish": {
+      "name": "Redfish",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 70,
+      "weight": {
+        "min": 2,
+        "max": 20,
+        "unit": "lbs"
+      },
+      "sell_value": 100,
+      "maps": {
+        "bay": 0.02,
+        "coast": 0.015
+      }
+    },
+    "cobia": {
+      "name": "Cobia",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 75,
+      "weight": {
+        "min": 5,
+        "max": 40,
+        "unit": "lbs"
+      },
+      "sell_value": 110,
+      "maps": {
+        "bay": 0.015,
+        "offshore": 0.02
+      }
+    },
+    "sheepshead": {
+      "name": "Sheepshead",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 68,
+      "weight": {
+        "min": 1,
+        "max": 10,
+        "unit": "lbs"
+      },
+      "sell_value": 95,
+      "maps": {
+        "bay": 0.015,
+        "reef": 0.015
+      }
+    },
+    "bay_tarpon": {
+      "name": "Bay Tarpon",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 160,
+      "weight": {
+        "min": 20,
+        "max": 120,
+        "unit": "lbs"
+      },
+      "sell_value": 300,
+      "maps": {
+        "bay": 0.004,
+        "coast": 0.003
+      }
+    },
+    "tiderunner": {
+      "name": "Tiderunner",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 500,
+      "weight": {
+        "min": 30,
+        "max": 150,
+        "unit": "lbs"
+      },
+      "sell_value": 1400,
+      "maps": {
+        "bay": 0.001
+      }
+    },
+    "rock_cod": {
+      "name": "Rock Cod",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 18,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 18,
+      "maps": {
+        "coast": 0.25,
+        "shoals": 0.08
+      }
+    },
+    "kelp_bass": {
+      "name": "Kelp Bass",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 18,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 16,
+      "maps": {
+        "coast": 0.22
+      }
+    },
+    "surf_smelt": {
+      "name": "Surf Smelt",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 12,
+      "weight": {
+        "min": 0.05,
+        "max": 0.3,
+        "unit": "lbs"
+      },
+      "sell_value": 10,
+      "maps": {
+        "coast": 0.18
+      }
+    },
+    "tide_pool_goby": {
+      "name": "Tide Pool Goby",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 10,
+      "weight": {
+        "min": 0.02,
+        "max": 0.2,
+        "unit": "lbs"
+      },
+      "sell_value": 8,
+      "maps": {
+        "coast": 0.15
+      }
+    },
+    "sandfish": {
+      "name": "Sandfish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 14,
+      "weight": {
+        "min": 0.1,
+        "max": 1,
+        "unit": "lbs"
+      },
+      "sell_value": 12,
+      "maps": {
+        "coast": 0.12,
+        "shoals": 0.1
+      }
+    },
+    "black_rockfish": {
+      "name": "Black Rockfish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 38,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 52,
+      "maps": {
+        "coast": 0.05,
+        "reef": 0.05
+      }
+    },
+    "cabezon": {
+      "name": "Cabezon",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 40,
+      "weight": {
+        "min": 1,
+        "max": 10,
+        "unit": "lbs"
+      },
+      "sell_value": 55,
+      "maps": {
+        "coast": 0.04
+      }
+    },
+    "lingcod": {
+      "name": "Lingcod",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 80,
+      "weight": {
+        "min": 2,
+        "max": 30,
+        "unit": "lbs"
+      },
+      "sell_value": 120,
+      "maps": {
+        "coast": 0.02,
+        "shoals": 0.015
+      }
+    },
+    "leopard_shark": {
+      "name": "Leopard Shark",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 85,
+      "weight": {
+        "min": 5,
+        "max": 30,
+        "unit": "lbs"
+      },
+      "sell_value": 130,
+      "maps": {
+        "coast": 0.015,
+        "bay": 0.01
+      }
+    },
+    "yellowtail": {
+      "name": "Yellowtail",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 88,
+      "weight": {
+        "min": 5,
+        "max": 40,
+        "unit": "lbs"
+      },
+      "sell_value": 140,
+      "maps": {
+        "coast": 0.015,
+        "offshore": 0.025
+      }
+    },
+    "ocean_whitefish": {
+      "name": "Ocean Whitefish",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 170,
+      "weight": {
+        "min": 3,
+        "max": 15,
+        "unit": "lbs"
+      },
+      "sell_value": 320,
+      "maps": {
+        "coast": 0.004,
+        "offshore": 0.005
+      }
+    },
+    "tide_wraith": {
+      "name": "Tide Wraith",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 175,
+      "weight": {
+        "min": 2,
+        "max": 12,
+        "unit": "lbs"
+      },
+      "sell_value": 330,
+      "maps": {
+        "coast": 0.003
+      }
+    },
+    "ironback_grouper": {
+      "name": "Ironback Grouper",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 550,
+      "weight": {
+        "min": 30,
+        "max": 200,
+        "unit": "lbs"
+      },
+      "sell_value": 1600,
+      "maps": {
+        "coast": 0.001
+      }
+    },
+    "clownfish": {
+      "name": "Clownfish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 20,
+      "weight": {
+        "min": 0.05,
+        "max": 0.2,
+        "unit": "lbs"
+      },
+      "sell_value": 20,
+      "maps": {
+        "reef": 0.28
+      }
+    },
+    "damselfish": {
+      "name": "Damselfish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 18,
+      "weight": {
+        "min": 0.05,
+        "max": 0.3,
+        "unit": "lbs"
+      },
+      "sell_value": 16,
+      "maps": {
+        "reef": 0.22
+      }
+    },
+    "parrotfish": {
+      "name": "Parrotfish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 22,
+      "weight": {
+        "min": 0.3,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 22,
+      "maps": {
+        "reef": 0.18
+      }
+    },
+    "wrasse": {
+      "name": "Wrasse",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 18,
+      "weight": {
+        "min": 0.1,
+        "max": 1.5,
+        "unit": "lbs"
+      },
+      "sell_value": 16,
+      "maps": {
+        "reef": 0.15
+      }
+    },
+    "sergeant_major": {
+      "name": "Sergeant Major",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 16,
+      "weight": {
+        "min": 0.1,
+        "max": 0.5,
+        "unit": "lbs"
+      },
+      "sell_value": 14,
+      "maps": {
+        "reef": 0.12
+      }
+    },
+    "pufferfish": {
+      "name": "Pufferfish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 42,
+      "weight": {
+        "min": 0.2,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 60,
+      "maps": {
+        "reef": 0.06
+      }
+    },
+    "lionfish": {
+      "name": "Lionfish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 45,
+      "weight": {
+        "min": 0.2,
+        "max": 2.5,
+        "unit": "lbs"
+      },
+      "sell_value": 65,
+      "maps": {
+        "reef": 0.05
+      }
+    },
+    "triggerfish": {
+      "name": "Triggerfish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 40,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 55,
+      "maps": {
+        "reef": 0.05
+      }
+    },
+    "hawkfish": {
+      "name": "Hawkfish",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 90,
+      "weight": {
+        "min": 0.1,
+        "max": 1,
+        "unit": "lbs"
+      },
+      "sell_value": 145,
+      "maps": {
+        "reef": 0.02
+      }
+    },
+    "coral_grouper": {
+      "name": "Coral Grouper",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 95,
+      "weight": {
+        "min": 2,
+        "max": 15,
+        "unit": "lbs"
+      },
+      "sell_value": 155,
+      "maps": {
+        "reef": 0.015,
+        "coast": 0.01
+      }
+    },
+    "napoleon_wrasse": {
+      "name": "Napoleon Wrasse",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 190,
+      "weight": {
+        "min": 10,
+        "max": 80,
+        "unit": "lbs"
+      },
+      "sell_value": 370,
+      "maps": {
+        "reef": 0.004
+      }
+    },
+    "ribbon_eel": {
+      "name": "Ribbon Eel",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 185,
+      "weight": {
+        "min": 0.5,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 360,
+      "maps": {
+        "reef": 0.003
+      }
+    },
+    "aurora_angelfish": {
+      "name": "Aurora Angelfish",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 600,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 1800,
+      "maps": {
+        "reef": 0.001
+      }
+    },
+    "sandbar_herring": {
+      "name": "Sandbar Herring",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 22,
+      "weight": {
+        "min": 0.1,
+        "max": 0.5,
+        "unit": "lbs"
+      },
+      "sell_value": 18,
+      "maps": {
+        "shoals": 0.28
+      }
+    },
+    "shoal_perch": {
+      "name": "Shoal Perch",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 20,
+      "weight": {
+        "min": 0.2,
+        "max": 1.5,
+        "unit": "lbs"
+      },
+      "sell_value": 18,
+      "maps": {
+        "shoals": 0.22
+      }
+    },
+    "razorback_sole": {
+      "name": "Razorback Sole",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 20,
+      "weight": {
+        "min": 0.3,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 18,
+      "maps": {
+        "shoals": 0.16
+      }
+    },
+    "spottail_pinfish": {
+      "name": "Spottail Pinfish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 16,
+      "weight": {
+        "min": 0.1,
+        "max": 0.6,
+        "unit": "lbs"
+      },
+      "sell_value": 14,
+      "maps": {
+        "shoals": 0.14
+      }
+    },
+    "barnacle_bass": {
+      "name": "Barnacle Bass",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 22,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 20,
+      "maps": {
+        "shoals": 0.1
+      }
+    },
+    "gurnard": {
+      "name": "Gurnard",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 45,
+      "weight": {
+        "min": 0.3,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 65,
+      "maps": {
+        "shoals": 0.05
+      }
+    },
+    "sand_tilefish": {
+      "name": "Sand Tilefish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 42,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 60,
+      "maps": {
+        "shoals": 0.04,
+        "deepsea": 0.05
+      }
+    },
+    "cuttlefish": {
+      "name": "Cuttlefish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 48,
+      "weight": {
+        "min": 0.2,
+        "max": 2.5,
+        "unit": "lbs"
+      },
+      "sell_value": 70,
+      "maps": {
+        "shoals": 0.04,
+        "reef": 0.03
+      }
+    },
+    "shoal_snapper": {
+      "name": "Shoal Snapper",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 100,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 160,
+      "maps": {
+        "shoals": 0.02
+      }
+    },
+    "flathead_croaker": {
+      "name": "Flathead Croaker",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 95,
+      "weight": {
+        "min": 1,
+        "max": 6,
+        "unit": "lbs"
+      },
+      "sell_value": 150,
+      "maps": {
+        "shoals": 0.015
+      }
+    },
+    "sunken_specter": {
+      "name": "Sunken Specter",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 200,
+      "weight": {
+        "min": 2,
+        "max": 10,
+        "unit": "lbs"
+      },
+      "sell_value": 390,
+      "maps": {
+        "shoals": 0.004
+      }
+    },
+    "driftwood_eel": {
+      "name": "Driftwood Eel",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 195,
+      "weight": {
+        "min": 3,
+        "max": 14,
+        "unit": "lbs"
+      },
+      "sell_value": 380,
+      "maps": {
+        "shoals": 0.003
+      }
+    },
+    "abyssal_wanderer": {
+      "name": "Abyssal Wanderer",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 650,
+      "weight": {
+        "min": 15,
+        "max": 60,
+        "unit": "lbs"
+      },
+      "sell_value": 2000,
+      "maps": {
+        "shoals": 0.001
+      }
+    },
+    "skipjack_tuna": {
+      "name": "Skipjack Tuna",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 28,
+      "weight": {
+        "min": 2,
+        "max": 10,
+        "unit": "lbs"
+      },
+      "sell_value": 28,
+      "maps": {
+        "offshore": 0.25
+      }
+    },
+    "mahi_mahi": {
+      "name": "Mahi-Mahi",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 30,
+      "weight": {
+        "min": 3,
+        "max": 20,
+        "unit": "lbs"
+      },
+      "sell_value": 30,
+      "maps": {
+        "offshore": 0.22,
+        "cape": 0.05
+      }
+    },
+    "oceanic_bonito": {
+      "name": "Oceanic Bonito",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 25,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 22,
+      "maps": {
+        "offshore": 0.18
+      }
+    },
+    "flying_fish": {
+      "name": "Flying Fish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 26,
+      "weight": {
+        "min": 0.2,
+        "max": 1,
+        "unit": "lbs"
+      },
+      "sell_value": 24,
+      "maps": {
+        "offshore": 0.15
+      }
+    },
+    "ribbon_barracuda": {
+      "name": "Ribbon Barracuda",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 28,
+      "weight": {
+        "min": 1,
+        "max": 6,
+        "unit": "lbs"
+      },
+      "sell_value": 26,
+      "maps": {
+        "offshore": 0.1,
+        "coast": 0.06
+      }
+    },
+    "wahoo": {
+      "name": "Wahoo",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 55,
+      "weight": {
+        "min": 5,
+        "max": 40,
+        "unit": "lbs"
+      },
+      "sell_value": 80,
+      "maps": {
+        "offshore": 0.06
+      }
+    },
+    "yellowfin_tuna": {
+      "name": "Yellowfin Tuna",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 60,
+      "weight": {
+        "min": 10,
+        "max": 80,
+        "unit": "lbs"
+      },
+      "sell_value": 90,
+      "maps": {
+        "offshore": 0.05
+      }
+    },
+    "spearfish": {
+      "name": "Spearfish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 52,
+      "weight": {
+        "min": 10,
+        "max": 50,
+        "unit": "lbs"
+      },
+      "sell_value": 75,
+      "maps": {
+        "offshore": 0.04
+      }
+    },
+    "albacore": {
+      "name": "Albacore",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 110,
+      "weight": {
+        "min": 5,
+        "max": 30,
+        "unit": "lbs"
+      },
+      "sell_value": 180,
+      "maps": {
+        "offshore": 0.02
+      }
+    },
+    "sailfish": {
+      "name": "Sailfish",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 120,
+      "weight": {
+        "min": 30,
+        "max": 120,
+        "unit": "lbs"
+      },
+      "sell_value": 200,
+      "maps": {
+        "offshore": 0.015,
+        "cape": 0.01
+      }
+    },
+    "blue_marlin": {
+      "name": "Blue Marlin",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 220,
+      "weight": {
+        "min": 50,
+        "max": 400,
+        "unit": "lbs"
+      },
+      "sell_value": 440,
+      "maps": {
+        "offshore": 0.004,
+        "cape": 0.003
+      }
+    },
+    "oarfish": {
+      "name": "Oarfish",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 210,
+      "weight": {
+        "min": 20,
+        "max": 100,
+        "unit": "lbs"
+      },
+      "sell_value": 420,
+      "maps": {
+        "offshore": 0.003,
+        "deepsea": 0.003
+      }
+    },
+    "pelagic_phantom": {
+      "name": "Pelagic Phantom",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 700,
+      "weight": {
+        "min": 100,
+        "max": 600,
+        "unit": "lbs"
+      },
+      "sell_value": 2200,
+      "maps": {
+        "offshore": 0.001
+      }
+    },
+    "slickhead": {
+      "name": "Slickhead",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 35,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 30,
+      "maps": {
+        "deepsea": 0.25
+      }
+    },
+    "grenadier": {
+      "name": "Grenadier",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 33,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 28,
+      "maps": {
+        "deepsea": 0.22
+      }
+    },
+    "deep_cod": {
+      "name": "Deep Cod",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 32,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 28,
+      "maps": {
+        "deepsea": 0.18
+      }
+    },
+    "alfonsino": {
+      "name": "Alfonsino",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 30,
+      "weight": {
+        "min": 0.5,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 26,
+      "maps": {
+        "deepsea": 0.14
+      }
+    },
+    "roughy": {
+      "name": "Orange Roughy",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 30,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 26,
+      "maps": {
+        "deepsea": 0.1
+      }
+    },
+    "fang_tooth": {
+      "name": "Fang Tooth",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 65,
+      "weight": {
+        "min": 0.1,
+        "max": 0.8,
+        "unit": "lbs"
+      },
+      "sell_value": 95,
+      "maps": {
+        "deepsea": 0.05,
+        "trench": 0.06
+      }
+    },
+    "bristlemouth": {
+      "name": "Bristlemouth",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 60,
+      "weight": {
+        "min": 0.05,
+        "max": 0.3,
+        "unit": "lbs"
+      },
+      "sell_value": 85,
+      "maps": {
+        "deepsea": 0.04,
+        "trench": 0.05
+      }
+    },
+    "viperfish": {
+      "name": "Viperfish",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 130,
+      "weight": {
+        "min": 0.3,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 220,
+      "maps": {
+        "deepsea": 0.02,
+        "trench": 0.03
+      }
+    },
+    "sabertooth_fish": {
+      "name": "Sabertooth Fish",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 135,
+      "weight": {
+        "min": 0.3,
+        "max": 2.5,
+        "unit": "lbs"
+      },
+      "sell_value": 230,
+      "maps": {
+        "deepsea": 0.015,
+        "trench": 0.02
+      }
+    },
+    "barreleye": {
+      "name": "Barreleye",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 125,
+      "weight": {
+        "min": 0.1,
+        "max": 0.5,
+        "unit": "lbs"
+      },
+      "sell_value": 210,
+      "maps": {
+        "deepsea": 0.015
+      }
+    },
+    "gulper_eel": {
+      "name": "Gulper Eel",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 240,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 480,
+      "maps": {
+        "deepsea": 0.004,
+        "trench": 0.005
+      }
+    },
+    "abyssal_dragonfish": {
+      "name": "Abyssal Dragonfish",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 235,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 470,
+      "maps": {
+        "deepsea": 0.003,
+        "trench": 0.004
+      }
+    },
+    "ridgewalker": {
+      "name": "Ridgewalker",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 750,
+      "weight": {
+        "min": 50,
+        "max": 300,
+        "unit": "lbs"
+      },
+      "sell_value": 2500,
+      "maps": {
+        "deepsea": 0.001
+      }
+    },
+    "pale_drifter": {
+      "name": "Pale Drifter",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 40,
+      "weight": {
+        "min": 0.2,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 34,
+      "maps": {
+        "trench": 0.25
+      }
+    },
+    "zombie_fish": {
+      "name": "Zombie Fish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 38,
+      "weight": {
+        "min": 0.3,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 30,
+      "maps": {
+        "trench": 0.22
+      }
+    },
+    "trench_cod": {
+      "name": "Trench Cod",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 36,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 30,
+      "maps": {
+        "trench": 0.18
+      }
+    },
+    "spook_fish": {
+      "name": "Spook Fish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 35,
+      "weight": {
+        "min": 0.2,
+        "max": 1.5,
+        "unit": "lbs"
+      },
+      "sell_value": 28,
+      "maps": {
+        "trench": 0.14
+      }
+    },
+    "deep_eel": {
+      "name": "Deep Eel",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 35,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 28,
+      "maps": {
+        "trench": 0.1
+      }
+    },
+    "hatchetfish": {
+      "name": "Hatchetfish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 70,
+      "weight": {
+        "min": 0.05,
+        "max": 0.3,
+        "unit": "lbs"
+      },
+      "sell_value": 100,
+      "maps": {
+        "trench": 0.05
+      }
+    },
+    "fangtooth_angler": {
+      "name": "Fangtooth Angler",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 72,
+      "weight": {
+        "min": 0.2,
+        "max": 1.5,
+        "unit": "lbs"
+      },
+      "sell_value": 105,
+      "maps": {
+        "trench": 0.04
+      }
+    },
+    "inkback_squid": {
+      "name": "Inkback Squid",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 68,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 95,
+      "maps": {
+        "trench": 0.04,
+        "deepsea": 0.04
+      }
+    },
+    "anglerfish": {
+      "name": "Anglerfish",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 145,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 250,
+      "maps": {
+        "trench": 0.02
+      }
+    },
+    "trench_serpent": {
+      "name": "Trench Serpent",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 150,
+      "weight": {
+        "min": 5,
+        "max": 30,
+        "unit": "lbs"
+      },
+      "sell_value": 260,
+      "maps": {
+        "trench": 0.015
+      }
+    },
+    "midnight_stalker": {
+      "name": "Midnight Stalker",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 260,
+      "weight": {
+        "min": 10,
+        "max": 50,
+        "unit": "lbs"
+      },
+      "sell_value": 520,
+      "maps": {
+        "trench": 0.004
+      }
+    },
+    "shadowjaw": {
+      "name": "Shadowjaw",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 255,
+      "weight": {
+        "min": 8,
+        "max": 40,
+        "unit": "lbs"
+      },
+      "sell_value": 510,
+      "maps": {
+        "trench": 0.003
+      }
+    },
+    "trench_god": {
+      "name": "Trench God",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 850,
+      "weight": {
+        "min": 100,
+        "max": 800,
+        "unit": "lbs"
+      },
+      "sell_value": 2800,
+      "maps": {
+        "trench": 0.001
+      }
+    },
+    "arctic_cod": {
+      "name": "Arctic Cod",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 45,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 40,
+      "maps": {
+        "frozen": 0.27
+      }
+    },
+    "ice_smelt": {
+      "name": "Ice Smelt",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 40,
+      "weight": {
+        "min": 0.05,
+        "max": 0.4,
+        "unit": "lbs"
+      },
+      "sell_value": 35,
+      "maps": {
+        "frozen": 0.22
+      }
+    },
+    "polar_herring": {
+      "name": "Polar Herring",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 40,
+      "weight": {
+        "min": 0.1,
+        "max": 0.8,
+        "unit": "lbs"
+      },
+      "sell_value": 35,
+      "maps": {
+        "frozen": 0.18
+      }
+    },
+    "frostback_char": {
+      "name": "Frostback Char",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 42,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 38,
+      "maps": {
+        "frozen": 0.15
+      }
+    },
+    "tundra_perch": {
+      "name": "Tundra Perch",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 38,
+      "weight": {
+        "min": 0.2,
+        "max": 1.5,
+        "unit": "lbs"
+      },
+      "sell_value": 32,
+      "maps": {
+        "frozen": 0.11
+      }
+    },
+    "snow_eel": {
+      "name": "Snow Eel",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 78,
+      "weight": {
+        "min": 0.3,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 115,
+      "maps": {
+        "frozen": 0.05
+      }
+    },
+    "icefish": {
+      "name": "Icefish",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 80,
+      "weight": {
+        "min": 0.3,
+        "max": 2.5,
+        "unit": "lbs"
+      },
+      "sell_value": 120,
+      "maps": {
+        "frozen": 0.04
+      }
+    },
+    "narwhal_cod": {
+      "name": "Narwhal Cod",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 82,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 125,
+      "maps": {
+        "frozen": 0.04
+      }
+    },
+    "glacierfish": {
+      "name": "Glacierfish",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 160,
+      "weight": {
+        "min": 2,
+        "max": 15,
+        "unit": "lbs"
+      },
+      "sell_value": 280,
+      "maps": {
+        "frozen": 0.02
+      }
+    },
+    "frost_shark": {
+      "name": "Frost Shark",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 165,
+      "weight": {
+        "min": 50,
+        "max": 300,
+        "unit": "lbs"
+      },
+      "sell_value": 290,
+      "maps": {
+        "frozen": 0.015
+      }
+    },
+    "blizzard_pike": {
+      "name": "Blizzard Pike",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 280,
+      "weight": {
+        "min": 5,
+        "max": 30,
+        "unit": "lbs"
+      },
+      "sell_value": 560,
+      "maps": {
+        "frozen": 0.004
+      }
+    },
+    "permafrost_leviathan": {
+      "name": "Permafrost Leviathan",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 285,
+      "weight": {
+        "min": 100,
+        "max": 600,
+        "unit": "lbs"
+      },
+      "sell_value": 570,
+      "maps": {
+        "frozen": 0.003
+      }
+    },
+    "aurora_whale_fish": {
+      "name": "Aurora Whale Fish",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 900,
+      "weight": {
+        "min": 200,
+        "max": 1000,
+        "unit": "lbs"
+      },
+      "sell_value": 3000,
+      "maps": {
+        "frozen": 0.001
+      }
+    },
+    "storm_herring": {
+      "name": "Storm Herring",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 50,
+      "weight": {
+        "min": 0.1,
+        "max": 0.8,
+        "unit": "lbs"
+      },
+      "sell_value": 44,
+      "maps": {
+        "cape": 0.26
+      }
+    },
+    "galefish": {
+      "name": "Galefish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 48,
+      "weight": {
+        "min": 0.3,
+        "max": 2.5,
+        "unit": "lbs"
+      },
+      "sell_value": 42,
+      "maps": {
+        "cape": 0.22
+      }
+    },
+    "cape_mackerel": {
+      "name": "Cape Mackerel",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 46,
+      "weight": {
+        "min": 0.2,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 40,
+      "maps": {
+        "cape": 0.18,
+        "offshore": 0.05
+      }
+    },
+    "squall_runner": {
+      "name": "Squall Runner",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 48,
+      "weight": {
+        "min": 0.5,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 42,
+      "maps": {
+        "cape": 0.14
+      }
+    },
+    "thunder_perch": {
+      "name": "Thunder Perch",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 46,
+      "weight": {
+        "min": 0.3,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 40,
+      "maps": {
+        "cape": 0.1
+      }
+    },
+    "tempest_eel": {
+      "name": "Tempest Eel",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 88,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 135,
+      "maps": {
+        "cape": 0.05
+      }
+    },
+    "stormback_tuna": {
+      "name": "Stormback Tuna",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 90,
+      "weight": {
+        "min": 10,
+        "max": 60,
+        "unit": "lbs"
+      },
+      "sell_value": 140,
+      "maps": {
+        "cape": 0.04,
+        "offshore": 0.03
+      }
+    },
+    "cyclone_ray": {
+      "name": "Cyclone Ray",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 85,
+      "weight": {
+        "min": 5,
+        "max": 40,
+        "unit": "lbs"
+      },
+      "sell_value": 130,
+      "maps": {
+        "cape": 0.04
+      }
+    },
+    "lightning_marlin": {
+      "name": "Lightning Marlin",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 175,
+      "weight": {
+        "min": 40,
+        "max": 200,
+        "unit": "lbs"
+      },
+      "sell_value": 310,
+      "maps": {
+        "cape": 0.02,
+        "offshore": 0.01
+      }
+    },
+    "gale_shark": {
+      "name": "Gale Shark",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 180,
+      "weight": {
+        "min": 50,
+        "max": 300,
+        "unit": "lbs"
+      },
+      "sell_value": 320,
+      "maps": {
+        "cape": 0.015
+      }
+    },
+    "hurricane_bass": {
+      "name": "Hurricane Bass",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 300,
+      "weight": {
+        "min": 30,
+        "max": 150,
+        "unit": "lbs"
+      },
+      "sell_value": 600,
+      "maps": {
+        "cape": 0.004
+      }
+    },
+    "maelstrom_serpent": {
+      "name": "Maelstrom Serpent",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 295,
+      "weight": {
+        "min": 20,
+        "max": 100,
+        "unit": "lbs"
+      },
+      "sell_value": 590,
+      "maps": {
+        "cape": 0.003
+      }
+    },
+    "the_tempest": {
+      "name": "The Tempest",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 950,
+      "weight": {
+        "min": 150,
+        "max": 900,
+        "unit": "lbs"
+      },
+      "sell_value": 3200,
+      "maps": {
+        "cape": 0.001
+      }
+    },
+    "void_drifter": {
+      "name": "Void Drifter",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 60,
+      "weight": {
+        "min": 0.3,
+        "max": 3,
+        "unit": "lbs"
+      },
+      "sell_value": 55,
+      "maps": {
+        "abyss": 0.26
+      }
+    },
+    "abyss_worm": {
+      "name": "Abyss Worm",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 55,
+      "weight": {
+        "min": 0.1,
+        "max": 1,
+        "unit": "lbs"
+      },
+      "sell_value": 50,
+      "maps": {
+        "abyss": 0.22
+      }
+    },
+    "nothing_fish": {
+      "name": "Nothing Fish",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 55,
+      "weight": {
+        "min": 0.2,
+        "max": 2,
+        "unit": "lbs"
+      },
+      "sell_value": 50,
+      "maps": {
+        "abyss": 0.18
+      }
+    },
+    "pressure_eel": {
+      "name": "Pressure Eel",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 58,
+      "weight": {
+        "min": 0.5,
+        "max": 5,
+        "unit": "lbs"
+      },
+      "sell_value": 52,
+      "maps": {
+        "abyss": 0.14
+      }
+    },
+    "depth_phantom": {
+      "name": "Depth Phantom",
+      "rarity": "Common",
+      "type": "regular",
+      "xp": 58,
+      "weight": {
+        "min": 0.2,
+        "max": 2.5,
+        "unit": "lbs"
+      },
+      "sell_value": 52,
+      "maps": {
+        "abyss": 0.1
+      }
+    },
+    "abyssal_snapper": {
+      "name": "Abyssal Snapper",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 100,
+      "weight": {
+        "min": 1,
+        "max": 8,
+        "unit": "lbs"
+      },
+      "sell_value": 155,
+      "maps": {
+        "abyss": 0.05
+      }
+    },
+    "chasm_crawler": {
+      "name": "Chasm Crawler",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 98,
+      "weight": {
+        "min": 2,
+        "max": 12,
+        "unit": "lbs"
+      },
+      "sell_value": 150,
+      "maps": {
+        "abyss": 0.04
+      }
+    },
+    "dark_lantern": {
+      "name": "Dark Lantern",
+      "rarity": "Uncommon",
+      "type": "regular",
+      "xp": 100,
+      "weight": {
+        "min": 0.5,
+        "max": 4,
+        "unit": "lbs"
+      },
+      "sell_value": 155,
+      "maps": {
+        "abyss": 0.04
+      }
+    },
+    "void_serpent": {
+      "name": "Void Serpent",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 200,
+      "weight": {
+        "min": 50,
+        "max": 500,
+        "unit": "lbs"
+      },
+      "sell_value": 360,
+      "maps": {
+        "abyss": 0.02
+      }
+    },
+    "soul_sucker": {
+      "name": "Soul Sucker",
+      "rarity": "Rare",
+      "type": "regular",
+      "xp": 205,
+      "weight": {
+        "min": 10,
+        "max": 60,
+        "unit": "lbs"
+      },
+      "sell_value": 370,
+      "maps": {
+        "abyss": 0.015
+      }
+    },
+    "elder_leviathan": {
+      "name": "Elder Leviathan",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 340,
+      "weight": {
+        "min": 500,
+        "max": 2000,
+        "unit": "lbs"
+      },
+      "sell_value": 680,
+      "maps": {
+        "abyss": 0.004
+      }
+    },
+    "world_eel": {
+      "name": "World Eel",
+      "rarity": "Epic",
+      "type": "regular",
+      "xp": 335,
+      "weight": {
+        "min": 200,
+        "max": 1500,
+        "unit": "lbs"
+      },
+      "sell_value": 670,
+      "maps": {
+        "abyss": 0.003
+      }
+    },
+    "the_unnamed": {
+      "name": "The Unnamed",
+      "rarity": "Legendary",
+      "type": "regular",
+      "xp": 1000,
+      "weight": {
+        "min": 999,
+        "max": 999,
+        "unit": "lbs"
+      },
+      "sell_value": 5000,
+      "maps": {
+        "abyss": 0.001
+      }
+    }
+  },
   "boats": {
     "kayak": {
       "name": "Fishing Kayak",

@@ -68,8 +68,9 @@ An interactive Slack bot fishing game
    - Fish species with rarity
  - Additional gameplay features
    - Fish
-     - Rarity tags: Common, Uncommon, Rare, Epic, Legendart
+     - Rarity tags: Common, Uncommon, Rare, Epic, Legendary
      - Variants for each type (super rare "Chroma", rare "Shiny")
+     - Data included: name, rarity, xp, maps (with catch probability weighting), type (regular, chroma, or shiny), weight, sell value
    - Maps
      - Different fish for each location
      - Differnt distances from home location
@@ -110,6 +111,10 @@ An interactive Slack bot fishing game
        - Harpoon gun
        - More special tools TBD
        - Different levels -> increased durability or effect
+       - Multipliers:
+         - catch rate
+         - catch speed 
+         - 
      - Baits -> real stuff
        - No bait
        - Basic bait
