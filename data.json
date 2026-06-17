@@ -24,7 +24,7 @@
       "danger": 6,
       "description": "A large lake with deeper waters and larger fish"
     },
-    "marsh" : {
+    "marsh": {
       "name": "Foggy Marsh",
       "level": 10,
       "tier": 1,
@@ -128,7 +128,7 @@
       "cost": 50,
       "tier": 1,
       "level": 2,
-      "effects":{}
+      "effects": {}
     },
     "spear": {
       "name": "Fishing Spear",
@@ -3055,7 +3055,7 @@
       "name": "Rowboat",
       "description": "A simple, sturdy boat for rowing on calm waters",
       "image": "",
-      "tier":1,
+      "tier": 1,
       "price": 200,
       "level": 3,
       "stats": {
@@ -3065,7 +3065,7 @@
         "range": 15
       }
     },
-    "motorboat" : {
+    "motorboat": {
       "name": "Motorboat",
       "description": "A fast, lightweight boat for quick travel on the water",
       "image": "",
@@ -3075,7 +3075,7 @@
       "stats": {
         "speed": 20,
         "durability": 6,
-        "capacity": 18, 
+        "capacity": 18,
         "range": 25
       }
     },
@@ -3219,8 +3219,108 @@
         "range": 250
       }
     }
-    
-
+  },
+  "levels": {
+    "1": 100,
+    "2": 200,
+    "3": 300,
+    "4": 400,
+    "5": 500,
+    "6": 600,
+    "7": 800,
+    "8": 2200,
+    "9": 2600,
+    "10": 2700,
+    "11": 2800,
+    "12": 3300,
+    "13": 3600,
+    "14": 4000,
+    "15": 4100,
+    "16": 4200,
+    "17": 4300,
+    "18": 8700,
+    "19": 9200,
+    "20": 12700,
+    "21": 13300,
+    "22": 13800,
+    "23": 14500,
+    "24": 15100,
+    "25": 18200,
+    "26": 18900,
+    "27": 19700,
+    "28": 24100,
+    "29": 25000,
+    "30": 25100,
+    "31": 25200,
+    "32": 25300,
+    "33": 25400,
+    "34": 25500,
+    "35": 47500,
+    "36": 48700,
+    "37": 49900,
+    "38": 51200,
+    "39": 52400,
+    "40": 85500,
+    "41": 87500,
+    "42": 89400,
+    "43": 91400,
+    "44": 93400,
+    "45": 128700,
+    "46": 131400,
+    "47": 134100,
+    "48": 136700,
+    "49": 139400,
+    "50": 139500,
+    "51": 139600,
+    "52": 139700,
+    "53": 139800,
+    "54": 139900,
+    "55": 140000,
+    "56": 140100,
+    "57": 140200,
+    "58": 140300,
+    "59": 140400,
+    "60": 178000,
+    "61": 180500,
+    "62": 183000,
+    "63": 185500,
+    "64": 187900,
+    "65": 234800,
+    "66": 237900,
+    "67": 241000,
+    "68": 244100,
+    "69": 247100,
+    "70": 250200,
+    "71": 253300,
+    "72": 256300,
+    "73": 259400,
+    "74": 262500,
+    "75": 380500,
+    "76": 385600,
+    "77": 390700,
+    "78": 395800,
+    "79": 400800,
+    "80": 405900,
+    "81": 411000,
+    "82": 416100,
+    "83": 421100,
+    "84": 426200,
+    "85": 843900,
+    "86": 853900,
+    "87": 863800,
+    "88": 873700,
+    "89": 883700,
+    "90": 893600,
+    "91": 903500,
+    "92": 913400,
+    "93": 923400,
+    "94": 933300,
+    "95": 943200,
+    "96": 953200,
+    "97": 963100,
+    "98": 973000,
+    "99": 983000,
+    "100": 2512800
   },
   "blocks": {
     "ping": [
@@ -3384,6 +3484,315 @@
           },
           "action_id": "dismiss"
         }
+      }
+    ],
+    "profile-overview": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person's User Profile - Overview"
+        },
+        "level": 1
+      },
+      {
+        "type": "markdown",
+        "text": "**Slack ID**: `U123456`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Coins Balance**: `100`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Gold Balance**: `50`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Level**: `10% (100/1000 XP)`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Account Created**: `2026-05-15`"
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select a page",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Overview",
+                  "emoji": true
+                },
+                "value": "overview"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Completion",
+                  "emoji": false
+                },
+                "value": "completion"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Boats",
+                  "emoji": false
+                },
+                "value": "boats"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Equipment",
+                  "emoji": false
+                },
+                "value": "equipment"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Usage Stats",
+                  "emoji": false
+                },
+                "value": "usage_stats"
+              }
+            ],
+            "action_id": "profile_page_select"
+          }
+        ]
+      }
+    ],
+    "profile-completion": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person's User Profile - Completion"
+        },
+        "level": 1
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select a page",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Overview",
+                  "emoji": true
+                },
+                "value": "overview"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Completion",
+                  "emoji": false
+                },
+                "value": "completion"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Boats",
+                  "emoji": false
+                },
+                "value": "boats"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Equipment",
+                  "emoji": false
+                },
+                "value": "equipment"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Usage Stats",
+                  "emoji": false
+                },
+                "value": "usage_stats"
+              }
+            ],
+            "action_id": "profile_page_select"
+          }
+        ]
+      }
+    ],
+    "profile-boats": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person's User Profile - Boats"
+        },
+        "level": 1
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select a boat",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Sailboat (id: FEJA)",
+                  "emoji": true
+                },
+                "value": "FEJA"
+              }
+            ],
+            "action_id": "profile_boat_select"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Boat Overview",
+          "emoji": true
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Boat Type**: `Sailboat`"
+      },
+      {
+        "type": "markdown",
+        "text": "**ID**: `FEJA`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Trips**: `8`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Distance**: `800`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Fish**: `12`"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Boat Attributes + Addons",
+          "emoji": true
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Speed**: `8`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Capacity**: `4`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Durability**: `4`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Range**: `4`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Addons**: `Upgraded Engine, Underwater Light`"
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select a page",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Overview",
+                  "emoji": true
+                },
+                "value": "overview"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Completion",
+                  "emoji": false
+                },
+                "value": "completion"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Boats",
+                  "emoji": false
+                },
+                "value": "boats"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Equipment",
+                  "emoji": false
+                },
+                "value": "equipment"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Usage Stats",
+                  "emoji": false
+                },
+                "value": "usage_stats"
+              }
+            ],
+            "action_id": "profile_page_select"
+          }
+        ]
       }
     ]
   }

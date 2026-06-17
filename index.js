@@ -42,6 +42,15 @@ for (const file of commands) {
   }
 }
 
+function generateID(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
 // // test ping button action for ping command
 
 (async () => {
@@ -52,6 +61,7 @@ for (const file of commands) {
   // database.clear();
   database.setup();
   global.db = database.db;
+  global.generateID = generateID;
   global.data = DATA;
 
   await app.start(process.env.PORT || 3000);

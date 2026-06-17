@@ -13,13 +13,14 @@ module.exports = {
       if (user) {
         // user already went through the start process
         const blocks = DATA.blocks["error"];
-        blocks[0].text.text = "You've already completed the start process. You can start fishing now.";
+        blocks[0].text.text =
+          "You've already completed the start process. You can start fishing now.";
         await client.chat.postEphemeral({
-            channel: command.channel_id,
-            user: command.user_id,
-            blocks: blocks
+          channel: command.channel_id,
+          user: command.user_id,
+          blocks: blocks,
         });
-        
+
         return;
       }
 
@@ -125,6 +126,7 @@ module.exports = {
             blocks: blocks,
           });
         } else {
+          const DATA = global.data;
           const block = JSON.parse(
             JSON.stringify(global.data.blocks["start-end"][0]),
           );
@@ -136,20 +138,62 @@ module.exports = {
           });
           // add user to dtabase
           const db = global.db;
-          db.prepare("INSERT INTO users (username, id, data) VALUES (?, ?, ?)").run(username, body.user.id, JSON.stringify({
-            inventory: [], // mainly caught fish and other items,
-            boats: [],
-            equipment: [], // tools and baits
-            stats: {}
-          }));
-          const block2 = JSON.parse(JSON.stringify(global.data.blocks["start-end"][0]));
-          block2.body.text = "You are all set! Welcome to Fishtopia, " + username + "!";
+          const completion = {};
+          for (let map of Object.keys(DATA.maps)) {
+            completion[map] = {};
+            for (let fish of Object.keys(DATA.fish)) {
+              if (Object.keys(DATA.fish[fish]["maps"]).includes(map)) {
+                completion[map][fish] = false;
+              }
+            }
+          }
+          const stats = {
+            total_fish_caught: 0,
+            total_fish_sold: 0,
+            total_amount_earned: 0,
+            total_fish_released: 0,
+            total_trades: 0,
+            total_shop_purchases: 0,
+            total_commands_used: 0,
+            total_xp_earned: 0
+          }
+
+          const startingBoats = [
+            {
+              "id":global.generateID(4),
+              "type": "kayak",
+              "addons": ["Upgraded Engine"],
+              "stats" : {
+                "trips": 1,
+                "distance": 1,
+                "fish": 1
+              }
+            }
+          ]
+          db.prepare(
+            "INSERT INTO users (username, id, data) VALUES (?, ?, ?)",
+          ).run(
+            username,
+            body.user.id,
+            JSON.stringify({
+              inventory: [], // mainly caught fish and other items,
+              boats: startingBoats,
+              equipment: [], // tools and baits
+              stats: stats,
+              completion: completion,
+            }),
+          );
+          const block2 = JSON.parse(
+            JSON.stringify(global.data.blocks["start-end"][0]),
+          );
+          block2.body.text =
+            "You are all set! Welcome to Fishtopia, " + username + "!";
           block2.subtitle.text = "Account created successfully!";
           await client.chat.update({
             channel: body.channel.id,
             ts: body.message.ts,
-            blocks: [block2]
-          })
+            blocks: [block2],
+          });
         }
       }
     },

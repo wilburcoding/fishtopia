@@ -26,6 +26,7 @@ An interactive Slack bot fishing game
    - [x] /f-start
    - [ ] /f-equipment
    - [ ] /f-boat
+   - [ ] /f-profile
  - [ ] 
 
 
@@ -60,7 +61,8 @@ An interactive Slack bot fishing game
      - Options to upgrade, sell, repair tools
    - Use /profile to get an overview of your stuff
      - Multi-paginated with tabs on boat, tools, stats
-       - Money page with net worth + start date + if the user is currently fishing right now
+       - Starting profile page with net worth + start date + if the user is currently fishing right now
+       - Completion page -> shows completion stats (ex. what kinds of fish caught)
        - Boats page showing list of owned boats + currently equipped boat stats + addons
        - Equipment -> tools and baits
        - Stats -> other usage stats (ex. times fished)
@@ -147,3 +149,5 @@ Column "status" of users DB is going to be a object that contains information of
 Scratch that I'm going to put everything into a JSON blob bcs I don't have to query other details really. 
 
 Make sure to copy blocks when using them from presets (!!)
+
+Used AI for generating fishes data (there's a lot of them lol)
