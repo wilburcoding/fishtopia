@@ -96,16 +96,16 @@ module.exports = {
         blocks[4].text = `**Level**: \`${user.level}\ (${user.xp}/${DATA.levels[user.level.toString()]})\``;
         blocks[5].text = `**Account Created**: \`${created_str}\``;
         await client.chat.postMessage({
-            channel: body.channel.id,
-            user: body.user.id,
-            blocks: blocks,
-            metadata: {
-                event_type: "profile_view",
-                event_payload: {
-                    userId: user.id
-                }
-            }
-        })
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+          metadata: {
+            event_type: "profile_view",
+            event_payload: {
+              userId: user.id,
+            },
+          },
+        });
       } else if (selected === "completion") {
         let blocks = DATA.blocks["profile-completion"];
         blocks[0].text.text = `${user.username}'s Profile - Completion`;
@@ -115,39 +115,37 @@ module.exports = {
         let totalCompleted = 0;
 
         for (const map of Object.keys(completion)) {
-            const count =0 ;
-            const total = Object.keys(completion[map]).length;
-            for (const item of Object.keys(completion[map])) {
-                if (completion[map][item]) {
-                    count++;
-                }
+          const count = 0;
+          const total = Object.keys(completion[map]).length;
+          for (const item of Object.keys(completion[map])) {
+            if (completion[map][item]) {
+              count++;
             }
-            const mapName = DATA.maps[map].name;
-            blocks.splice(1, 0, {
-                "type": "markdown",
-                "text": `${mapName}: \`${count}/${total} (${((count / total) * 100).toFixed(2)}%)\``
-            });
-            totalCount += total;
-            totalCompleted += count;
+          }
+          const mapName = DATA.maps[map].name;
+          blocks.splice(1, 0, {
+            type: "markdown",
+            text: `${mapName}: \`${count}/${total} (${((count / total) * 100).toFixed(2)}%)\``,
+          });
+          totalCount += total;
+          totalCompleted += count;
         }
         blocks.splice(1, 0, {
-            "type": "markdown",
-            "text": `**Total**: \`${totalCompleted}/${totalCount} (${((totalCompleted / totalCount) * 100).toFixed(2)}%)\``
-        })
-
-        await client.chat.update({
-            channel: body.channel.id,
-            ts: body.message.ts,
-            blocks: blocks,
-            metadata: {
-                event_type: "profile_view",
-                event_payload: {
-                    userId: user.id
-                }
-            }
+          type: "markdown",
+          text: `**Total**: \`${totalCompleted}/${totalCount} (${((totalCompleted / totalCount) * 100).toFixed(2)}%)\``,
         });
 
-
+        await client.chat.update({
+          channel: body.channel.id,
+          ts: body.message.ts,
+          blocks: blocks,
+          metadata: {
+            event_type: "profile_view",
+            event_payload: {
+              userId: user.id,
+            },
+          },
+        });
       } else if (selected === "boats") {
         let blocks = DATA.blocks["profile-boats"];
         let userData = JSON.parse(user.data);
@@ -155,14 +153,14 @@ module.exports = {
         blocks[0].text.text = `${user.username}'s Profile - Boats`;
         const boat = boats[0];
         blocks[1].elements[0].options = boats.map((b) => {
-            return               {
-                "text": {
-                  "type": "plain_text",
-                  "text": `${DATA.boats[b.type].name} (id: ${b.id})`,
-                  "emoji": true
-                },
-                "value": b.id
-              }
+          return {
+            text: {
+              type: "plain_text",
+              text: `${DATA.boats[b.type].name} (id: ${b.id})`,
+              emoji: true,
+            },
+            value: b.id,
+          };
         });
         blocks[3].text = `**Boat Type**: \`${DATA.boats[boat.type].name}\``;
         blocks[4].text = `**ID**: \`${boat.id}\``;
@@ -175,28 +173,86 @@ module.exports = {
         blocks[9].text = "**Speed**: `" + attributes.speed + " kt`";
         blocks[10].text = "**Capacity**: `" + attributes.capacity + " slots`";
         blocks[11].text = "**Durability**: `" + attributes.durability + "/20`";
-        blocks[12].text = "**Range**: `" + attributes.range + " nautical miles`";
-        blocks[13].text = "**Addons**: `" + boat.addons.join(", ") + "`"
-
+        blocks[12].text =
+          "**Range**: `" + attributes.range + " nautical miles`";
+        blocks[13].text = "**Addons**: `" + boat.addons.join(", ") + "`";
 
         await client.chat.update({
-            channel: body.channel.id,
-            ts: body.message.ts,
-            blocks: blocks,
-            metadata: {
-                event_type: "profile_view",
-                event_payload: {
-                    userId: user.id,
-                    selectedBoat: boats[0].id
-                }
-            }
+          channel: body.channel.id,
+          ts: body.message.ts,
+          blocks: blocks,
+          metadata: {
+            event_type: "profile_view",
+            event_payload: {
+              userId: user.id,
+              selectedBoat: boats[0].id,
+            },
+          },
         });
-        
       }
     },
-    profile_boat_select: async ({action, ack, client, respond, body}) => {
-        await ack();
-        
-    }
+    profile_boat_select: async ({ action, ack, client, respond, body }) => {
+      await ack();
+      let DATA = global.data;
+      let boatId = action.selected_option.value;
+      // get user data
+      const metadata = body.message.metadata.event_payload;
+      const userId = metadata.userId;
+      let user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+      if (!user) {
+        let blocks = DATA.blocks["error"];
+        blocks[0].text.text =
+          "It looks like the user with this profile doesn't exist in our database anymore. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
+      let userData = JSON.parse(user.data);
+      let boats = userData.boats;
+      let boat = boats.find((b) => b.id === boatId);
+      if (!boat) {
+        let blocks = DATA.blocks["error"];
+        blocks[0].text.text =
+          "It looks like the user doesn't own this boat anymore.";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
+      console.log(boat);
+      let blocks = DATA.blocks["profile-boats"];
+      blocks[0].text.text = `${user.username}'s Profile - Boats`;
+      blocks[1].elements[0].options = boats.map((b) => {
+        return {
+          text: {
+            type: "plain_text",
+            text: `${DATA.boats[b.type].name} (id: ${b.id})`,
+            emoji: true,
+          },
+          value: b.id,
+        };
+      });
+      blocks[3].text = `**Boat Type**: \`${DATA.boats[boat.type].name}\``;
+      blocks[4].text = `**ID**: \`${boat.id}\``;
+      blocks[5].text = `**Total Trips**: \`${boat.stats.trips}\``;
+      blocks[6].text = `**Total Distance**: \`${boat.stats.distance}\``;
+      blocks[7].text = `**Total Fish**: \`${boat.stats.fish}\``;
+      const attributes = DATA.boats[boat.type].stats;
+      blocks[9].text = "**Speed**: `" + attributes.speed + " kt`";
+      blocks[10].text = "**Capacity**: `" + attributes.capacity + " slots`";
+      blocks[11].text = "**Durability**: `" + attributes.durability + "/20`";
+      blocks[12].text = "**Range**: `" + attributes.range + " nautical miles`";
+      blocks[13].text = "**Addons**: `" + boat.addons.join(", ") + "`";
+      await client.chat.update({
+        channel: body.channel.id,
+        ts: body.message.ts,
+        blocks: blocks
+      })
+    },
   },
 };
