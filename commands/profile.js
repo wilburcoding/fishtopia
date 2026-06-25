@@ -175,7 +175,9 @@ module.exports = {
         blocks[11].text = "**Durability**: `" + attributes.durability + "/20`";
         blocks[12].text =
           "**Range**: `" + attributes.range + " nautical miles`";
-        blocks[13].text = "**Addons**: `" + boat.addons.join(", ") + "`";
+        blocks[13].text =
+          "**Tier**: `" + DATA.tiers[DATA.boats[boat.type].tier - 1] + "`";
+        blocks[14].text = "**Addons**: `" + boat.addons.join(", ") + "`";
 
         await client.chat.update({
           channel: body.channel.id,
@@ -188,6 +190,68 @@ module.exports = {
               selectedBoat: boats[0].id,
             },
           },
+        });
+      } else if (selected === "tools") {
+        let blocks = DATA.blocks["profile-equipment"];
+
+        await client.chat.update({
+          channel: body.channel.id,
+          ts: body.message.ts,
+          blocks: blocks,
+          metadata: {
+            event_type: "profile_view",
+            event_payload: {
+              userId: user.id,
+              selectedOption: "tools",
+            },
+          },
+        });
+      } else if (selected === "baits") {
+        let blocks = DATA.blocks["profile-equipment"];
+        // update each blocks to show baits instead of tools
+        let userData = JSON.parse(user.data);
+        const baits = userData.equipment.filter((item) => item.type === "bait");
+        blocks[0].text.text = `${user.username}'s Profile - Baits`;
+        blocks[2].text.text = "Baits Overview";
+        if (baits.length === 0) {
+          blocks.splice(4, 12);
+          blocks.splice(0,1);
+          console.log(blocks);
+          blocks[3].text =
+            "This user doesn't have any baits in their inventory. When they buy or recieve baits, they will show up here. ";
+          await client.chat.update({
+            channel: body.channel.id,
+            ts: body.message.ts,
+            blocks: blocks,
+          });
+          return;
+        }
+        blocks[1].elements[0].options = baits.map((b) => {
+          return {
+            text: {
+              type: "plain_text",
+              text: `${DATA.baits[b.type].name} (id: ${b.id})`,
+              emoji: true,
+            },
+            value: b.id,
+          };
+        });
+        const bait_data = DATA.baits[baits[0].type];
+        blocks[3].text = `**Bait Type**: \`${bait_data.name}\``;
+        blocks[4].text = `**ID**: \`${baits[0].id}\``;
+        blocks[5].text = `**Description**: \`${bait_data.description}\``;
+        blocks[6].text = `**Cost**: \`${bait_data.cost} coins\``;
+        blocks[7].text = `**Level Requirement**: \`${bait_data.level_requirement}\``;
+        blocks[8].text = `**Tier**: \`${bait_data.tier}\``;
+        blocks[9].text = `**Effects**: \`${bait_data.effects.join(", ")}\``;
+        blocks[11].text = `**Total Trips**: \`${baits[0].usage_stats.trips}\``;
+        blocks[12].text = `**Total Fish***: \`${baits[0].usage_stats.fish_caught}\``;
+        blocks[13].text = `**Total Weight of Fish**: \`${baits[0].usage_stats.fish_weight}\``;
+        blocks[14].text = `**Total Value of Fish**: \`${baits[0].usage_stats.fish_value}\``;
+        await client.chat.update({
+          channel: body.channel.id,
+          ts: body.message.ts,
+          blocks: blocks,
         });
       }
     },
@@ -247,12 +311,20 @@ module.exports = {
       blocks[10].text = "**Capacity**: `" + attributes.capacity + " slots`";
       blocks[11].text = "**Durability**: `" + attributes.durability + "/20`";
       blocks[12].text = "**Range**: `" + attributes.range + " nautical miles`";
-      blocks[13].text = "**Addons**: `" + boat.addons.join(", ") + "`";
+      blocks[13].text = "**Tier**: `" + DATA.tiers[boat.tier - 1] + "`";
+      blocks[14].text = "**Addons**: `" + boat.addons.join(", ") + "`";
       await client.chat.update({
         channel: body.channel.id,
         ts: body.message.ts,
-        blocks: blocks
-      })
+        blocks: blocks,
+        metadata: {
+          event_type: "profile_view",
+          event_payload: {
+            userId: user.id,
+            selectedBoat: boat.id,
+          },
+        },
+      });
     },
   },
 };

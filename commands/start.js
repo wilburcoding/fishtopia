@@ -170,6 +170,21 @@ module.exports = {
               }
             }
           ]
+          let sample_tool = {
+            "id": global.generateID(4),
+            "type": "fishing_rod",
+            "usage_stats": {
+              "trips": 1,
+              "fish_caught": 4,
+              "fish_weight": 20,
+              "fish_value": 100
+            },
+            "etype": "tool"
+          }
+          let sample_bait = {
+            "id": global.generateID(4),
+            "type": ""
+          }
           db.prepare(
             "INSERT INTO users (username, id, data) VALUES (?, ?, ?)",
           ).run(

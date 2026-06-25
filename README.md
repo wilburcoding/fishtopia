@@ -64,7 +64,7 @@ An interactive Slack bot fishing game
        - Starting profile page with net worth + start date + if the user is currently fishing right now
        - Completion page -> shows completion stats (ex. what kinds of fish caught)
        - Boats page showing list of owned boats + currently equipped boat stats + addons
-       - Equipment -> tools and baits
+       - Equipment -> tools and baits -> can selected list baits or tools and view full list
        - Stats -> other usage stats (ex. times fished)
      - Ability to search up other users
    - Fish species with rarity
@@ -102,6 +102,7 @@ An interactive Slack bot fishing game
        - More TBD
      - Tiers: Novice, Amateur, Professional, Elite, Legendary
    - Equipment
+     - Tiers -> same as boat tiers
      - Tools
        - Hand
        - Pole

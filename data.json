@@ -113,6 +113,13 @@
       "description": "The ultimate fishing destination...."
     }
   },
+  "tiers":[
+    "Novice", 
+    "Amateur", 
+    "Professional", 
+    "Elite", 
+    "Legendary"
+  ],
   "tools": {
     "hand": {
       "name": "Hand",
@@ -3036,6 +3043,9 @@
       }
     }
   },
+  "baits": {
+
+  },
   "boats": {
     "kayak": {
       "name": "Fishing Kayak",
@@ -3556,10 +3566,18 @@
               {
                 "text": {
                   "type": "plain_text",
-                  "text": "Equipment",
+                  "text": "Tools",
                   "emoji": false
                 },
-                "value": "equipment"
+                "value": "tools"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Baits",
+                  "emoji": false
+                },
+                "value": "baits"
               },
               {
                 "text": {
@@ -3625,10 +3643,18 @@
               {
                 "text": {
                   "type": "plain_text",
-                  "text": "Equipment",
+                  "text": "Tools",
                   "emoji": false
                 },
-                "value": "equipment"
+                "value": "tools"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Baits",
+                  "emoji": false
+                },
+                "value": "baits"
               },
               {
                 "text": {
@@ -3733,6 +3759,10 @@
       },
       {
         "type": "markdown",
+        "text": "**Tier**: `1`"
+      },
+      {
+        "type": "markdown",
         "text": "**Addons**: `Upgraded Engine, Underwater Light`"
       },
       {
@@ -3779,7 +3809,15 @@
                   "text": "Equipment",
                   "emoji": false
                 },
-                "value": "equipment"
+                "value": "tools"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Baits",
+                  "emoji": false
+                },
+                "value": "baits"
               },
               {
                 "text": {
@@ -3791,6 +3829,168 @@
               }
             ],
             "action_id": "profile_page_select"
+          }
+        ]
+      }
+    ],
+    "profile-equipment": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person's User Profile - Tools"
+        },
+        "level": 1
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select a tool",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Tools",
+                  "emoji": true
+                },
+                "value": "tools"
+              }
+            ],
+            "action_id": "profile_tool_select"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Tools Overview",
+          "emoji": true
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Tool Type**: `Fishing Rod`"
+      },
+      {
+        "type": "markdown",
+        "text": "**ID**: `12947`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Description**: `A basic fishing rod for beginners.`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Cost**: `$000`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Level Requirement**: `1`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Tier**: `1`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Effects**: `Increased catch rate by 10%`"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Tool Stats",
+          "emoji": true
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Trips**: `12`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Fish**: `30`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Weight of Fish**: `45 lbs`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Value of Fish**: `$300`"
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select a page",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Overview",
+                  "emoji": true
+                },
+                "value": "overview"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Completion",
+                  "emoji": false
+                },
+                "value": "completion"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Boats",
+                  "emoji": false
+                },
+                "value": "boats"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Tools",
+                  "emoji": false
+                },
+                "value": "tools"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Baits",
+                  "emoji": false
+                },
+                "value": "baits"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Usage Stats",
+                  "emoji": false
+                },
+                "value": "usage_stats"
+              }
+            ]
           }
         ]
       }
