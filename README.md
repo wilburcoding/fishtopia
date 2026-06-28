@@ -138,6 +138,22 @@ An interactive Slack bot fishing game
        - Mythical bait
          - Dramatic increase in getting rare fishes
        - Different levels for each bait -> effect multiplier
+       - List of multipliers
+         - catch speed (increase by range amount so [1, 2] decreases by 1-2 seconds) catch_speed
+         - catching nothing (reduces it by the percentage) catch_nothing
+         - catch count bonus (range increase by [x, y]) catch_count 
+         - weight multiplier (multiplies) weight
+         - multipliers for every rarity (all percentage increases)
+           - common_multiplier common_multi
+           - uncommon_multiplier uncommon_multi
+           - rare_multiplier rare_multi
+           - epic_multiplier epic_multi
+           - legendary_multiplier legendary_multi
+         - shiny_multiplier (added percentage) shiny_multi
+         - chroma_multiplier (added percentage) chroma_multi
+         - item_multiplier -> higher chance of getting an item when fishing
+         - xp_multiplier -> (multiplies by percentage)
+         - All of the effects are on top of the basic boat's effects
  - Database? -> keep it simple and use local sqlite
  - Unfortunately it looks like I need to do art for this one
  - 
@@ -152,3 +168,9 @@ Scratch that I'm going to put everything into a JSON blob bcs I don't have to qu
 Make sure to copy blocks when using them from presets (!!)
 
 Used AI for generating fishes data (there's a lot of them lol)
+Used AI for list of possible baits / tools / maps (though the actual stats were created by me)
+ - bruh forgot I had some idaes already for baits. Redoing. 
+ - Also a little help with actually balancing my game
+
+Not going to limit baits to maps. For now. 
+Also not bait tiers because it's a pretty mixed bag of level
