@@ -183,7 +183,14 @@ module.exports = {
           }
           let sample_bait = {
             "id": global.generateID(4),
-            "type": ""
+            "type": "ultimate",
+            "usage_stats": {
+              "trips": 1,
+              "fish_caught": 20,
+              "fish_weight": 100,
+              "fish_value": 500
+            },
+            "etype": "bait"
           }
           db.prepare(
             "INSERT INTO users (username, id, data) VALUES (?, ?, ?)",
@@ -191,9 +198,9 @@ module.exports = {
             username,
             body.user.id,
             JSON.stringify({
-              inventory: [], // mainly caught fish and other items,
+              inventory: [sample_bait, sample_tool], // mainly caught fish and other items,
               boats: startingBoats,
-              equipment: [], // tools and baits
+              equipment: [sample_tool, sample_bait], // tools and baits
               stats: stats,
               completion: completion,
             }),

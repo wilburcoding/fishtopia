@@ -3147,6 +3147,7 @@
       "description": "A bait that attracts a ton of fish with fast bite times",
       "level": 1,
       "cost": 20,
+      "tier": 4,
       "effects": {
         "catch_speed": [-1, -5],
         "catch_nothing": 0.1,
@@ -3159,6 +3160,7 @@
       "description": "A heavy bait that sinks quickly, allowing you to pull in larger fish from deeper waters",
       "level": 12,
       "cost": 90,
+      "tier": 4,
       "image":"",
       "effects": {
         "catch_speed": [-2, 0],
@@ -3173,6 +3175,7 @@
       "description": "A exotic bait with a major boost to catching the rarest of fish, along with shiny and chroma variants",
       "level": 30,
       "cost": 300,
+      "tier": 5,
       "image": "",
       "effects": {
         "catch_speed": [-1, -4],
@@ -3191,6 +3194,7 @@
       "description": "A pure XP boosting bait for those looking to level up quickly. Also a slight boost in catch speed.",
       "level": 10,
       "cost": 100,
+      "tier": 4,
       "image": "",
       "effects": {
         "catch_speed": [0, 2],
@@ -3203,6 +3207,7 @@
       "description": "The ultimate bait with boosts to all aspects of fishing, including catch speed, XP, and chances for rare fish and items.",
       "level": 40,
       "cost": 500,
+      "tier": 5,
       "image": "",
       "effects": {
         "catch_speed": [1, 3],
@@ -4117,6 +4122,7 @@
               "text": "Select a page",
               "emoji": true
             },
+            "action_id": "profile_page_select",
             "options": [
               {
                 "text": {

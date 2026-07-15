@@ -6,19 +6,19 @@ An interactive Slack bot fishing game
    - [ ] Create slash commands
  - [x] Setup database
    - [x] Database schema
- - [ ] Preset data
-   - [ ] Fish 
+ - [x] Preset data
+   - [x] Fish 
      - [ ] Fish artwork
-     - [ ] Balance fishes
-     - [ ] Fish variants
-   - [ ] Equipment (tools + baits)
+     - [x] Balance fishes
+     - [x] Fish variants
+   - [x] Equipment (tools + baits)
      - [ ] Item artwork
-     - [ ] Balance items
-   - [ ] Maps
+     - [x] Balance items
+   - [x] Maps
      - [ ] Maps artwork
-   - [ ] Boats (hoping for at least like 8)
+   - [x] Boats (hoping for at least like 8)
      - [ ] Boat artwork
-     - [ ] Balance boats
+     - [x] Balance boats
  - [ ] Commands 
    - [ ] /f-fish
    - [ ] /f-shop
@@ -73,6 +73,11 @@ An interactive Slack bot fishing game
      - Rarity tags: Common, Uncommon, Rare, Epic, Legendary
      - Variants for each type (super rare "Chroma", rare "Shiny")
      - Data included: name, rarity, xp, maps (with catch probability weighting), type (regular, chroma, or shiny), weight, sell value
+   - Items?
+     - Will likely be a separate percentage from fish
+     - mix of common ish to rare ish items
+     - Maybe usable items? (boxes?? gamblign???)
+     - 
    - Maps
      - Different fish for each location
      - Differnt distances from home location

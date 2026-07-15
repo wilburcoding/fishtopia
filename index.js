@@ -58,7 +58,7 @@ function generateID(length) {
     with: { type: "json" },
   });
   DATA = data;
-  // database.clear();
+  // database.clear(); // full clear (all data)
   database.setup();
   global.db = database.db;
   global.generateID = generateID;
