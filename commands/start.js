@@ -181,6 +181,17 @@ module.exports = {
             },
             "etype": "tool"
           }
+          let sample_tool2 = {
+            "id": global.generateID(4),
+            "type": "pole",
+            "usage_stats": {
+              "trips": 5,
+              "fish_caught": 10,
+              "fish_weight": 50,
+              "fish_value": 200
+            },
+            "etype": "tool"
+          }
           let sample_bait = {
             "id": global.generateID(4),
             "type": "ultimate",
@@ -192,15 +203,26 @@ module.exports = {
             },
             "etype": "bait"
           }
+          let sample_bait2 = {
+            "id": global.generateID(4),
+            "type": "jumbo",
+            "usage_stats": {
+              "trips": 3,
+              "fish_caught": 25,
+              "fish_weight": 150,
+              "fish_value": 700
+            },
+            "etype": "bait"
+          }
           db.prepare(
             "INSERT INTO users (username, id, data) VALUES (?, ?, ?)",
           ).run(
             username,
             body.user.id,
             JSON.stringify({
-              inventory: [sample_bait, sample_tool], // mainly caught fish and other items,
+              inventory: [], // mainly caught fish and other items,
               boats: startingBoats,
-              equipment: [sample_tool, sample_bait], // tools and baits
+              equipment: [sample_tool, sample_tool2, sample_bait, sample_bait2], // tools and baits
               stats: stats,
               completion: completion,
             }),

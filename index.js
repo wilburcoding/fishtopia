@@ -67,3 +67,4 @@ function generateID(length) {
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);
 })();
+

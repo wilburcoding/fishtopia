@@ -199,6 +199,7 @@ module.exports = {
         const tools = userData.equipment.filter(
           (item) => item.etype === "tool",
         );
+        console.log(tools);
         if (tools.length == 0) {
           blocks.splice(4, 11);
           blocks[1].elements[0].options[0].text.text = "No tools available";
@@ -236,7 +237,7 @@ module.exports = {
         blocks[6].text = `**Cost**: \`${tool_data.cost} coins\``;
         blocks[7].text = `**Level Requirement**: \`${tool_data.level}\``;
         blocks[8].text = `**Tier**: \`${tool_data.tier}\``;
-        blocks[9].text = "**Effects**: \n`TBD`" ; // tbd
+        blocks[9].text = "**Effects**: \n`TBD`"; // tbd
         blocks[11].text = `**Total Trips**: \`${tools[0].usage_stats.trips}\``;
         blocks[12].text = `**Total Fish**: \`${tools[0].usage_stats.fish_caught}\``;
         blocks[13].text = `**Total Weight of Fish**: \`${tools[0].usage_stats.fish_weight}\``;
@@ -287,11 +288,11 @@ module.exports = {
             text: {
               type: "plain_text",
               text: DATA.baits[bait.type].name + " (id: " + bait.id + ")",
-              emoji: true
+              emoji: true,
             },
-            value: bait.id
-          }
-        })
+            value: bait.id,
+          };
+        });
 
         if (baits.length === 0) {
           blocks.splice(4, 11);
@@ -316,6 +317,9 @@ module.exports = {
             } else {
               effects_txt += `\`Decrease ${bait_effect_templates[effect]} by ${Math.abs(bait_data.effects[effect] * 100)}%\`\n`;
             }
+          } else {
+            // has to be like an array (like a range)
+            effects_txt += `\`Increase ${bait_effect_templates[effect]} by ${bait_data.effects[effect][0]} to ${bait_data.effects[effect][1]}\`\n`;
           }
         }
 
@@ -339,9 +343,9 @@ module.exports = {
             event_type: "profile_view",
             event_payload: {
               userId: user.id,
-              selectedOption: "baits"
-            }
-          }
+              selectedOption: "baits",
+            },
+          },
         });
       }
     },
@@ -416,7 +420,7 @@ module.exports = {
         },
       });
     },
-    profile_tool_select: async({ action, ack, client, respond, body}) => {
+    profile_tool_select: async ({ action, ack, client, respond, body }) => {
       await ack();
       let DATA = global.data;
       let tool_id = action.selected_option.value;
@@ -426,25 +430,28 @@ module.exports = {
       let user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
       if (!user) {
         let blocks = DATA.blocks["error"];
-        blocks[0].text.text = "It looks like the user with this profile doesn't exist in our database anymore. ";
+        blocks[0].text.text =
+          "It looks like the user with this profile doesn't exist in our database anymore. ";
         await client.chat.postEphemeral({
           channel: body.channel.id,
           user: body.user.id,
-          blocks: blocks
+          blocks: blocks,
         });
         return;
       }
 
       let userData = JSON.parse(user.data);
-      let tools = userData.equipment.filter(item => item.etype === "tool");
-      let tool = tools.find(t => t.id === tool_id);
-      if (!tool) { // just checks in case i miss something dumb
+      let tools = userData.equipment.filter((item) => item.etype === "tool");
+      let tool = tools.find((t) => t.id === tool_id);
+      if (!tool) {
+        // just checks in case i miss something dumb
         let blocks = DATA.blocks["error"];
-        blocks[0].text.text = "It looks like the user doesn't own this tool anymore.";
+        blocks[0].text.text =
+          "It looks like the user doesn't own this tool anymore.";
         await client.chat.postEphemeral({
           channel: body.channel.id,
           user: body.user.id,
-          blocks: blocks
+          blocks: blocks,
         });
         return;
       }
@@ -453,7 +460,8 @@ module.exports = {
       if (tools.length === 0) {
         blocks.splice(4, 11);
         blocks[1].elements[0].options[0].text.text = "No tools available";
-        blocks[3].text = "This user doesn't have any tools in their inventory. When they buy or recieve tools, they will show up here. ";
+        blocks[3].text =
+          "This user doesn't have any tools in their inventory. When they buy or recieve tools, they will show up here. ";
         await client.chat.update({
           channel: body.channel.id,
           ts: body.message.ts,
@@ -462,9 +470,9 @@ module.exports = {
             event_type: "profile_view",
             event_payload: {
               userId: user.id,
-              selectedOption: "tools"
-            }
-          }
+              selectedOption: "tools",
+            },
+          },
         });
         return;
       }
@@ -487,11 +495,11 @@ module.exports = {
           text: {
             type: "plain_text",
             text: DATA.tools[t.type].name + " (id: " + t.id + ")",
-            emoji: true
+            emoji: true,
           },
-          value: t.id
-        }
-      })
+          value: t.id,
+        };
+      });
 
       await client.chat.update({
         channel: body.channel.id,
@@ -501,12 +509,126 @@ module.exports = {
           event_type: "profile_view",
           event_payload: {
             userId: user.id,
-            selectedOption: "tools"
-          }
-        }
+            selectedOption: "tools",
+          },
+        },
       });
-      
+    },
+    profile_bait_select: async ({ action, ack, client, respond, body }) => {
+      await ack();
+      let DATA = global.data;
+      let bait_id = action.selected_option.value;
+      // console.log("profile bait select action initiated");
+      const bait_effect_templates = {
+        catch_speed: " in catch speed",
+        catch_nothing: " in chance of catching nothing",
+        xp_multiplier: " in XP earned",
+        catch_count: " in catch count range",
+        weight: " in weight of fish caught",
+        common_multiplier: " in chance of catching common fish",
+        uncommon_multiplier: " in chance of catching uncommon fish",
+        rare_multiplier: " in chance of catching rare fish",
+        epic_multiplier: " in chance of catching epic fish",
+        legendary_multiplier: " in chance of catching legendary fish",
+        shiny_multiplier: " in chance of catching shiny fish",
+        chroma_multiplier: " in chance of catching chroma fish",
+        item_multiplier: " in chance of catching any item",
+      };
+      const metadata = body.message.metadata.event_payload;
+      const userId = metadata.userId;
+      let user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+      if (!user) {
+        let blocks = DATA.blocks["error"];
+        blocks[0].text.text =
+          "It looks like the user with this profile doesn't exist in our database anymore. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
 
-    }
+      let userData = JSON.parse(user.data);
+      let baits = userData.equipment.filter((item) => item.etype === "bait");
+      let bait = baits.find((b) => b.id === bait_id);
+      if (!bait) {
+        let blocks = DATA.blocks["error"];
+        blocks[0].text.text =
+          "It looks like the user doesn't own this bait anymore. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
+      let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-equipment"]));
+      if (baits.length == 0) {
+        blocks.splice(4, 11);
+        blocks[1].elements[0].options[0].text.text = "No baits available";
+        blocks[3].text =
+          "This user doesn't have any baits in their inventory. When they buy or recieve baits, they will show up here. ";
+        await client.chat.update({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+          metadata: {
+            event_type: "profile_view",
+            event_payload: {
+              userId: user.id,
+              selectedOption: "baits",
+            },
+          },
+        });
+      }
+      let bait_data = DATA.baits[bait.type];
+      blocks[0].text.text = `${user.username}'s Profile - Baits`;
+      blocks[3].text = `**Tool Type**: \`${bait_data.name}\``;
+      blocks[4].text = `**ID**: \`${bait.id}\``;
+      blocks[5].text = `**Description**: \`${bait_data.description}\``;
+      blocks[6].text = `**Cost**: \`${bait_data.cost} coins\``;
+      blocks[7].text = `**Level Requirement**: \`${bait_data.level}\``;
+      blocks[8].text = `**Tier**: \`${bait_data.tier}\``;
+      let effects_txt = "";
+      for (const effect of Object.keys(bait_data.effects)) {
+        if (typeof bait_data.effects[effect] === "number") {
+          if (bait_data.effects[effect] > 0) {
+            effects_txt += `\`Increase ${bait_effect_templates[effect]} by ${bait_data.effects[effect] * 100}%\`\n`;
+          } else {
+            effects_txt += `\`Decrease ${bait_effect_templates[effect]} by ${Math.abs(bait_data.effects[effect] * 100)}%\`\n`;
+          }
+        } else {
+          effects_txt += `\`Increase ${bait_effect_templates[effect]} by ${bait_data.effects[effect][0]} to ${bait_data.effects[effect][1]}\`\n`;
+        }
+      }
+      blocks[9].text = `**Effects**: \n` + effects_txt;
+      blocks[11].text = `**Total Trips**: \`${bait.usage_stats.trips}\``;
+      blocks[12].text = `**Total Fish**: \`${bait.usage_stats.fish_caught}\``;
+      blocks[13].text = `**Total Weight of Fish**: \`${bait.usage_stats.fish_weight}\``;
+      blocks[14].text = `**Total Value of Fish**: \`${bait.usage_stats.fish_value}\``;
+      blocks[1].elements[0].options = baits.map((b) => {
+        return {
+          text: {
+            type: "plain_text",
+            text: DATA.baits[b.type].name + " (id: " + b.id + ")",
+            emoji: true,
+          },
+          value: b.id,
+        };
+      });
+      await client.chat.update({
+        channel: body.channel.id,
+        ts: body.message.ts,
+        blocks: blocks,
+        metadata: {
+          event_type: "profile_view",
+          event_payload: {
+            userId: user.id,
+            selectedOption: "baits",
+          },
+        },
+      });
+    },
   },
 };
