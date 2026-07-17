@@ -9,7 +9,7 @@ module.exports = {
       .prepare("SELECT * FROM users WHERE id = ?")
       .get(command.user_id);
     if (!user) {
-      const blocks = DATA.blocks["error"];
+      const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
       blocks[0].text.text =
         "You need to get started before you can use this command. Try using the /f-start command to get started. ";
       await client.chat.postEphemeral({
@@ -27,7 +27,7 @@ module.exports = {
         .prepare("SELECT * FROM users WHERE id = ?")
         .get(userId);
       if (!targetUser) {
-        const blocks = DATA.blocks["error"];
+        const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "It looks like that user doesn't exist in our database.";
         await client.chat.postEphemeral({
@@ -41,7 +41,7 @@ module.exports = {
     }
     // display user profile
     console.log(user);
-    let blocks = DATA.blocks["profile-overview"];
+    let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-overview"]));
     const created_date = new Date(user.created_at);
     const created_str = `${created_date.getFullYear()}-${(created_date.getMonth() + 1).toString().padStart(2, "0")}-${created_date.getDate().toString().padStart(2, "0")}`;
     blocks[0].text.text = `${user.username}'s Profile - Overview`;
@@ -75,7 +75,7 @@ module.exports = {
       let user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
 
       if (!user) {
-        let blocks = DATA.blocks["error"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "It looks like that user doesn't exist in our database anymore. ";
         await client.chat.postEphemeral({
@@ -86,9 +86,9 @@ module.exports = {
       }
 
       if (selected === "overview") {
-        let blocks = DATA.blocks["profile-overview"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-overview"]));
         const created_date = new Date(user.created_at);
-        const created_str = `${created_date.getFullYear()}-${(created_date.getMonth() + 1).toString().padStart(2, "0")}-${created_date.getDate()}`;
+        const created_str = `${created_date.getFullYear()}-${(created_date.getMonth() + 1).toString().padStart(2, "0")}-${created_date.getDate().toString().padStart(2, "0")}`;
         blocks[0].text.text = `${user.username}'s Profile - Overview`;
         blocks[1].text = `**Slack ID**: \`${user.id}\``;
         blocks[2].text = `**Coins Balance**: \`${user.coins}\``;
@@ -107,7 +107,7 @@ module.exports = {
           },
         });
       } else if (selected === "completion") {
-        let blocks = DATA.blocks["profile-completion"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-completion"]));
         blocks[0].text.text = `${user.username}'s Profile - Completion`;
         const userData = JSON.parse(user.data);
         const completion = userData.completion;
@@ -147,7 +147,7 @@ module.exports = {
           },
         });
       } else if (selected === "boats") {
-        let blocks = DATA.blocks["profile-boats"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-boats"]));
         let userData = JSON.parse(user.data);
         let boats = userData.boats;
         blocks[0].text.text = `${user.username}'s Profile - Boats`;
@@ -242,7 +242,6 @@ module.exports = {
         blocks[12].text = `**Total Fish**: \`${tools[0].usage_stats.fish_caught}\``;
         blocks[13].text = `**Total Weight of Fish**: \`${tools[0].usage_stats.fish_weight}\``;
         blocks[14].text = `**Total Value of Fish**: \`${tools[0].usage_stats.fish_value}\``;
-        console.log(blocks);
         await client.chat.update({
           channel: body.channel.id,
           ts: body.message.ts,
@@ -347,6 +346,31 @@ module.exports = {
             },
           },
         });
+      } else if (selected == "usage_stats") {  // probably future achievement command but for now we'll just keep some numbers 
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-usage"]));
+        const userData = JSON.parse(user.data);
+        const stats = userData.stats;
+        let c = 0;
+        for (const stat of Object.keys(stats)) {
+          let split = blocks[c+1].text.split(": ")[0];
+          blocks[c + 1].text = split + ": `" + stats[stat] + "`";
+          console.log(blocks[c + 1].text);
+          c++;
+        }
+
+        await client.chat.update({
+          channel: body.channel.id,
+          ts: body.message.ts,
+          blocks: blocks,
+          metadata: {
+            event_type: "profile_view",
+            event_payload: {
+              userId: user.id,
+              selectedOption: "usage_stats"
+            }
+          }
+        })
+        
       }
     },
     profile_boat_select: async ({ action, ack, client, respond, body }) => {
@@ -358,7 +382,7 @@ module.exports = {
       const userId = metadata.userId;
       let user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
       if (!user) {
-        let blocks = DATA.blocks["error"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "It looks like the user with this profile doesn't exist in our database anymore. ";
         await client.chat.postEphemeral({
@@ -372,7 +396,7 @@ module.exports = {
       let boats = userData.boats;
       let boat = boats.find((b) => b.id === boatId);
       if (!boat) {
-        let blocks = DATA.blocks["error"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "It looks like the user doesn't own this boat anymore.";
         await client.chat.postEphemeral({
@@ -383,7 +407,7 @@ module.exports = {
         return;
       }
       console.log(boat);
-      let blocks = DATA.blocks["profile-boats"];
+      let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-boats"]));
       blocks[0].text.text = `${user.username}'s Profile - Boats`;
       blocks[1].elements[0].options = boats.map((b) => {
         return {
@@ -429,7 +453,7 @@ module.exports = {
       const userId = metadata.userId;
       let user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
       if (!user) {
-        let blocks = DATA.blocks["error"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "It looks like the user with this profile doesn't exist in our database anymore. ";
         await client.chat.postEphemeral({
@@ -445,7 +469,7 @@ module.exports = {
       let tool = tools.find((t) => t.id === tool_id);
       if (!tool) {
         // just checks in case i miss something dumb
-        let blocks = DATA.blocks["error"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "It looks like the user doesn't own this tool anymore.";
         await client.chat.postEphemeral({
@@ -538,7 +562,7 @@ module.exports = {
       const userId = metadata.userId;
       let user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
       if (!user) {
-        let blocks = DATA.blocks["error"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "It looks like the user with this profile doesn't exist in our database anymore. ";
         await client.chat.postEphemeral({
@@ -553,7 +577,7 @@ module.exports = {
       let baits = userData.equipment.filter((item) => item.etype === "bait");
       let bait = baits.find((b) => b.id === bait_id);
       if (!bait) {
-        let blocks = DATA.blocks["error"];
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "It looks like the user doesn't own this bait anymore. ";
         await client.chat.postEphemeral({

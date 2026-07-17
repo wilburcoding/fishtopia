@@ -4176,6 +4176,131 @@
           }
         ]
       }
+    ],
+    "profile-usage": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person's User Profile - Usage Stats"
+        },
+        "level": 1
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Fish Caught**: `2`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Fish Sold**: `1`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Fish Value**: `$100`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Amount Earned**: `$100`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Fish Released**: `1`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Trades Made**: `2`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Shop Purchases**: `3`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Commands Used**: `50`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total XP Earned**: `500`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Equipment Uses**: `5`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Boats Uses**: `3`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Bait Uses**: `4`"
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select a page",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Overview",
+                  "emoji": true
+                },
+                "value": "overview"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Completion",
+                  "emoji": false
+                },
+                "value": "completion"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Boats",
+                  "emoji": false
+                },
+                "value": "boats"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Equipment",
+                  "emoji": false
+                },
+                "value": "tools"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Baits",
+                  "emoji": false
+                },
+                "value": "baits"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Usage Stats",
+                  "emoji": false
+                },
+                "value": "usage_stats"
+              }
+            ],
+            "action_id": "profile_page_select"
+          }
+        ]
+      }
     ]
   }
 }

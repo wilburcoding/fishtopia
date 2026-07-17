@@ -27,6 +27,13 @@ An interactive Slack bot fishing game
    - [ ] /f-equipment
    - [ ] /f-boat
    - [ ] /f-profile
+     - [x] Overview section
+     - [x] baits section
+       - [x] bait selecting functionality
+     - [x] Tools section
+       - [x] tool selecting functionality
+     - [x] Completion stats section
+     - [ ] usage stats sectio
  - [ ] 
 
 
@@ -179,3 +186,5 @@ Used AI for list of possible baits / tools / maps (though the actual stats were 
 
 Not going to limit baits to maps. For now. 
 Also not bait tiers because it's a pretty mixed bag of level
+
+Payload data is just really going to be holding userId data because otherwise action values got it
