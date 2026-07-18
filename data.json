@@ -113,13 +113,7 @@
       "description": "The ultimate fishing destination...."
     }
   },
-  "tiers":[
-    "Novice", 
-    "Amateur", 
-    "Professional", 
-    "Elite", 
-    "Legendary"
-  ],
+  "tiers": ["Novice", "Amateur", "Professional", "Elite", "Legendary"],
   "tools": {
     "hand": {
       "name": "Hand",
@@ -3052,7 +3046,7 @@
       "cost": 5,
       "image": "",
       "effects": {
-        "catch_speed": [1,2],
+        "catch_speed": [1, 2],
         "catch_nothing": 0.05
       }
     },
@@ -3082,7 +3076,7 @@
       "cost": 75,
       "image": "",
       "effects": {
-        "catch_speed":[-1, -3],
+        "catch_speed": [-1, -3],
         "catch_nothing": -0.1,
         "common_multiplier": -0.05,
         "uncommon_multiplier": 0.33,
@@ -3097,11 +3091,11 @@
       "name": "Scented Bait",
       "description": "Great for attracting fish for faster bite times and slightly better quality",
       "level": 8,
-      "tier":2,
+      "tier": 2,
       "cost": 55,
       "image": "",
       "effects": {
-        "catch_speed":[1,3],
+        "catch_speed": [1, 3],
         "catch_nothing": -0.05,
         "common_multiplier": -0.05,
         "uncommon_multiplier": 0.1,
@@ -3118,11 +3112,11 @@
       "level": 20,
       "cost": 200,
       "tier": 3,
-      "image":"",
+      "image": "",
       "effects": {
         "chroma_multiplier": 0.2,
         "shiny_multiplier": 0.2,
-        "catch_speed":[-1, -4],
+        "catch_speed": [-1, -4],
         "legendary_multiplier": 0.2,
         "epic_multiplier": 0.15
       }
@@ -3161,7 +3155,7 @@
       "level": 12,
       "cost": 90,
       "tier": 4,
-      "image":"",
+      "image": "",
       "effects": {
         "catch_speed": [-2, 0],
         "catch_nothing": -0.05,
@@ -3225,7 +3219,6 @@
         "item_multiplier": 0.2
       }
     }
-
   },
   "boats": {
     "kayak": {
@@ -3903,6 +3896,10 @@
       },
       {
         "type": "markdown",
+        "text": "**Durability**: `100%`"
+      },
+      {
+        "type": "markdown",
         "text": "**Total Trips**: `8`"
       },
       {
@@ -4079,6 +4076,10 @@
       {
         "type": "markdown",
         "text": "**Tier**: `1`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Durability**: `100%`"
       },
       {
         "type": "markdown",
@@ -4298,6 +4299,148 @@
               }
             ],
             "action_id": "profile_page_select"
+          }
+        ]
+      }
+    ],
+    "boats-main": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person's User Profile - Usage Stats"
+        },
+        "level": 1
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Boat Overview (1/5)"
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Boat Type**: `Sailboat`"
+      },
+      {
+        "type": "markdown",
+        "text": "**ID**: `ABCDE`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Durability**: `100%`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Trips**: `5`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Distance**: `100 miles`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Fish**: `10`"
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Boat Attributes + Addons",
+          "emoji": true
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Speed**: `8`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Capacity**: `6`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Durability**: `3`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Range**: `6`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Tier**: `4`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Addons**: `Upgraded Engine, Underwater Light`"
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select an action",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Select as default",
+                  "emoji": true
+                },
+                "value": "default"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text":"Repair",
+                  "emoji": true
+                },
+                "value": "repair"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Sell",
+                  "emoji": true
+                },
+                "value": "sell"
+              }
+            ],
+            "action_id":"boat_action_select"
+          }
+        ]
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select a boat",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Sailboat (id: FEJA)",
+                  "emoji": true
+                },
+                "value": "FEJA"
+              }
+            ],
+            "action_id":"boat_select"
           }
         ]
       }

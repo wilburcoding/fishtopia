@@ -17,9 +17,9 @@ module.exports = {
         user: command.user_id,
         blocks: blocks,
       });
+      return;
     }
     // View profile
-    console.log(command.text);
     const text = command.text; // check if user ID was provided
     if (text.startsWith("<@")) {
       const userId = text.match(/<@(\w+)>/)[1];
@@ -40,7 +40,7 @@ module.exports = {
       user = targetUser;
     }
     // display user profile
-    console.log(user);
+    // console.log(user);
     let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-overview"]));
     const created_date = new Date(user.created_at);
     const created_str = `${created_date.getFullYear()}-${(created_date.getMonth() + 1).toString().padStart(2, "0")}-${created_date.getDate().toString().padStart(2, "0")}`;
@@ -65,13 +65,10 @@ module.exports = {
   actions: {
     profile_page_select: async ({ action, ack, client, respond, body }) => {
       await ack();
-      console.log(action);
-      console.log(body);
       let DATA = global.data;
       const selected = action.selected_option.value;
       const metadata = body.message.metadata.event_payload;
       const userId = metadata.userId;
-      console.log(metadata);
       let user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
 
       if (!user) {
@@ -164,20 +161,21 @@ module.exports = {
         });
         blocks[3].text = `**Boat Type**: \`${DATA.boats[boat.type].name}\``;
         blocks[4].text = `**ID**: \`${boat.id}\``;
-        blocks[5].text = `**Total Trips**: \`${boat.stats.trips}\``;
-        blocks[6].text = `**Total Distance**: \`${boat.stats.distance}\``;
-        blocks[7].text = `**Total Fish**: \`${boat.stats.fish}\``;
-        // blocks[8].text = "**Addons**: `" + boat.addons.join(", ") + "`";
+        blocks[5].text = `**Durability**: \`${boat.durability}%\``;
+        blocks[6].text = `**Total Trips**: \`${boat.stats.trips}\``;
+        blocks[7].text = `**Total Distance**: \`${boat.stats.distance}\``;
+        blocks[8].text = `**Total Fish**: \`${boat.stats.fish}\``;
+        // blocks[9].text = "**Addons**: `" + boat.addons.join(", ") + "`";
         // attributes
         const attributes = DATA.boats[boat.type].stats;
-        blocks[9].text = "**Speed**: `" + attributes.speed + " kt`";
-        blocks[10].text = "**Capacity**: `" + attributes.capacity + " slots`";
-        blocks[11].text = "**Durability**: `" + attributes.durability + "/20`";
-        blocks[12].text =
-          "**Range**: `" + attributes.range + " nautical miles`";
+        blocks[10].text = "**Speed**: `" + attributes.speed + " kt`";
+        blocks[11].text = "**Capacity**: `" + attributes.capacity + " slots`";
+        blocks[12].text = "**Durability**: `" + attributes.durability + "/20`";
         blocks[13].text =
+          "**Range**: `" + attributes.range + " nautical miles`";
+        blocks[14].text =
           "**Tier**: `" + DATA.tiers[DATA.boats[boat.type].tier - 1] + "`";
-        blocks[14].text = "**Addons**: `" + boat.addons.join(", ") + "`";
+        blocks[15].text = "**Addons**: `" + boat.addons.join(", ") + "`";
 
         await client.chat.update({
           channel: body.channel.id,
@@ -237,11 +235,12 @@ module.exports = {
         blocks[6].text = `**Cost**: \`${tool_data.cost} coins\``;
         blocks[7].text = `**Level Requirement**: \`${tool_data.level}\``;
         blocks[8].text = `**Tier**: \`${tool_data.tier}\``;
-        blocks[9].text = "**Effects**: \n`TBD`"; // tbd
-        blocks[11].text = `**Total Trips**: \`${tools[0].usage_stats.trips}\``;
-        blocks[12].text = `**Total Fish**: \`${tools[0].usage_stats.fish_caught}\``;
-        blocks[13].text = `**Total Weight of Fish**: \`${tools[0].usage_stats.fish_weight}\``;
-        blocks[14].text = `**Total Value of Fish**: \`${tools[0].usage_stats.fish_value}\``;
+        blocks[9].text = `**Durability**: \`${tools[0].durability}%\``;
+        blocks[10].text = "**Effects**: \n`TBD`"; // tbd
+        blocks[12].text = `**Total Trips**: \`${tools[0].usage_stats.trips}\``;
+        blocks[13].text = `**Total Fish**: \`${tools[0].usage_stats.fish_caught}\``;
+        blocks[14].text = `**Total Weight of Fish**: \`${tools[0].usage_stats.fish_weight}\``;
+        blocks[15].text = `**Total Value of Fish**: \`${tools[0].usage_stats.fish_value}\``;
         await client.chat.update({
           channel: body.channel.id,
           ts: body.message.ts,
@@ -328,11 +327,12 @@ module.exports = {
         blocks[6].text = `**Cost**: \`${bait_data.cost} coins\``;
         blocks[7].text = `**Level Requirement**: \`${bait_data.level}\``;
         blocks[8].text = `**Tier**: \`${bait_data.tier}\``;
-        blocks[9].text = `**Effects**: \n` + effects_txt;
-        blocks[11].text = `**Total Trips**: \`${baits[0].usage_stats.trips}\``;
-        blocks[12].text = `**Total Fish**: \`${baits[0].usage_stats.fish_caught}\``;
-        blocks[13].text = `**Total Weight of Fish**: \`${baits[0].usage_stats.fish_weight}\``;
-        blocks[14].text = `**Total Value of Fish**: \`${baits[0].usage_stats.fish_value}\``;
+        blocks[9].text = `**Durability**: \`${baits[0].durability}%\``;
+        blocks[10].text = `**Effects**: \n` + effects_txt;
+        blocks[12].text = `**Total Trips**: \`${baits[0].usage_stats.trips}\``;
+        blocks[13].text = `**Total Fish**: \`${baits[0].usage_stats.fish_caught}\``;
+        blocks[14].text = `**Total Weight of Fish**: \`${baits[0].usage_stats.fish_weight}\``;
+        blocks[15].text = `**Total Value of Fish**: \`${baits[0].usage_stats.fish_value}\``;
 
         await client.chat.update({
           channel: body.channel.id,
@@ -421,16 +421,17 @@ module.exports = {
       });
       blocks[3].text = `**Boat Type**: \`${DATA.boats[boat.type].name}\``;
       blocks[4].text = `**ID**: \`${boat.id}\``;
-      blocks[5].text = `**Total Trips**: \`${boat.stats.trips}\``;
-      blocks[6].text = `**Total Distance**: \`${boat.stats.distance}\``;
-      blocks[7].text = `**Total Fish**: \`${boat.stats.fish}\``;
+      blocks[5].text = `**Durability**: \`${boat.durability}%\``;
+      blocks[6].text = `**Total Trips**: \`${boat.stats.trips}\``;
+      blocks[7].text = `**Total Distance**: \`${boat.stats.distance}\``;
+      blocks[8].text = `**Total Fish**: \`${boat.stats.fish}\``;
       const attributes = DATA.boats[boat.type].stats;
-      blocks[9].text = "**Speed**: `" + attributes.speed + " kt`";
-      blocks[10].text = "**Capacity**: `" + attributes.capacity + " slots`";
-      blocks[11].text = "**Durability**: `" + attributes.durability + "/20`";
-      blocks[12].text = "**Range**: `" + attributes.range + " nautical miles`";
-      blocks[13].text = "**Tier**: `" + DATA.tiers[boat.tier - 1] + "`";
-      blocks[14].text = "**Addons**: `" + boat.addons.join(", ") + "`";
+      blocks[10].text = "**Speed**: `" + attributes.speed + " kt`";
+      blocks[11].text = "**Capacity**: `" + attributes.capacity + " slots`";
+      blocks[12].text = "**Durability**: `" + attributes.durability + "/20`";
+      blocks[13].text = "**Range**: `" + attributes.range + " nautical miles`";
+      blocks[14].text = "**Tier**: `" + DATA.tiers[boat.tier - 1] + "`";
+      blocks[15].text = "**Addons**: `" + boat.addons.join(", ") + "`";
       await client.chat.update({
         channel: body.channel.id,
         ts: body.message.ts,
@@ -509,11 +510,12 @@ module.exports = {
       blocks[6].text = `**Cost**: \`${tool_data.cost} coins\``;
       blocks[7].text = `**Level Requirement**: \`${tool_data.level}\``;
       blocks[8].text = `**Tier**: \`${tool_data.tier}\``;
-      blocks[9].text = "**Effects**: \n`TBD`"; // also tbd
-      blocks[11].text = `**Total Trips**: \`${tool.usage_stats.trips}\``;
-      blocks[12].text = `**Total Fish**: \`${tool.usage_stats.fish_caught}\``;
-      blocks[13].text = `**Total Weight of Fish**: \`${tool.usage_stats.fish_weight}\``;
-      blocks[14].text = `**Total Value of Fish**: \`${tool.usage_stats.fish_value}\``;
+      blocks[9].text = "**Durability**: \`" + tool.durability + "%\`";
+      blocks[10].text = "**Effects**: \n`TBD`"; // also tbd
+      blocks[12].text = `**Total Trips**: \`${tool.usage_stats.trips}\``;
+      blocks[13].text = `**Total Fish**: \`${tool.usage_stats.fish_caught}\``;
+      blocks[14].text = `**Total Weight of Fish**: \`${tool.usage_stats.fish_weight}\``;
+      blocks[15].text = `**Total Value of Fish**: \`${tool.usage_stats.fish_value}\``;
       blocks[1].elements[0].options = tools.map((t) => {
         return {
           text: {
@@ -577,6 +579,8 @@ module.exports = {
       let baits = userData.equipment.filter((item) => item.etype === "bait");
       let bait = baits.find((b) => b.id === bait_id);
       if (!bait) {
+        console.log("BAIT NOT FOUND")
+        console.log(baits);
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "It looks like the user doesn't own this bait anymore. ";
@@ -608,6 +612,8 @@ module.exports = {
       }
       let bait_data = DATA.baits[bait.type];
       blocks[0].text.text = `${user.username}'s Profile - Baits`;
+      blocks[1].elements[0].placeholder.text = "Select a bait";
+      blocks[1].elements[0].action_id = "profile_bait_select"
       blocks[3].text = `**Tool Type**: \`${bait_data.name}\``;
       blocks[4].text = `**ID**: \`${bait.id}\``;
       blocks[5].text = `**Description**: \`${bait_data.description}\``;
@@ -626,11 +632,12 @@ module.exports = {
           effects_txt += `\`Increase ${bait_effect_templates[effect]} by ${bait_data.effects[effect][0]} to ${bait_data.effects[effect][1]}\`\n`;
         }
       }
-      blocks[9].text = `**Effects**: \n` + effects_txt;
-      blocks[11].text = `**Total Trips**: \`${bait.usage_stats.trips}\``;
-      blocks[12].text = `**Total Fish**: \`${bait.usage_stats.fish_caught}\``;
-      blocks[13].text = `**Total Weight of Fish**: \`${bait.usage_stats.fish_weight}\``;
-      blocks[14].text = `**Total Value of Fish**: \`${bait.usage_stats.fish_value}\``;
+      blocks[9].text = `**Durability**: \`${bait.durability}%\``;
+      blocks[10].text = `**Effects**: \n` + effects_txt;
+      blocks[12].text = `**Total Trips**: \`${bait.usage_stats.trips}\``;
+      blocks[13].text = `**Total Fish**: \`${bait.usage_stats.fish_caught}\``;
+      blocks[14].text = `**Total Weight of Fish**: \`${bait.usage_stats.fish_weight}\``;
+      blocks[15].text = `**Total Value of Fish**: \`${bait.usage_stats.fish_value}\``;
       blocks[1].elements[0].options = baits.map((b) => {
         return {
           text: {

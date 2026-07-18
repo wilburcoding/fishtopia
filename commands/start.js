@@ -167,6 +167,7 @@ module.exports = {
               "id":global.generateID(4),
               "type": "kayak",
               "addons": ["Upgraded Engine"],
+              "durability": 100,
               "stats" : {
                 "trips": 1,
                 "distance": 1,
@@ -177,6 +178,7 @@ module.exports = {
           let sample_tool = {
             "id": global.generateID(4),
             "type": "fishing_rod",
+            "durability": 100,
             "usage_stats": {
               "trips": 1,
               "fish_caught": 4,
@@ -188,6 +190,7 @@ module.exports = {
           let sample_tool2 = {
             "id": global.generateID(4),
             "type": "pole",
+            "durability": 100,
             "usage_stats": {
               "trips": 5,
               "fish_caught": 10,
@@ -199,6 +202,7 @@ module.exports = {
           let sample_bait = {
             "id": global.generateID(4),
             "type": "ultimate",
+            "durability": 100,
             "usage_stats": {
               "trips": 1,
               "fish_caught": 20,
@@ -210,6 +214,7 @@ module.exports = {
           let sample_bait2 = {
             "id": global.generateID(4),
             "type": "jumbo",
+            "durability":100,
             "usage_stats": {
               "trips": 3,
               "fish_caught": 25,

@@ -26,15 +26,22 @@ An interactive Slack bot fishing game
    - [x] /f-start
    - [ ] /f-equipment
    - [ ] /f-boat
-   - [ ] /f-profile
+     - [ ] UI -> current boat with buttons to move around
+     - [ ] Functionality
+       - [ ] User selecting + controls
+       - [ ] Selling
+       - [ ] Repair
+   - [x] /f-profile
      - [x] Overview section
      - [x] baits section
        - [x] bait selecting functionality
      - [x] Tools section
        - [x] tool selecting functionality
      - [x] Completion stats section
-     - [ ] usage stats sectio
- - [ ] 
+     - [x] usage stats sectio
+ - [ ] some way for me to edit my own data?
+ - [ ] bugs
+   - [x] Trying to select a tool in profile doesn't work after you select it the second time? -> forgot to set action id lol whoops
 
 
 # IDEA DUMP
@@ -63,7 +70,14 @@ An interactive Slack bot fishing game
    - Use /shop to buy equipment 
      - Boat, tools, baits. Prices in both coins and gold
      - Some items are only available in gold (rare stuff)
-   - Use /market to put offers and trade things with other people 
+     - Layout
+       - Title
+       - Show balance
+       - Boat info here
+       - Show page info
+       - Buttons for moving around / options
+   - Use /market to put offers and trade things with other people
+   - Use /boat to select main boat, see other boats 
    - Use /equpment to check out your tools, baits, and other equipment
      - Options to upgrade, sell, repair tools
    - Use /profile to get an overview of your stuff
@@ -129,7 +143,7 @@ An interactive Slack bot fishing game
        - Multipliers:
          - catch rate
          - catch speed 
-         - 
+       - Gradually lose durability -> can repair but otherwise breaks
      - Baits -> real stuff
        - No bait
        - Basic bait
@@ -166,6 +180,7 @@ An interactive Slack bot fishing game
          - item_multiplier -> higher chance of getting an item when fishing
          - xp_multiplier -> (multiplies by percentage)
          - All of the effects are on top of the basic boat's effects
+       - Baits can be reused to a certain point and then they self destruct. No chance of like repairing or anything. 
  - Database? -> keep it simple and use local sqlite
  - Unfortunately it looks like I need to do art for this one
  - 
