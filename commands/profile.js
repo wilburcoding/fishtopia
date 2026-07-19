@@ -170,7 +170,7 @@ module.exports = {
         const attributes = DATA.boats[boat.type].stats;
         blocks[10].text = "**Speed**: `" + attributes.speed + " kt`";
         blocks[11].text = "**Capacity**: `" + attributes.capacity + " slots`";
-        blocks[12].text = "**Durability**: `" + attributes.durability + "/20`";
+        blocks[12].text = "**Sturdiness**: `" + attributes.sturdiness + "/20`";
         blocks[13].text =
           "**Range**: `" + attributes.range + " nautical miles`";
         blocks[14].text =
@@ -428,7 +428,7 @@ module.exports = {
       const attributes = DATA.boats[boat.type].stats;
       blocks[10].text = "**Speed**: `" + attributes.speed + " kt`";
       blocks[11].text = "**Capacity**: `" + attributes.capacity + " slots`";
-      blocks[12].text = "**Durability**: `" + attributes.durability + "/20`";
+      blocks[12].text = "**Sturdiness**: `" + attributes.sturdiness + "/20`";
       blocks[13].text = "**Range**: `" + attributes.range + " nautical miles`";
       blocks[14].text = "**Tier**: `" + DATA.tiers[boat.tier - 1] + "`";
       blocks[15].text = "**Addons**: `" + boat.addons.join(", ") + "`";

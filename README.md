@@ -26,11 +26,12 @@ An interactive Slack bot fishing game
    - [x] /f-start
    - [ ] /f-equipment
    - [ ] /f-boat
-     - [ ] UI -> current boat with buttons to move around
+     - [x] UI -> current boat with buttons to move around
      - [ ] Functionality
        - [ ] User selecting + controls
        - [ ] Selling
        - [ ] Repair
+       - [ ] Check for empty boat lists
    - [x] /f-profile
      - [x] Overview section
      - [x] baits section
@@ -78,6 +79,8 @@ An interactive Slack bot fishing game
        - Buttons for moving around / options
    - Use /market to put offers and trade things with other people
    - Use /boat to select main boat, see other boats 
+     - Actions - show confirmation menu
+     - 
    - Use /equpment to check out your tools, baits, and other equipment
      - Options to upgrade, sell, repair tools
    - Use /profile to get an overview of your stuff
@@ -112,7 +115,7 @@ An interactive Slack bot fishing game
    - Boat
      - Different kinds of boat have different appearence, speed, capacity, range
      - Durability -> for different types of waters
-       - You can enter any water you want but if you're below the durability minimum for the map you may capsize. If you are near the durability minimum, there is a chance you're boat gets damaged
+       - You can enter any water you want but if you're below the durability minimum for the map you may capsize. If you are near the durability minimum, there is a chance you're boat gets damaged NOTE: RENAMED TO STURDINESS
      - Stats
        - Speed -> starts at 5 kt and goes up to 60 kt. Though it dosen't always go up with level or cost
        - Capacity -> starts at 5 slots and goes up to like 100

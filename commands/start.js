@@ -168,10 +168,23 @@ module.exports = {
               "type": "kayak",
               "addons": ["Upgraded Engine"],
               "durability": 100,
+              "default": true,
               "stats" : {
                 "trips": 1,
                 "distance": 1,
                 "fish": 1
+              }
+            },
+            {
+              "id": global.generateID(4),
+              "type": "rowboat",
+              "addons": ["Upgraded Engine"],
+              "durability": 100,
+              "default": false,
+              "stats": {
+                "trips": 2,
+                "distance": 10,
+                "fish": 5
               }
             }
           ]

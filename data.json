@@ -3230,7 +3230,7 @@
       "level": 1,
       "stats": {
         "speed": 5,
-        "durability": 2,
+        "sturdiness": 2,
         "capacity": 10,
         "range": 10
       }
@@ -3244,7 +3244,7 @@
       "level": 3,
       "stats": {
         "speed": 7,
-        "durability": 4,
+        "sturdiness": 4,
         "capacity": 15,
         "range": 15
       }
@@ -3258,21 +3258,21 @@
       "level": 6,
       "stats": {
         "speed": 20,
-        "durability": 6,
+        "sturdiness": 6,
         "capacity": 18,
         "range": 25
       }
     },
     "pontoon": {
       "name": "Pontoon",
-      "description": "A stable, spacious boat with moderate speed and decent durability",
+      "description": "A stable, spacious boat with moderate speed and decent sturdiness",
       "image": "",
       "tier": 1,
       "price": 1400,
       "level": 10,
       "stats": {
         "speed": 20,
-        "durability": 10,
+        "sturdiness": 10,
         "capacity": 30,
         "range": 35
       }
@@ -3286,21 +3286,21 @@
       "level": 15,
       "stats": {
         "speed": 25,
-        "durability": 12,
+        "sturdiness": 12,
         "capacity": 30,
         "range": 50
       }
     },
     "yacht": {
       "name": "Yacht",
-      "description": "A luxurious and spacious boat that has a decent range and durability. More as a flex item.",
+      "description": "A luxurious and spacious boat that has a decent range and sturdiness. More as a flex item.",
       "image": "",
       "tier": 2,
       "price": 2500,
       "level": 20,
       "stats": {
         "speed": 30,
-        "durability": 15,
+        "sturdiness": 15,
         "capacity": 40,
         "range": 60
       }
@@ -3314,7 +3314,7 @@
       "level": 25,
       "stats": {
         "speed": 40,
-        "durability": 14,
+        "sturdiness": 14,
         "capacity": 40,
         "range": 75
       }
@@ -3328,7 +3328,7 @@
       "level": 30,
       "stats": {
         "speed": 50,
-        "durability": 12,
+        "sturdiness": 12,
         "capacity": 35,
         "range": 65
       }
@@ -3342,7 +3342,7 @@
       "level": 40,
       "stats": {
         "speed": 40,
-        "durability": 16,
+        "sturdiness": 16,
         "capacity": 45,
         "range": 85
       }
@@ -3356,7 +3356,7 @@
       "level": 50,
       "stats": {
         "speed": 25,
-        "durability": 16,
+        "sturdiness": 16,
         "capacity": 60,
         "range": 120
       }
@@ -3370,7 +3370,7 @@
       "level": 65,
       "stats": {
         "speed": 20,
-        "durability": 17,
+        "sturdiness": 17,
         "capacity": 75,
         "range": 150
       }
@@ -3384,7 +3384,7 @@
       "level": 75,
       "stats": {
         "speed": 25,
-        "durability": 18,
+        "sturdiness": 18,
         "capacity": 85,
         "range": 180
       }
@@ -3398,7 +3398,7 @@
       "level": 100,
       "stats": {
         "speed": 25,
-        "durability": 20,
+        "sturdiness": 20,
         "capacity": 100,
         "range": 250
       }
@@ -3929,7 +3929,7 @@
       },
       {
         "type": "markdown",
-        "text": "**Durability**: `4`"
+        "text": "**Sturdiness**: `4`"
       },
       {
         "type": "markdown",
@@ -4308,7 +4308,7 @@
         "type": "header",
         "text": {
           "type": "plain_text",
-          "text": "Person's User Profile - Usage Stats"
+          "text": "Person's User Profile - Boats"
         },
         "level": 1
       },
@@ -4363,7 +4363,7 @@
       },
       {
         "type": "markdown",
-        "text": "**Durability**: `3`"
+        "text": "**Sturdiness**: `3`"
       },
       {
         "type": "markdown",
@@ -4441,6 +4441,43 @@
               }
             ],
             "action_id":"boat_select"
+          }
+        ]
+      }
+    ],
+    "confirm": [
+      {
+        "type": "card",
+        "title": {
+          "type": "mrkdwn",
+          "text": "Confirm Action",
+          "verbatim": false
+        },
+        "body": {
+          "type": "mrkdwn",
+          "text": "Are you sure you want to perform this action?",
+          "verbatim": false
+        },
+        "actions": [
+          {
+            "type": "button",
+            "style": "primary",
+            "text": {
+              "type": "plain_text",
+              "text": "Confirm",
+              "emoji": true
+            },
+            "action_id": "confirm_action"
+          },
+          {
+            "type": "button",
+            "style": "danger",
+            "text": {
+              "type": "plain_text",
+              "text": "Cancel",
+              "emoji" :true
+            },
+            "action_id": "cancel_action"
           }
         ]
       }
