@@ -237,7 +237,7 @@ module.exports = {
             "etype": "bait"
           }
           db.prepare(
-            "INSERT INTO users (username, id, data) VALUES (?, ?, ?)",
+            "INSERT INTO users (username, id, data, coins, gold, level, xp) VALUES (?, ?, ?, ?, ?)",
           ).run(
             username,
             body.user.id,
@@ -248,6 +248,10 @@ module.exports = {
               stats: stats,
               completion: completion,
             }),
+            1000,
+            0,
+            1,
+            0
           );
           const block2 = JSON.parse(
             JSON.stringify(global.data.blocks["start-end"][0]),

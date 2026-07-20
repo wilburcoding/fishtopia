@@ -41,8 +41,12 @@ An interactive Slack bot fishing game
      - [x] Completion stats section
      - [x] usage stats sectio
  - [ ] some way for me to edit my own data?
- - [ ] bugs
+ - [ ] bugs + fixes
    - [x] Trying to select a tool in profile doesn't work after you select it the second time? -> forgot to set action id lol whoops
+   - [ ] Didn't really implement checks to ensure that the right user is interacting
+   - [x] Metadata not updating? -> weirdly disappeared will monitor. Marking as fixed for now but will monitor. 
+   - [x] Weird message timestamping issue -> new messages will change their timestamps to become very, very old. Fixed, this was a weird typo
+   - [x] wow i even forgot to store balance information
 
 
 # IDEA DUMP
@@ -80,7 +84,8 @@ An interactive Slack bot fishing game
    - Use /market to put offers and trade things with other people
    - Use /boat to select main boat, see other boats 
      - Actions - show confirmation menu
-     - 
+       - Sell -> sell at 70% of buy price
+       - Repair -> improve durability of boat by 25% using 8% of the buy price
    - Use /equpment to check out your tools, baits, and other equipment
      - Options to upgrade, sell, repair tools
    - Use /profile to get an overview of your stuff
@@ -206,3 +211,5 @@ Not going to limit baits to maps. For now.
 Also not bait tiers because it's a pretty mixed bag of level
 
 Payload data is just really going to be holding userId data because otherwise action values got it
+
+XP processing (checking levels and stuff) is going to be done whenever the user recieves XP

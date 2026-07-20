@@ -43,8 +43,8 @@ for (const file of commands) {
 }
 
 function generateID(length) {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result = "";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   for (let i = 0; i < length; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
@@ -52,6 +52,35 @@ function generateID(length) {
 }
 
 // // test ping button action for ping command
+function setData(username, data, coins, gold, level, xp) {
+  const db = global.db;
+  const user = db
+    .prepare("SELECT * FROM users WHERE username = ?")
+    .get(username);
+  if (user) {
+    if (data === undefined) {
+      data = user.data;
+    }
+    if (coins === undefined) {
+      coins = user.coins;
+    }
+    if (gold === undefined) {
+      gold = user.gold;
+    }
+    if (level === undefined) {
+      level = user.level;
+    }
+    if (xp === undefined) {
+      xp = user.xp;
+    }
+    db.prepare(
+      "UPDATE users SET data = ?, coins = ?, gold = ?, level = ?, xp = ? WHERE username = ?",
+    ).run(data, coins, gold, level, xp, username);
+    console.log("Successfully updated data for user: " + username);
+  } else {
+    console.error(`User with username ${username} not found.`);
+  }
+}
 
 (async () => {
   const { default: data } = await import("./data.json", {
@@ -63,8 +92,8 @@ function generateID(length) {
   global.db = database.db;
   global.generateID = generateID;
   global.data = DATA;
+  setData("jellyfish", undefined, 1000, 100, 2, 100); // for testing only
 
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);
 })();
-

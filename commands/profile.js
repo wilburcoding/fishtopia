@@ -41,6 +41,7 @@ module.exports = {
     }
     // display user profile
     // console.log(user);
+    console.log(user);
     let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-overview"]));
     const created_date = new Date(user.created_at);
     const created_str = `${created_date.getFullYear()}-${(created_date.getMonth() + 1).toString().padStart(2, "0")}-${created_date.getDate().toString().padStart(2, "0")}`;
@@ -83,7 +84,9 @@ module.exports = {
       }
 
       if (selected === "overview") {
-        let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-overview"]));
+        let blocks = JSON.parse(
+          JSON.stringify(DATA.blocks["profile-overview"]),
+        );
         const created_date = new Date(user.created_at);
         const created_str = `${created_date.getFullYear()}-${(created_date.getMonth() + 1).toString().padStart(2, "0")}-${created_date.getDate().toString().padStart(2, "0")}`;
         blocks[0].text.text = `${user.username}'s Profile - Overview`;
@@ -104,7 +107,9 @@ module.exports = {
           },
         });
       } else if (selected === "completion") {
-        let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-completion"]));
+        let blocks = JSON.parse(
+          JSON.stringify(DATA.blocks["profile-completion"]),
+        );
         blocks[0].text.text = `${user.username}'s Profile - Completion`;
         const userData = JSON.parse(user.data);
         const completion = userData.completion;
@@ -346,13 +351,14 @@ module.exports = {
             },
           },
         });
-      } else if (selected == "usage_stats") {  // probably future achievement command but for now we'll just keep some numbers 
+      } else if (selected == "usage_stats") {
+        // probably future achievement command but for now we'll just keep some numbers
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-usage"]));
         const userData = JSON.parse(user.data);
         const stats = userData.stats;
         let c = 0;
         for (const stat of Object.keys(stats)) {
-          let split = blocks[c+1].text.split(": ")[0];
+          let split = blocks[c + 1].text.split(": ")[0];
           blocks[c + 1].text = split + ": `" + stats[stat] + "`";
           console.log(blocks[c + 1].text);
           c++;
@@ -366,11 +372,10 @@ module.exports = {
             event_type: "profile_view",
             event_payload: {
               userId: user.id,
-              selectedOption: "usage_stats"
-            }
-          }
-        })
-        
+              selectedOption: "usage_stats",
+            },
+          },
+        });
       }
     },
     profile_boat_select: async ({ action, ack, client, respond, body }) => {
@@ -579,7 +584,7 @@ module.exports = {
       let baits = userData.equipment.filter((item) => item.etype === "bait");
       let bait = baits.find((b) => b.id === bait_id);
       if (!bait) {
-        console.log("BAIT NOT FOUND")
+        console.log("BAIT NOT FOUND");
         console.log(baits);
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
@@ -613,7 +618,7 @@ module.exports = {
       let bait_data = DATA.baits[bait.type];
       blocks[0].text.text = `${user.username}'s Profile - Baits`;
       blocks[1].elements[0].placeholder.text = "Select a bait";
-      blocks[1].elements[0].action_id = "profile_bait_select"
+      blocks[1].elements[0].action_id = "profile_bait_select";
       blocks[3].text = `**Tool Type**: \`${bait_data.name}\``;
       blocks[4].text = `**ID**: \`${bait.id}\``;
       blocks[5].text = `**Description**: \`${bait_data.description}\``;
