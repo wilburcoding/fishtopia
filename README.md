@@ -25,12 +25,18 @@ An interactive Slack bot fishing game
    - [ ] /f-market
    - [x] /f-start
    - [ ] /f-equipment
-   - [ ] /f-boat
-     - [x] UI -> current boat with buttons to move around
+     - [ ] UI Layout -> similar to boat comamnd layout
      - [ ] Functionality
        - [ ] User selecting + controls
        - [ ] Selling
        - [ ] Repair
+       - [ ] Check for empty tool lists
+   - [ ] /f-boat
+     - [x] UI -> current boat with buttons to move around
+     - [x] Functionality
+       - [x] User selecting + controls
+       - [x] Selling
+       - [x] Repair
        - [ ] Check for empty boat lists
    - [x] /f-profile
      - [x] Overview section
@@ -88,6 +94,10 @@ An interactive Slack bot fishing game
        - Repair -> improve durability of boat by 25% using 8% of the buy price
    - Use /equpment to check out your tools, baits, and other equipment
      - Options to upgrade, sell, repair tools
+       - Upgrading is not going be done right now -> need to figure out how its actually gonna work
+       - Selling is going to be the same as boats ->, 70% of buy price
+       - Repair is going to be the same as boats -> 25% for 8% of the buy price
+    - List both tools and baits? Probably won't get too disorganized...?
    - Use /profile to get an overview of your stuff
      - Multi-paginated with tabs on boat, tools, stats
        - Starting profile page with net worth + start date + if the user is currently fishing right now
@@ -106,7 +116,7 @@ An interactive Slack bot fishing game
      - Will likely be a separate percentage from fish
      - mix of common ish to rare ish items
      - Maybe usable items? (boxes?? gamblign???)
-     - 
+     - How to put this into current data?
    - Maps
      - Different fish for each location
      - Differnt distances from home location

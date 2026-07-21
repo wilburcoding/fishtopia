@@ -4481,6 +4481,140 @@
           }
         ]
       }
+    ],
+    "equipment-main": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person's User Profile - Equipment"
+        },
+        "level": 1
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Equipment Overview (1/3)"
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Equipment Type**: `Fishing Rod`"
+      },
+      {
+        "type": "markdown",
+        "text": "**ID**: `12354`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Description**: `A basic fishing rod for beginners.`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Cost**: `$000`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Level Requirement**: `1`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Tier**: `1`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Durability**: `100%`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Effects**: `Increased catch rate by 10%`"
+      },
+            {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Tool Stats",
+          "emoji": true
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Trips**: `12`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Fish**: `30`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Weight of Fish**: `45 lbs`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Total Value of Fish**: `$300`"
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select an action",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Repair",
+                  "emoji": true
+                },
+                "value": "repair"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Sell",
+                  "emoji": true
+                },
+                "value": "sell"
+              }
+            ],
+            "action_id": "equipment_action_select"
+          }
+        ]
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select equipment",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Fishing Rod (id: 12354)",
+                  "emoji": true
+                },
+                "value": "12354"
+              }
+            ],
+            "action_id": "equipment_select"
+          }
+        ]
+      }
     ]
   }
 }
