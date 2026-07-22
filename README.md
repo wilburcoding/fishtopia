@@ -25,11 +25,11 @@ An interactive Slack bot fishing game
    - [ ] /f-market
    - [x] /f-start
    - [ ] /f-equipment
-     - [ ] UI Layout -> similar to boat comamnd layout
-     - [ ] Functionality
-       - [ ] User selecting + controls
-       - [ ] Selling
-       - [ ] Repair
+     - [x] UI Layout -> similar to boat comamnd layout
+     - [x] Functionality
+       - [x] User selecting + controls
+       - [x] Selling
+       - [x] Repair
        - [ ] Check for empty tool lists
    - [ ] /f-boat
      - [x] UI -> current boat with buttons to move around
@@ -53,6 +53,9 @@ An interactive Slack bot fishing game
    - [x] Metadata not updating? -> weirdly disappeared will monitor. Marking as fixed for now but will monitor. 
    - [x] Weird message timestamping issue -> new messages will change their timestamps to become very, very old. Fixed, this was a weird typo
    - [x] wow i even forgot to store balance information
+   - [ ] issue: performing an action (ex. repairing a boat) doesn't update the original message -> possible solution: refresh button with reminders to do so.  Need this like like every command with direct action comamnds
+     - [x] /equipment
+     - [ ] /boat
 
 
 # IDEA DUMP
@@ -90,12 +93,12 @@ An interactive Slack bot fishing game
    - Use /market to put offers and trade things with other people
    - Use /boat to select main boat, see other boats 
      - Actions - show confirmation menu
-       - Sell -> sell at 70% of buy price
+       - Sell -> sell at 70% of buy price * the durability
        - Repair -> improve durability of boat by 25% using 8% of the buy price
    - Use /equpment to check out your tools, baits, and other equipment
      - Options to upgrade, sell, repair tools
        - Upgrading is not going be done right now -> need to figure out how its actually gonna work
-       - Selling is going to be the same as boats ->, 70% of buy price
+       - Selling is going to be the same as boats ->, 70% of buy price * durability
        - Repair is going to be the same as boats -> 25% for 8% of the buy price
     - List both tools and baits? Probably won't get too disorganized...?
    - Use /profile to get an overview of your stuff

@@ -82,6 +82,130 @@ function setData(username, data, coins, gold, level, xp) {
   }
 }
 
+function resetData(username) {
+  const db = global.db;
+  const user = db
+    .prepare("SELECT * FROM users WHERE username = ?")
+    .get(username);
+
+  if (user) {
+    const startingBoats = [
+      {
+        id: global.generateID(4),
+        type: "kayak",
+        addons: ["Upgraded Engine"],
+        durability: 100,
+        default: true,
+        stats: {
+          trips: 1,
+          distance: 1,
+          fish: 1,
+        },
+      },
+      {
+        id: global.generateID(4),
+        type: "rowboat",
+        addons: ["Upgraded Engine"],
+        durability: 100,
+        default: false,
+        stats: {
+          trips: 2,
+          distance: 10,
+          fish: 5,
+        },
+      },
+    ];
+    const stats = {
+      total_fish_caught: 0,
+      total_fish_sold: 0,
+      total_fish_value: 0,
+      total_amount_earned: 0,
+      total_fish_released: 0,
+      total_trades: 0,
+      total_shop_purchases: 0,
+      total_commands_used: 0,
+      total_xp_earned: 0,
+      total_equipment_used: 0,
+      total_boats_used: 0,
+      total_baits_used: 0,
+    };
+    const equipment = [
+      {
+        id: global.generateID(4),
+        type: "fishing_rod",
+        durability: 100,
+        usage_stats: {
+          trips: 1,
+          fish_caught: 4,
+          fish_weight: 20,
+          fish_value: 100,
+        },
+        etype: "tool",
+      },
+      {
+        id: global.generateID(4),
+        type: "pole",
+        durability: 100,
+        usage_stats: {
+          trips: 5,
+          fish_caught: 10,
+          fish_weight: 50,
+          fish_value: 200,
+        },
+        etype: "tool",
+      },
+      {
+        id: global.generateID(4),
+        type: "ultimate",
+        durability: 100,
+        usage_stats: {
+          trips: 1,
+          fish_caught: 20,
+          fish_weight: 100,
+          fish_value: 500,
+        },
+        etype: "bait",
+      },
+      {
+        id: global.generateID(4),
+        type: "jumbo",
+        durability: 100,
+        usage_stats: {
+          trips: 3,
+          fish_caught: 25,
+          fish_weight: 150,
+          fish_value: 700,
+        },
+        etype: "bait",
+      },
+    ];
+    const completion = {};
+    for (let map of Object.keys(DATA.maps)) {
+      completion[map] = {};
+      for (let fish of Object.keys(DATA.fish)) {
+        if (Object.keys(DATA.fish[fish]["maps"]).includes(map)) {
+          completion[map][fish] = false;
+        }
+      }
+    }
+    db.prepare(
+      "UPDATE users SET data = ?, coins = 1000, gold = 100, level = 1, xp = 0 WHERE username = ?",
+    ).run(
+      JSON.stringify({
+        inventory: [],
+        boats: startingBoats,
+        equipment: equipment,
+        stats: stats,
+        completion: completion,
+      }),
+      username
+    );
+    console.log("Successfully reset data for user: " + username);
+  } else {
+    console.error(`User with username ${username} not found. `);
+  }
+}
+
 (async () => {
   const { default: data } = await import("./data.json", {
     with: { type: "json" },
@@ -92,8 +216,8 @@ function setData(username, data, coins, gold, level, xp) {
   global.db = database.db;
   global.generateID = generateID;
   global.data = DATA;
-  setData("jellyfish", undefined, 1000, 100, 2, 100); // for testing only
-
+  // setData("jellyfish", undefined, 1000, 100, 2, 100); // for testing only
+  // resetData("jellyfish"); // reset data for testing only
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);
 })();

@@ -4402,7 +4402,7 @@
               {
                 "text": {
                   "type": "plain_text",
-                  "text":"Repair",
+                  "text": "Repair",
                   "emoji": true
                 },
                 "value": "repair"
@@ -4416,7 +4416,7 @@
                 "value": "sell"
               }
             ],
-            "action_id":"boat_action_select"
+            "action_id": "boat_action_select"
           }
         ]
       },
@@ -4440,7 +4440,22 @@
                 "value": "FEJA"
               }
             ],
-            "action_id":"boat_select"
+            "action_id": "boat_select"
+          }
+        ]
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Refresh",
+              "emoji": true
+            },
+            "value": "refresh",
+            "action_id": "refresh_boats"
           }
         ]
       }
@@ -4475,7 +4490,7 @@
             "text": {
               "type": "plain_text",
               "text": "Cancel",
-              "emoji" :true
+              "emoji": true
             },
             "action_id": "cancel_action"
           }
@@ -4531,7 +4546,7 @@
         "type": "markdown",
         "text": "**Effects**: `Increased catch rate by 10%`"
       },
-            {
+      {
         "type": "header",
         "text": {
           "type": "plain_text",
@@ -4612,6 +4627,21 @@
               }
             ],
             "action_id": "equipment_select"
+          }
+        ]
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Refresh",
+              "emoji": true
+            },
+            "value": "refresh",
+            "action_id": "refresh_equipment"
           }
         ]
       }

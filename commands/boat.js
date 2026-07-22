@@ -129,13 +129,13 @@ module.exports = {
         blocks2[0].body.text =
           "Are you sure you want to set this boat as your default boat? This will make it the boat that is used for fishing trips by default. ";
       } else if (actionValue === "sell") {
-        const sell_price = boat_data.price * 0.7; // tentatively 70% of the sell price
+        const sell_price = Math.floor(boat_data.price * 0.7 * (boat.durability / 100)); // tentatively 70% of the sell price
         blocks2[0].body.text =
           `Are you sure you want to sell this boat for ${sell_price} coins? This action is irreversible!`;
 
       } else if (actionValue === "repair") {
         // might make this not require a confirmation in the future
-        const repair_price = boat_data.price * 0.08; // tentatively 8% of the sell price
+        const repair_price = Math.floor(boat_data.price * 0.08); // tentatively 8% of the sell price
         blocks2[0].body.text =
           `Are you sure you want to repair this boat for ${repair_price} coins? This will increase its durability by 25%. `;
         if (user.coins < repair_price) {
@@ -314,7 +314,7 @@ module.exports = {
         blocks[0].text.text =
           "You have successfully set this boat as your default boat.";
       } else if (actionType === "sell") {
-        const sell_price = boat_data.price * 0.7; // 70%
+        const sell_price = Math.floor(boat_data.price * 0.7 * (boat.durability / 100)); // 70%
         blocks[0].text.text =
           `You have successfully sold this boat for ${sell_price} coins.`;
         boats.splice(index, 1);
