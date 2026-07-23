@@ -33,6 +33,13 @@ module.exports = {
             channel: command.channel_id,
             user: command.user_id,
             blocks: blocks,
+            metadata: {
+                event_type: "equipment_view",
+                event_payload: {
+                    userId: user.id,
+                    toolId: null
+                }
+            }
         });
         return;
     }
@@ -463,7 +470,14 @@ module.exports = {
             channel: body.channel.id,
             user: body.user.id,
             ts: body.message.ts,
-            blocks: blocks
+            blocks: blocks,
+            metadata: {
+                event_type: "equipment_view",
+                event_payload: {
+                    userId: user.id,
+                    toolId: null
+                }
+            }
         });
         return;
       }

@@ -56,6 +56,7 @@ An interactive Slack bot fishing game
    - [ ] issue: performing an action (ex. repairing a boat) doesn't update the original message -> possible solution: refresh button with reminders to do so.  Need this like like every command with direct action comamnds
      - [x] /equipment
      - [ ] /boat
+   - [ ] I missed metadata in a lot of plaecs -> double check 
 
 
 # IDEA DUMP

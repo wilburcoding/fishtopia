@@ -52,7 +52,7 @@ function generateID(length) {
 }
 
 // // test ping button action for ping command
-function setData(username, data, coins, gold, level, xp) {
+function setData(username, data, coins, gold, level, xp) { 
   const db = global.db;
   const user = db
     .prepare("SELECT * FROM users WHERE username = ?")
@@ -82,6 +82,22 @@ function setData(username, data, coins, gold, level, xp) {
   }
 }
 
+function getData(username) {
+  const db = global.db;
+  const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
+  if (user) {
+    return {
+      data: user.data,
+      coins: user.coins,
+      gold: user.gold,
+      level: user.level,
+      xp: user.xp
+    };
+  } else {
+    console.error(`User with username ${username} not found.`);
+    return null;
+  }
+}
 function resetData(username) {
   const db = global.db;
   const user = db
@@ -213,11 +229,20 @@ function resetData(username) {
   DATA = data;
   // database.clear(); // full clear (all data)
   database.setup();
+
   global.db = database.db;
   global.generateID = generateID;
   global.data = DATA;
-  // setData("jellyfish", undefined, 1000, 100, 2, 100); // for testing only
   // resetData("jellyfish"); // reset data for testing only
+
+  let userdata = getData("jellyfish");
+
+  userdata = JSON.parse(userdata.data);
+  console.log(userdata.boats);
+  userdata.boats = [];
+  console.log(userdata.boats);
+  setData("jellyfish", JSON.stringify(userdata), undefined, undefined, undefined, undefined); // for testing only
+ 
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);
 })();
