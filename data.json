@@ -4645,6 +4645,57 @@
           }
         ]
       }
+    ],
+    "shop-main": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Shop"
+        },
+        "level": 1
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Showing Baits (10)"
+        }
+      },
+      {
+        "type": "carousel",
+        "elements": [
+          {
+            "type": "card",
+            "block_id": "bait-card-1",
+            "title": {
+              "type": "mrkdwn",
+              "text": "Worm Bait",
+              "verbatim": false
+            },
+            "subtitle": {
+              "type": "mrkdwn",
+              "text": "Tier 4 Bait"
+            },
+            "body": {
+              "type": "mrkdwn",
+              "text": "Something something something bait description here soething something something \n**Cost**: `100`",
+              "verbatim": false
+            },
+            "actions": [
+              {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "Purchase",
+                  "emoji": true
+                },
+                "action_id": "purchase_bait"
+              }
+            ]
+          }
+        ]
+      }
     ]
   }
 }

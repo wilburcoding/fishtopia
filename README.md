@@ -22,22 +22,28 @@ An interactive Slack bot fishing game
  - [ ] Commands 
    - [ ] /f-fish
    - [ ] /f-shop
+     - [ ] Paginated layout
+     - [ ] Functionality
+       - [ ] User pagination controls
+       - [ ] Buying options
+       - [ ] Bulk buying
+       - [ ] Search option?
    - [ ] /f-market
    - [x] /f-start
-   - [ ] /f-equipment
+   - [x] /f-equipment
      - [x] UI Layout -> similar to boat comamnd layout
      - [x] Functionality
        - [x] User selecting + controls
        - [x] Selling
        - [x] Repair
-       - [ ] Check for empty tool lists
-   - [ ] /f-boat
+       - [x] Check for empty tool lists
+   - [x] /f-boat
      - [x] UI -> current boat with buttons to move around
      - [x] Functionality
        - [x] User selecting + controls
        - [x] Selling
        - [x] Repair
-       - [ ] Check for empty boat lists
+       - [x] Check for empty boat lists
    - [x] /f-profile
      - [x] Overview section
      - [x] baits section
@@ -46,6 +52,7 @@ An interactive Slack bot fishing game
        - [x] tool selecting functionality
      - [x] Completion stats section
      - [x] usage stats sectio
+   - [ ] an overall command message catch?
  - [ ] some way for me to edit my own data?
  - [ ] bugs + fixes
    - [x] Trying to select a tool in profile doesn't work after you select it the second time? -> forgot to set action id lol whoops
@@ -55,7 +62,7 @@ An interactive Slack bot fishing game
    - [x] wow i even forgot to store balance information
    - [ ] issue: performing an action (ex. repairing a boat) doesn't update the original message -> possible solution: refresh button with reminders to do so.  Need this like like every command with direct action comamnds
      - [x] /equipment
-     - [ ] /boat
+     - [x] /boat
    - [ ] I missed metadata in a lot of plaecs -> double check 
 
 
@@ -91,6 +98,13 @@ An interactive Slack bot fishing game
        - Boat info here
        - Show page info
        - Buttons for moving around / options
+     - Layout v2
+       - Title
+       - Show balance
+       - Item information maybe as carousel
+       - Action options
+       - Select different shop type (boats, tools, baits)
+       - search bar?
    - Use /market to put offers and trade things with other people
    - Use /boat to select main boat, see other boats 
      - Actions - show confirmation menu

@@ -235,13 +235,13 @@ function resetData(username) {
   global.data = DATA;
   // resetData("jellyfish"); // reset data for testing only
 
-  let userdata = getData("jellyfish");
+  // let userdata = getData("jellyfish");
 
-  userdata = JSON.parse(userdata.data);
-  console.log(userdata.boats);
-  userdata.boats = [];
-  console.log(userdata.boats);
-  setData("jellyfish", JSON.stringify(userdata), undefined, undefined, undefined, undefined); // for testing only
+  // userdata = JSON.parse(userdata.data);
+  // console.log(userdata.boats);
+  // userdata.boats = [];
+  // console.log(userdata.boats);
+  // setData("jellyfish", JSON.stringify(userdata), undefined, undefined, undefined, undefined); // for testing only
  
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);

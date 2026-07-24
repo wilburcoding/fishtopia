@@ -23,7 +23,7 @@ module.exports = {
 
     const user_data = JSON.parse(user.data);
     const boats = user_data.boats; // should always exist
-    console.log(user_data.boats);
+    // console.log(user_data.boats);
     const blocks = JSON.parse(JSON.stringify(DATA.blocks["boats-main"]));
     if (boats.length === 0) {
       blocks[0].text.text = `${user.username}'s Boats`;
@@ -47,7 +47,6 @@ module.exports = {
     blocks[1].text.text = `Boat Overview (${boats.length})`;
     const boat = boats[0];
     const boat_data = DATA.boats[boat.type];
-    console.log(boat_data);
     blocks[2].text = `**Boat Type**: \`${boat_data.name}\``;
     blocks[3].text = `**ID**: \`${boat.id}\``;
     blocks[4].text = `**Durability**: \`${boat.durability}%\``;
@@ -114,7 +113,7 @@ module.exports = {
       const userId = metadata.userId;
       const actionValue = action.selected_option.value;
       const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
-      console.log(boatId, userId, actionValue);
+      // console.log(boatId, userId, actionValue);
       if (!user) {
         const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
@@ -179,7 +178,6 @@ module.exports = {
       //       },
       //     },
       //   })
-      console.log(body.message.ts);
       await client.chat.postMessage({
         channel: body.channel.id,
         blocks: blocks2,
@@ -376,7 +374,6 @@ module.exports = {
     },
     boat_action_cancel: async ({ action, ack, client, respond, body }) => {
       await ack();
-      console.log("boat action cancel");
       const metadata = body.message.metadata.event_payload;
       const userId = metadata.userId;
       const boatId = metadata.boatId;
@@ -521,7 +518,7 @@ module.exports = {
             boatId: boat.id
           }
         }
-      })
+      });
     },
   },
 };
