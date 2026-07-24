@@ -3226,7 +3226,7 @@
       "description": "A narrow, lightweight boat designed for small-scale fishing in calm waters",
       "image": "",
       "tier": 1,
-      "price": 100,
+      "cost": 100,
       "level": 1,
       "stats": {
         "speed": 5,
@@ -3240,7 +3240,7 @@
       "description": "A simple, sturdy boat for rowing on calm waters",
       "image": "",
       "tier": 1,
-      "price": 200,
+      "cost": 200,
       "level": 3,
       "stats": {
         "speed": 7,
@@ -3254,7 +3254,7 @@
       "description": "A fast, lightweight boat for quick travel on the water",
       "image": "",
       "tier": 1,
-      "price": 800,
+      "cost": 800,
       "level": 6,
       "stats": {
         "speed": 20,
@@ -3268,7 +3268,7 @@
       "description": "A stable, spacious boat with moderate speed and decent sturdiness",
       "image": "",
       "tier": 1,
-      "price": 1400,
+      "cost": 1400,
       "level": 10,
       "stats": {
         "speed": 20,
@@ -3282,7 +3282,7 @@
       "description": "A wind-powered boat that can travel quickly across the water",
       "image": "",
       "tier": 2,
-      "price": 2000,
+      "cost": 2000,
       "level": 15,
       "stats": {
         "speed": 25,
@@ -3296,7 +3296,7 @@
       "description": "A luxurious and spacious boat that has a decent range and sturdiness. More as a flex item.",
       "image": "",
       "tier": 2,
-      "price": 2500,
+      "cost": 2500,
       "level": 20,
       "stats": {
         "speed": 30,
@@ -3310,7 +3310,7 @@
       "description": "A versatile boat designed for professional offshore sports fishing.",
       "image": "",
       "tier": 3,
-      "price": 5000,
+      "cost": 5000,
       "level": 25,
       "stats": {
         "speed": 40,
@@ -3324,7 +3324,7 @@
       "description": "A high-speed fiberglass boat designed with for fishing in shallow waters.",
       "image": "",
       "tier": 3,
-      "price": 7000,
+      "cost": 7000,
       "level": 30,
       "stats": {
         "speed": 50,
@@ -3338,7 +3338,7 @@
       "description": "A versatile, highly durable boat suitable for a variety of water conditions.",
       "image": "",
       "tier": 3,
-      "price": 9300,
+      "cost": 9300,
       "level": 40,
       "stats": {
         "speed": 40,
@@ -3352,7 +3352,7 @@
       "description": "A large, sturdy commerical fishing boat designed for catching large quantities of fish.",
       "image": "",
       "tier": 4,
-      "price": 11000,
+      "cost": 11000,
       "level": 50,
       "stats": {
         "speed": 25,
@@ -3366,7 +3366,7 @@
       "description": "A large, specialized fishing vessel designed for long-distance fishing in open waters.",
       "image": "",
       "tier": 4,
-      "price": 15000,
+      "cost": 15000,
       "level": 65,
       "stats": {
         "speed": 20,
@@ -3380,7 +3380,7 @@
       "description": "A heavy, reinforced fishing boat designed for catching large quantities of bottom-dwelling crustaceans.",
       "image": "",
       "tier": 5,
-      "price": 20000,
+      "cost": 20000,
       "level": 75,
       "stats": {
         "speed": 25,
@@ -3394,7 +3394,7 @@
       "description": "A ultimate fishing vessel for deep-sea fishing.",
       "image": "",
       "tier": 5,
-      "price": 50000,
+      "cost": 50000,
       "level": 100,
       "stats": {
         "speed": 25,
@@ -4651,7 +4651,7 @@
         "type": "header",
         "text": {
           "type": "plain_text",
-          "text": "Shop"
+          "text": "Shop for Person"
         },
         "level": 1
       },
@@ -4661,6 +4661,10 @@
           "type": "plain_text",
           "text": "Showing Baits (10)"
         }
+      },
+      {
+        "type": "markdown",
+        "text": "Searching `worm` in *Baits* category. Showing 1 result(s)."
       },
       {
         "type": "carousel",
@@ -4679,7 +4683,7 @@
             },
             "body": {
               "type": "mrkdwn",
-              "text": "Something something something bait description here soething something something \n**Cost**: `100`",
+              "text": "Something something something bait description here soething something something \n*Cost*: `100`",
               "verbatim": false
             },
             "actions": [
@@ -4693,6 +4697,84 @@
                 "action_id": "purchase_bait"
               }
             ]
+          }
+        ]
+      },
+      {
+        "type": "input",
+        "element": {
+          "type": "static_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text":"Select a category",
+            "emoji": true
+          },
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Baits",
+                "emoji": true
+              },
+              "value": "baits"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Tools",
+                "emoji": true
+              },
+              "value": "tools"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Boats",
+                "emoji": true
+              },
+              "value": "boats"
+            }
+          ],
+          "initial_option": {
+            "text": {
+              "type": "plain_text",
+              "text": "Baits",
+              "emoji": true
+            },
+            "value": "baits"
+          },
+          "action_id": "shop_category_select"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Shop Category",
+          "emoji": true
+        },
+        "optional": false
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Search",
+              "emoji": true
+            },
+            "value": "shop_search",
+            "action_id": "shop_search"
+          },
+          {
+            "type": "button",
+            "style": "danger",
+            "text": {
+              "type": "plain_text",
+              "text": "Clear Search",
+              "emoji": true
+            },
+            "value": "clear_search",
+            "action_id": "clear_search"
           }
         ]
       }

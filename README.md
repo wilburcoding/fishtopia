@@ -64,6 +64,9 @@ An interactive Slack bot fishing game
      - [x] /equipment
      - [x] /boat
    - [ ] I missed metadata in a lot of plaecs -> double check 
+   - [x] markdown not working for /f-shop command? apparently it decided to only take single *
+   - [ ] Just realized different button styles exist -> put in later
+
 
 
 # IDEA DUMP
@@ -105,6 +108,7 @@ An interactive Slack bot fishing game
        - Action options
        - Select different shop type (boats, tools, baits)
        - search bar?
+         - An option to add a filter by name
    - Use /market to put offers and trade things with other people
    - Use /boat to select main boat, see other boats 
      - Actions - show confirmation menu
@@ -241,3 +245,5 @@ Also not bait tiers because it's a pretty mixed bag of level
 Payload data is just really going to be holding userId data because otherwise action values got it
 
 XP processing (checking levels and stuff) is going to be done whenever the user recieves XP
+
+Max carousel size is 10. I guess I have to redo whatever is happening with the shop layout. 
