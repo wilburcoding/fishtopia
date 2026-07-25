@@ -106,7 +106,7 @@ An interactive Slack bot fishing game
        - Show balance
        - Item information maybe as carousel
        - Action options
-       - Select different shop type (boats, tools, baits)
+       - Select different shop page -> there are multiple pages for each type
        - search bar?
          - An option to add a filter by name
    - Use /market to put offers and trade things with other people
@@ -247,3 +247,5 @@ Payload data is just really going to be holding userId data because otherwise ac
 XP processing (checking levels and stuff) is going to be done whenever the user recieves XP
 
 Max carousel size is 10. I guess I have to redo whatever is happening with the shop layout. 
+
+How did i not come up with this helper function based command population earlier

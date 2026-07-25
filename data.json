@@ -4701,6 +4701,33 @@
         ]
       },
       {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "style": "primary",
+            "text": {
+              "type": "plain_text",
+              "text": "Previous Page",
+              "emoji": true
+            },
+            "value": "shop_prev",
+            "action_id": "shop_prev"
+          },
+          {
+            "type": "button",
+            "style": "primary",
+            "text": {
+              "type": "plain_text",
+              "text": "Next Page",
+              "emoji": true
+            },
+            "value": "shop_next",
+            "action_id": "shop_next"
+          }
+        ]
+      },
+      {
         "type": "input",
         "element": {
           "type": "static_select",
