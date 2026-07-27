@@ -21,13 +21,14 @@ An interactive Slack bot fishing game
      - [x] Balance boats
  - [ ] Commands 
    - [ ] /f-fish
+     - [ ] 
    - [ ] /f-shop
-     - [ ] Paginated layout
-     - [ ] Functionality
-       - [ ] User pagination controls
-       - [ ] Buying options
+     - [x] Paginated layout
+     - [x] Functionality
+       - [x] User pagination controls
+       - [x] Buying option
        - [ ] Bulk buying
-       - [ ] Search option?
+       - [x] Search option?
    - [ ] /f-market
    - [x] /f-start
    - [x] /f-equipment
@@ -92,6 +93,16 @@ An interactive Slack bot fishing game
        - Odds are different for different types of baits or tools
        - Can choose to keep or throw back fish
      - Shows catch + option to fish again (same tools), change setup, or return home
+     - Layout
+       - First screen -> select map and equipment to bring. Shows your current default boat
+         - Show brief intro
+         - Cards to show tool, bait, and boat info before they go in? Switching to carousel layout
+       - Second screen -> show actively moving to location (and ETA)
+       - Third screen -> multiple buttons to pick a spot to fish
+       - Fourth screen -> Showing fishing and then after delay, show catch 
+         - Options: Release and Catch Again, Keep and Catch Again
+           - Release if they don't like fish so no space wasted 
+       - Fifth screen  
    - Use /shop to buy equipment 
      - Boat, tools, baits. Prices in both coins and gold
      - Some items are only available in gold (rare stuff)
@@ -108,7 +119,7 @@ An interactive Slack bot fishing game
        - Action options
        - Select different shop page -> there are multiple pages for each type
        - search bar?
-         - An option to add a filter by name
+           - 
    - Use /market to put offers and trade things with other people
    - Use /boat to select main boat, see other boats 
      - Actions - show confirmation menu

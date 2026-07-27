@@ -222,7 +222,7 @@ module.exports = {
             }
           } else {
             // array
-            effects += `\`Increase ${bait_effect_templtaes[effect]} by ${value[0]} to ${value[1]}\`\n`;
+            effects += `\`Increase ${bait_effect_templates[effect]} by ${value[0]} to ${value[1]}\`\n`;
           }
         } else {
           // tool effects are TBD

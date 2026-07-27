@@ -4694,7 +4694,7 @@
                   "text": "Purchase",
                   "emoji": true
                 },
-                "action_id": "purchase_bait"
+                "action_id": "purchase"
               }
             ]
           }
@@ -4733,7 +4733,7 @@
           "type": "static_select",
           "placeholder": {
             "type": "plain_text",
-            "text":"Select a category",
+            "text": "Select a category",
             "emoji": true
           },
           "options": [
@@ -4780,6 +4780,25 @@
         "optional": false
       },
       {
+        "type": "input",
+        "block_id": "shop_search_input_block",
+        "element": {
+          "type": "plain_text_input",
+          "action_id": "plain_text_input-action",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Search for an item...(title & description)",
+            "emoji": true
+          }
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "  ",
+          "emoji": true
+        },
+        "optional": false
+      },
+      {
         "type": "actions",
         "elements": [
           {
@@ -4802,6 +4821,195 @@
             },
             "value": "clear_search",
             "action_id": "clear_search"
+          }
+        ]
+      }
+    ],
+    "fish-start": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person - Preparing to Fish"
+        },
+        "level": 1
+      },
+      {
+        "type": "markdown",
+        "text": "Ready to go fishing? Review your boat and choose a bait and tool."
+      },
+      {
+        "type": "carousel",
+        "elements": [
+          {
+            "type": "card",
+            "title": {
+              "type": "mrkdwn",
+              "text": "Trawler",
+              "verbatim": false
+            },
+            "subtitle": {
+              "type": "mrkdwn",
+              "text": "Default Boat - ID: FEJA"
+            },
+            "body": {
+              "type": "mrkdwn",
+              "text": "Something somethign description something somethign boat descriptioon\n*Tier*: `5`\n*Speed*:`10`\n*Capacity*: `5`\n*Sturdiness*: `5`\n*Range*: `5`",
+              "verbatim": false
+            },
+            "actions": []
+          },
+          {
+            "type": "card",
+            "title": {
+              "type": "mrkdwn",
+              "text": "Fishing Rod",
+              "verbatim": false
+            },
+            "subtitle": {
+              "type": "mrkdwn",
+              "text": "Selected Tool - ID: 1234"
+            },
+            "body": {
+              "type": "mrkdwn",
+              "text": "Something something something somethign descriptoin\n*Tier*: `5`\n*Durability*: `100%`\n*Effects*: `5`",
+              "verbatim": false
+            },
+            "actions": []
+          },
+          {
+            "type": "card",
+            "title": {
+              "type": "mrkdwn",
+              "text": "Worm Bait",
+              "verbatim": false
+            },
+            "subtitle": {
+              "type": "mrkdwn",
+              "text": "Selected Bait - ID: 2145"
+            },
+            "body": {
+              "type": "mrkdwn",
+              "text": "Something something something somthign description\n*Tier*: `3`\n*Durability*: `100%`\n*Effects*: `5`",
+              "verbatim": false
+            },
+            "actions": []
+          }
+        ]
+      },
+      {
+        "type": "input",
+        "element": {
+          "type": "static_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select a different tool",
+            "emoji": true
+          },
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Fishing Rod (id: 1245)",
+                "emoji": true
+              },
+              "value": "1245"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Fishing Pole (id: 1246)",
+                "emoji": true
+              },
+              "value": "1246"
+            }
+          ],
+          "action_id": "pregame_tool_select"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": " ",
+          "emoji": true
+        }
+      },
+      {
+        "type": "input",
+        "element": {
+          "type": "static_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select a different bait",
+            "emoji": true
+          },
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Worm Bait (id: 2145)",
+                "emoji": true
+              },
+              "value": "2145"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text":"Basic Bait (id: 2146)",
+                "emoji": true
+              },
+              "value": "2146"
+            }
+          ],
+          "action_id": "pregame_bait_select"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": " ",
+          "emoji": true
+        }
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "input",
+        "element": {
+          "type": "static_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select a fishing location",
+            "emoji": true
+          },
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "Lake",
+                "emoji": true
+              },
+              "value": "lake"
+            }
+          ],
+          "action_id": "pregame_location_select"
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Ready? Choose a location to fish at. ",
+          "emoji": true
+        },
+        "optional":false
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type":"button",
+            "text": {
+              "type": "plain_text",
+              "text": "Start Fishing",
+              "emoji": true
+            },
+            "value": "pregame_start",
+            "action_id": "pregame_start"
           }
         ]
       }

@@ -59,7 +59,8 @@ function populateBlock(category, searchQuery, page_num, DATA, user) {
             text: "Purchase",
             emoji: true,
           },
-          action_id: `purchase_${item.stype}_${item.id}`,
+          value: `${item.stype}_${item.id}`,
+          action_id: `shop_purchase`,
         },
       ],
     };
@@ -262,6 +263,156 @@ module.exports = {
                 }
             }
         })
-    }
+    },
+    shop_search: async ({action, ack, client, response, body}) => {
+        await ack();
+        const db = global.db;
+        const DATA = global.data;
+        const metadata = body.message.metadata;
+        const userId = metadata.event_payload.userId;
+        const shopPage = 1; // reset to page 1 when new searc h query
+        const searchQuery = body.state.values["shop_search_input_block"]["plain_text_input-action"].value;
+        const category = metadata.event_payload.category;
+        const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+        if (!user) {
+            const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+            blocks[0].text.text = "You need to get started before you can use this command. Try using the /f-start command to get started. ";
+            await client.chat.postEphemeral({
+                channel: body.channel.id,
+                user: boyd.user.id,
+                blocks: blocks
+            });
+            return;
+        }
+
+        const blocks = populateBlock(category, searchQuery, shopPage, DATA, user);
+        await client.chat.update({
+            channel: body.channel.id,
+            ts: body.message.ts,
+            blocks: blocks,
+            metadata: {
+                event_type: "shop_main",
+                event_payload: {
+                    userId: user.id,
+                    shopPage: shopPage,
+                    searchQuery: searchQuery,
+                    category: category
+                }
+            }
+        });
+
+
+    },
+    clear_search: async ({ action, ack, client, response, body}) => {
+        await ack();
+        const db = global.db;
+        const DATA = global.data;
+        const metadata = body.message.metadata;
+        const userId = metadata.event_payload.userId;
+        const shopPage = 1;
+        const searchQuery = "";
+        const category = metadata.event_payload.category;
+        const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+        if (!user) {
+            const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+            blocks[0].text.text = "You need to get started before you can use this command. Try using the /f-start command to get started. ";
+            await client.chat.postEphemeral({
+                channel: body.channel.id,
+                user: body.user.id,
+                blocks: blocks
+            });
+            return;
+
+        }
+        const blocks = populateBlock(category, searchQuery, shopPage, DATA, user);
+        await client.chat.update({
+            channel: body.channel.id,
+            ts: body.message.ts,
+            blocks: blocks,
+            metadata: {
+                event_type: "shop_main",
+                event_payload: {
+                    userId: user.id,
+                    shopPage: shopPage,
+                    searchQuery: searchQuery,
+                    category: category
+                }
+            }
+        });
+
+
+    },
+    shop_purchase: async ({ action, ack, client, response, body }) => {
+        // no confirmation. It's definitely not in a spot for accidental pressing
+        await ack();
+        const db = global.db;
+        const DATA = global.data;
+        const metadata = body.message.metadata;
+        const userId = metadata.event_payload.userId;
+        const shopPage = metadata.event_payload.shopPage;
+        const searchQuery = metadata.event_payload.searchQuery;
+        const category = metadata.event_payload.category;
+        const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+        if (!user) {
+            const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+            blocks[0].text.text = "You need to get started before you can use this command. Try using the /f-start command to get started. ";
+            await client.chat.postEphemeral({
+                channel: body.channel.id,
+                user: body.user.id,
+                blocks: blocks
+            });
+            return;
+        }
+
+        let user_data = JSON.parse(user.data);
+        const val = action.value;
+        const stype = val.split("_")[0];
+        const itemId = val.split("_")[1];
+        let item = null;
+        if (stype === "baits") {
+            item = DATA.baits[itemId];
+        } else if (stype === "boats") {
+            item = DATA.boats[itemId];
+        } else if (stype === "tools") {
+            item = DATA.tools[itemId];
+        }
+
+        // check if user has enough coins
+        if (user.coins <item.cost) {
+            const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+            blocks[0].text.text = "You don't have enough coins to purchase this item. You need `" + item.cost + "` coins to purchase this item. ";
+            await client.chat.postEphemeral({
+                channel: body.channel.id,
+                user: body.user.id,
+                blocks: blocks
+            });
+            return;
+        }
+
+        // deduct coins and add item to user data
+        user.coins -= item.cost;
+        console.log(itemId);
+        user_data.equipment.push({
+            id: global.generateID(4),
+            type: itemId,
+            durability: 100,
+            usage_stats: {
+                trips: 0,
+                fish_caught: 0,
+                fish_weight: 0,
+                fish_value: 0
+            },
+            etype: stype.slice(0, stype.length - 1)
+        });
+        const new_id = user_data.equipment[user_data.equipment.length - 1].id;
+        db.prepare("UPDATE users SET coins = ?, data = ? WHERE id = ?").run(user.coins, JSON.stringify(user_data), user.id);
+        const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = "You have successfully purchased 1x `" + item.name + "` for `" + item.cost + "` coins. The item ID is `" + new_id + "`";
+        await client.chat.postEphemeral({
+            channel: body.channel.id,
+            user: body.user.id,
+            blocks: blocks
+        });
+     }
   },
 };
