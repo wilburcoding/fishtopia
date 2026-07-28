@@ -1,4 +1,4 @@
-function populateStartBlocks(DATA, user, toolId, baitId, boatId) {
+function populateStartBlocks(DATA, user, toolId, baitId, boatId, mapId) {
     let blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-start"]));
     const userData = JSON.parse(user.data);
     let userEquipment = userData.equipment; 
@@ -90,6 +90,31 @@ function populateStartBlocks(DATA, user, toolId, baitId, boatId) {
             "value": map
         }
     });
+    blocks[6].element.initial_option = {
+        text: {
+            type: "plain_text",
+            text: `${DATA.maps[mapId].name}`,
+            emoji: true
+        },
+        value: mapId
+    }
+
+    // map card
+    const mapData = DATA.maps[mapId];
+    blocks[7].title.text = mapData.name;
+    let fish_available = 0;
+    for (let fish of Object.keys(DATA.fish)) {
+        if (Object.keys(DATA.fish[fish]["maps"]).includes(mapId)) {4
+            fish_available++;
+        }
+    }
+    // fish_available = fish_available.trim();
+    blocks[7].body.text = `
+${mapData.description}
+*Danger* (Sturdiness recommended): \`${mapData.danger}\`
+*Distance*: \`${mapData.distance}\`
+*Fish Available*: ${fish_available}
+    `
     return blocks;
 
     
@@ -121,6 +146,7 @@ module.exports = {
         let toolId = null;
         let baitId = null;
         let boatId = null;
+        let mapId = null;
 
         // automatically select the best tool and bait
         let tools = equipment.filter(item => item.etype === "tool");
@@ -142,10 +168,22 @@ module.exports = {
             boatId = defaultBoat.id;
         }
 
+        // find best map boat can go to (based on sturdiness)
+        for (let map of Object.keys(DATA.maps)) {
+            // console.log(map);
+            // console.log(DATA.maps[map].danger);
+            // console.log(DATA.boats[defaultBoat.type].stats.sturdiness);
+            if (DATA.maps[map].danger <= DATA.boats[defaultBoat.type].stats.sturdiness) {
+                console.log(map);
+                mapId = map;
+            }
+        }
+        console.log(mapId);
+
         // console.log(toolId);
         // console.log(baitId);
         // console.log(boatId);
-        const blocks = populateStartBlocks(DATA, user, toolId, baitId, boatId);
+        const blocks = populateStartBlocks(DATA, user, toolId, baitId, boatId, mapId);
 
         // just testing layout as I go
             // const blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-start"]));
@@ -246,7 +284,51 @@ module.exports = {
                     }
                 }
             });
+
+        },
+        pregame_location_select: async ({ action, ack, client, body, respond }) => {
+            await ack();
+            const new_map_id = action.selected_option.value;
+            const metadata = body.message.metadata;
+            const toolId = metadata.event_payload.toolId;
+            const baitId = metadata.event_payload.baitId;
+            const boatId = metadata.event_payload.boatId;
+
+            const userId = metadata.event_payload.userId;
+            const DATA = global.data;
+            const db = global.db;
+
+            const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+            if (!user) {
+                const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+                blocks[0].text.text = "You need to get started before you can use this command. Try using the /f-start command to get started. ";
+                await client.chat.postEphemeral({
+                    channel: body.channel.id,
+                    user: body.user.id,
+                    blocks: blocks
+                });
+                return;
+            }
+            
+            const blocks = populateStartBlocks(DATA, user, toolId, baitId, boatId, new_map_id);
+            await client.chat.update({
+                channel: body.channel.id,
+                ts: body.message.ts,
+                user: body.user.id,
+                blocks: blocks,
+                metadata: {
+                    event_type: "fish_start",
+                    event_payload: {
+                        userId: user.id,
+                        toolId: toolId,
+                        baitId: baitId,
+                        boatId: boatId,
+                        mapId: new_map_id
+                    }
+                }
+            });
             
         }
+
     }
 }

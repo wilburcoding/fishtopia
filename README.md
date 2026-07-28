@@ -23,8 +23,8 @@ An interactive Slack bot fishing game
    - [ ] /f-fish
      - [x] Layout
      - [ ] Start page
-       - [ ] Tool select
-       - [ ] Bait select
+       - [x] Tool select
+       - [x] Bait select
        - [ ] Location select
        - [ ] Start functionality
        - [ ] Check for no boat, no tools, or no baits
@@ -104,6 +104,9 @@ An interactive Slack bot fishing game
        - First screen -> select map and equipment to bring. Shows your current default boat
          - Show brief intro
          - Cards to show tool, bait, and boat info before they go in? Switching to carousel layout
+         - v2 layout -> also show selected location information
+           - Show sturdiness, description, fish
+           - Add warning for recommended sturdiness
        - Second screen -> show actively moving to location (and ETA)
        - Third screen -> multiple buttons to pick a spot to fish
        - Fourth screen -> Showing fishing and then after delay, show catch 

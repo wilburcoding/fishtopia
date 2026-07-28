@@ -4999,6 +4999,24 @@
         "optional":false
       },
       {
+        "type": "card",
+        "title": {
+          "type": "mrkdwn",
+          "text": "Lake",
+          "verbatim": false
+        },
+        "body": {
+          "type": "mrkdwn",
+          "text": "Cool something something something description here aefa. \n*Recommended Sturdiness*: `5` (Your boat: `8`)\n*Distance*: `5 (Your boat: `10`)\n*Fish Available*: `Bass` `Trout` `Salmon`",
+          "verbatim": false
+        },
+        "actions": []
+      },
+      {
+        "type": "markdown",
+        "text": " " 
+      },
+      {
         "type": "actions",
         "elements": [
           {
