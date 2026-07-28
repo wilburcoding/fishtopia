@@ -21,6 +21,13 @@ An interactive Slack bot fishing game
      - [x] Balance boats
  - [ ] Commands 
    - [ ] /f-fish
+     - [x] Layout
+     - [ ] Start page
+       - [ ] Tool select
+       - [ ] Bait select
+       - [ ] Location select
+       - [ ] Start functionality
+       - [ ] Check for no boat, no tools, or no baits
      - [ ] 
    - [ ] /f-shop
      - [x] Paginated layout
