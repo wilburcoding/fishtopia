@@ -108,6 +108,9 @@ An interactive Slack bot fishing game
            - Show sturdiness, description, fish
            - Add warning for recommended sturdiness
        - Second screen -> show actively moving to location (and ETA)
+         - Show location destination
+         - Show ETA
+         - probably the simplest of the fishing screens
        - Third screen -> multiple buttons to pick a spot to fish
        - Fourth screen -> Showing fishing and then after delay, show catch 
          - Options: Release and Catch Again, Keep and Catch Again

@@ -13,6 +13,7 @@ function setUpDatabase() {
             level INTEGER DEFAULT 1,
             xp INTEGER DEFAULT 0,
             data TEXT DEFAULT '{}',
+            state TEXT DEFAULT '{}',
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
         `).run();

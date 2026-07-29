@@ -111,10 +111,26 @@ function populateStartBlocks(DATA, user, toolId, baitId, boatId, mapId) {
     // fish_available = fish_available.trim();
     blocks[7].body.text = `
 ${mapData.description}
-*Danger* (Sturdiness recommended): \`${mapData.danger}\`
-*Distance*: \`${mapData.distance}\`
+*Danger* (Sturdiness): \`${mapData.danger}\` (Your boat: \`${boatData.stats.sturdiness}\`)
+*Distance*: \`${mapData.distance}\` (Your boat range: \`${boatData.stats.range}\`)
 *Fish Available*: ${fish_available}
     `
+
+    // add boat sturdiness warning + range warning
+    let warning_text = "";
+    if (boatData.stats.sturdiness < mapData.danger) {
+        warning_text+= ":warning: Warning: Your boat may not be sturdy enough for this location.\n";
+    } else {
+        warning_text+= ":white_check_mark: Your boat is sturdy enough for this location. \n";
+    }
+
+    if (boatData.stats.range < mapData.distance) {
+        warning_text+= ":warning: Warning: Your boat is out of range for this location. \n";
+    } else {
+        warning_text+= ":white_check_mark: Your boat is in range for this location. \n";
+    }
+    warning_text = warning_text.trim();
+    blocks[8].text = warning_text;
     return blocks;
 
     
@@ -199,7 +215,8 @@ module.exports = {
                     toolId: toolId,
                     baitId: baitId,
                     boatId: boatId,
-                    userId: user.id
+                    userId: user.id,
+                    mapId: mapId
                 }
             }
         })
@@ -328,6 +345,54 @@ module.exports = {
                 }
             });
             
+        },
+        pregame_start: async ({ action, ack, client, body, respond }) => {
+            await ack();
+            const metadata = body.message.metadata;
+            const toolId = metadata.event_payload.toolId;
+            const baitId = metadata.event_payload.baitId;
+            const boatId = metadata.event_payload.boatId;
+            // boat, tool, and bait info is passed through metadata. Map is in state data so its not going with metadata
+            const mapId = metadata.event_payload.mapId;
+
+            const userId = metadata.event_payload.userId;
+            const DATA = global.data;
+            const db = global.db;
+            const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+            if (!user) {
+                const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+                blocks[0].text.text = "You need to get started before you can use this command. Try using the /f-start command to get started. ";
+                await client.chat.postEphemeral({
+                    channel: body.channel.id,
+                    user: body.user.id,
+                    blocks: blocks
+                });
+                return;
+            }
+
+            // start traveling 
+            userState = JSON.parse(user.state);
+            if (userState.current !== "idle") {
+                const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+                blocks[0].text.text = "You are already on a trip. You cannot start a new one until you return from your current trip. ";
+                await client.chat.postEphemeral({
+                    channel: body.channel.id,
+                    user: body.user.id,
+                    blocks: blocks
+                });
+                return;
+            }
+            userState.current = "traveling";
+            userState.location = mapId;
+            // time to reach = distance / speed (minutes)
+            console.log(mapId);
+            const time_to_reach = Math.ceil(DATA.maps[mapId].distance / DATA.boats[boatId].stats.speed);
+            const time_reach = Date.now() + (time_to_reach * 60 * 1000);
+            console.log(time_to_reach);
+            console.log(time_reach);
+            
+
+
         }
 
     }

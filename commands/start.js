@@ -237,7 +237,7 @@ module.exports = {
             "etype": "bait"
           }
           db.prepare(
-            "INSERT INTO users (username, id, data, coins, gold, level, xp) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO users (username, id, data, coins, gold, level, xp, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
           ).run(
             username,
             body.user.id,
@@ -251,7 +251,12 @@ module.exports = {
             1000,
             0,
             1,
-            0
+            0,
+            JSON.stringify({
+              current: "idle", // alternative options: traveling, fishing
+              location: "home", // alternative options: any map id
+              time_reach: 0, // when applicable -> for the time when user is reaching a new location
+            })
           );
           const block2 = JSON.parse(
             JSON.stringify(global.data.blocks["start-end"][0]),

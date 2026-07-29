@@ -52,7 +52,7 @@ function generateID(length) {
 }
 
 // // test ping button action for ping command
-function setData(username, data, coins, gold, level, xp) { 
+function setData(username, data, coins, gold, level, xp, state) { 
   const db = global.db;
   const user = db
     .prepare("SELECT * FROM users WHERE username = ?")
@@ -73,6 +73,10 @@ function setData(username, data, coins, gold, level, xp) {
     if (xp === undefined) {
       xp = user.xp;
     }
+
+    if (state === undefined) {
+      state = user.state;
+    }
     db.prepare(
       "UPDATE users SET data = ?, coins = ?, gold = ?, level = ?, xp = ? WHERE username = ?",
     ).run(data, coins, gold, level, xp, username);
@@ -91,7 +95,8 @@ function getData(username) {
       coins: user.coins,
       gold: user.gold,
       level: user.level,
-      xp: user.xp
+      xp: user.xp,
+      state: user.state
     };
   } else {
     console.error(`User with username ${username} not found.`);
@@ -205,7 +210,7 @@ function resetData(username) {
       }
     }
     db.prepare(
-      "UPDATE users SET data = ?, coins = 1000, gold = 100, level = 1, xp = 0 WHERE username = ?",
+      "UPDATE users SET data = ?, coins = 1000, gold = 100, level = 1, xp = 0, state = ? WHERE username = ?",
     ).run(
       JSON.stringify({
         inventory: [],
@@ -214,7 +219,12 @@ function resetData(username) {
         stats: stats,
         completion: completion,
       }),
-      username
+      username,
+      JSON.stringify({
+        current: "idle",
+        location: "home",
+        time_reach: 0,
+      })
     );
     console.log("Successfully reset data for user: " + username);
   } else {
@@ -241,7 +251,7 @@ function resetData(username) {
   // console.log(userdata.boats);
   // userdata.boats = [];
   // console.log(userdata.boats);
-  // setData("jellyfish", JSON.stringify(userdata), undefined, undefined, undefined, undefined); // for testing only
+  // setData("jellyfish", JSON.stringify(userdata), undefined, undefined, undefined, undefined, undefined); // for testing only
  
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);

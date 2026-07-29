@@ -5031,6 +5031,33 @@
           }
         ]
       }
+    ],
+    "fish-travel": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person - Traveling to Fishing Location"
+        },
+        "level": 1
+      },
+      {
+        "type": "card",
+        "title": {
+          "type": "mrkdwn",
+          "text": "Destination: Crystal Lake",
+          "verbatim": false
+        },
+        "body": {
+          "type": "mrkdwn",
+          "text": "Sometghint somethign somethgin description here",
+          "verbatim": false
+        },
+        "actions": []
+      },
+      {
+        "type": "divider"
+      }
     ]
   }
 }
