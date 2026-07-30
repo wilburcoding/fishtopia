@@ -52,7 +52,7 @@ function generateID(length) {
 }
 
 // // test ping button action for ping command
-function setData(username, data, coins, gold, level, xp, state) { 
+function setData(username, data, coins, gold, level, xp, state) {
   const db = global.db;
   const user = db
     .prepare("SELECT * FROM users WHERE username = ?")
@@ -88,7 +88,9 @@ function setData(username, data, coins, gold, level, xp, state) {
 
 function getData(username) {
   const db = global.db;
-  const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
+  const user = db
+    .prepare("SELECT * FROM users WHERE username = ?")
+    .get(username);
   if (user) {
     return {
       data: user.data,
@@ -96,7 +98,7 @@ function getData(username) {
       gold: user.gold,
       level: user.level,
       xp: user.xp,
-      state: user.state
+      state: user.state,
     };
   } else {
     console.error(`User with username ${username} not found.`);
@@ -219,13 +221,17 @@ function resetData(username) {
         stats: stats,
         completion: completion,
       }),
-      username,
       JSON.stringify({
         current: "idle",
         location: "home",
         time_reach: 0,
-      })
+      }),
+      username
     );
+    // const new_data = db
+    //   .prepare("SELECT * FROM users WHERE username = ?")
+    //   .get(username);
+    // console.log(new_data);
     console.log("Successfully reset data for user: " + username);
   } else {
     console.error(`User with username ${username} not found. `);
@@ -243,7 +249,7 @@ function resetData(username) {
   global.db = database.db;
   global.generateID = generateID;
   global.data = DATA;
-  // resetData("jellyfish"); // reset data for testing only
+  resetData("jellyfish"); // reset data for testing only
 
   // let userdata = getData("jellyfish");
 
@@ -252,7 +258,7 @@ function resetData(username) {
   // userdata.boats = [];
   // console.log(userdata.boats);
   // setData("jellyfish", JSON.stringify(userdata), undefined, undefined, undefined, undefined, undefined); // for testing only
- 
+
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);
 })();

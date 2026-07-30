@@ -5053,10 +5053,11 @@
           "text": "Sometghint somethign somethgin description here",
           "verbatim": false
         },
+        "subtext": {
+          "type": "mrkdwn",
+          "text": "Run this command to check your progress or start fishing!"
+        },
         "actions": []
-      },
-      {
-        "type": "divider"
       }
     ]
   }
