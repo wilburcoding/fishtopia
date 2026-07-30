@@ -174,6 +174,10 @@ function populateTravelBlocks(DATA, user) {
   return blocks;
 }
 
+function populateFishingBlocks(DATA, user, toolId, baitId, boatId, mapId) {
+    
+}
+
 module.exports = {
   name: "/f-fish",
   description: "Go fishing!",
@@ -272,6 +276,12 @@ module.exports = {
       });
     
     } else if (state.current === "traveling") {
+        if (state.time_reach <= Date.now()) {
+            // reached place -> change to fishing UI
+            state.current = "fishing";
+            db.prepare("UPDATE users SET state = ? WHERE id = ?").run(JSON.stringify(state), user.id);
+
+        }
         const blocks = populateTravelBlocks(DATA, user);
         await client.chat.postMessage({
             channel: command.channel_id,
@@ -279,6 +289,8 @@ module.exports = {
             blocks: blocks,
         });
         // so it turns out no metadata is needed for this since you can't really go on anyways
+    } else if (state.current === "fishing") {
+
     }
   },
   actions: {

@@ -4953,7 +4953,7 @@
             {
               "text": {
                 "type": "plain_text",
-                "text":"Basic Bait (id: 2146)",
+                "text": "Basic Bait (id: 2146)",
                 "emoji": true
               },
               "value": "2146"
@@ -4996,7 +4996,7 @@
           "text": "Ready? Choose a location to fish at. ",
           "emoji": true
         },
-        "optional":false
+        "optional": false
       },
       {
         "type": "card",
@@ -5014,13 +5014,13 @@
       },
       {
         "type": "markdown",
-        "text": " " 
+        "text": " "
       },
       {
         "type": "actions",
         "elements": [
           {
-            "type":"button",
+            "type": "button",
             "text": {
               "type": "plain_text",
               "text": "Start Fishing",
@@ -5058,6 +5058,93 @@
           "text": "Run this command to check your progress or start fishing!"
         },
         "actions": []
+      }
+    ],
+    "fish-precatch": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person - Fishing at Crystal Lake"
+        }
+      },
+      {
+        "type": "markdown",
+        "text": "You've arrived! The tool, bait, and boat you selected are shown below. You can start fishing now."
+      },
+      {
+        "type": "carousel",
+        "elements": [
+          {
+            "type": "card",
+            "title": {
+              "type": "mrkdwn",
+              "text": "Trawler",
+              "verbatim": false
+            },
+            "subtitle": {
+              "type": "mrkdwn",
+              "text": "Boat - ID: FEJA"
+            },
+            "body": {
+              "type": "mrkdwn",
+              "text": "Somethihng somteing something something desciprtion",
+              "verbatim": false
+            },
+            "actions": []
+          },
+          {
+            "type": "card",
+            "title": {
+              "type": "mrkdwn",
+              "text": "Fishing ROd",
+              "verbatim": false
+            },
+            "subtitle": {
+              "type": "mrkdwn",
+              "text": "Tool - ID: 1234"
+            },
+            "body": {
+              "type": "mrkdwn",
+              "text": "Something something something descpirtoin",
+              "verbatim": false
+            },
+            "actions": []
+          },
+          {
+            "type": "card",
+            "title": {
+              "type": "mrkdwn",
+              "text": "Worm Bait",
+              "verbatim": false
+            },
+            "subtitle": {
+              "type": "mrkdwn",
+              "text": "Bait - ID: 1253"
+            },
+            "body": {
+              "type": "mrkdwn",
+              "text": "Something somethign somethgin",
+              "verbatim": false
+            },
+            "actions": []
+          }
+        ]
+      },
+            {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Cast Line",
+              "emoji": true
+            },
+            "value": "fish",
+            "action_id": "fish"
+          }
+        ]
       }
     ]
   }

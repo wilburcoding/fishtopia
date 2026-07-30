@@ -25,10 +25,13 @@ An interactive Slack bot fishing game
      - [ ] Start page
        - [x] Tool select
        - [x] Bait select
-       - [ ] Location select
-       - [ ] Start functionality
-       - [ ] Check for no boat, no tools, or no baits
-     - [ ] 
+       - [x] Location select
+       - [x] Start functionality
+       - [x] Check for no boat, no tools, or no baits
+     - [ ] Travel page
+       - [ ] Layout
+       - [ ] Show basic info
+     - [ ] Fishing page
    - [ ] /f-shop
      - [x] Paginated layout
      - [x] Functionality
@@ -74,6 +77,7 @@ An interactive Slack bot fishing game
    - [ ] I missed metadata in a lot of plaecs -> double check 
    - [x] markdown not working for /f-shop command? apparently it decided to only take single *
    - [ ] Just realized different button styles exist -> put in later
+   - [ ] Tool, bait, and boat IDs are not transferred between traveling and fishing states
 
 
 
@@ -112,10 +116,14 @@ An interactive Slack bot fishing game
          - Show ETA
          - probably the simplest of the fishing screens
        - Third screen -> multiple buttons to pick a spot to fish
+         - Layout -> compressed view showing tool, bait, boat
+           - 
+         - Pick a spot to fish
+         - This should realistically only show up in the beginning
        - Fourth screen -> Showing fishing and then after delay, show catch 
          - Options: Release and Catch Again, Keep and Catch Again
            - Release if they don't like fish so no space wasted 
-       - Fifth screen  
+       - Fifth screen -> traveling back with catch results
    - Use /shop to buy equipment 
      - Boat, tools, baits. Prices in both coins and gold
      - Some items are only available in gold (rare stuff)

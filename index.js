@@ -225,6 +225,7 @@ function resetData(username) {
         current: "idle",
         location: "home",
         time_reach: 0,
+        metadata:{}
       }),
       username
     );

@@ -256,6 +256,7 @@ module.exports = {
               current: "idle", // alternative options: traveling, fishing
               location: "home", // alternative options: any map id
               time_reach: 0, // when applicable -> for the time when user is reaching a new location
+              metadata:{}, // extra data to store (ex. boat, tool, bait IDs )
             })
           );
           const block2 = JSON.parse(
