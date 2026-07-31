@@ -5060,17 +5060,18 @@
         "actions": []
       }
     ],
-    "fish-precatch": [
+    "fish-prefish": [
       {
         "type": "header",
         "text": {
           "type": "plain_text",
           "text": "Person - Fishing at Crystal Lake"
-        }
+        },
+        "level": 1
       },
       {
         "type": "markdown",
-        "text": "You've arrived! The tool, bait, and boat you selected are shown below. You can start fishing now."
+        "text": "You've arrived at `Crystal Lake`! The tool, bait, and boat you selected are shown below. You can start fishing now."
       },
       {
         "type": "carousel",
@@ -5131,7 +5132,7 @@
           }
         ]
       },
-            {
+      {
         "type": "actions",
         "elements": [
           {
@@ -5141,10 +5142,30 @@
               "text": "Cast Line",
               "emoji": true
             },
-            "value": "fish",
-            "action_id": "fish"
+            "value": "fish_rstart",
+            "action_id": "fish_rstart"
           }
         ]
+      }
+    ],
+    "fish_waitfish": [
+      {
+        "type": "card",
+        "title": {
+          "type": "mrkdwn",
+          "text": "Person - Line Casted",
+          "verbatim": false
+        },
+        "body": {
+          "type": "mrkdwn",
+          "text": "Your line is in the water! Just waiting for a fish to bite...",
+          "verbatim":false
+        },
+        "subtext": {
+          "type": "mrkdwn",
+          "text": "You're at `Crystal Lake` with a `Trawler`, using a `Fishing Rod` and `Worm Bait`."
+        },
+        "actions": []
       }
     ]
   }

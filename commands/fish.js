@@ -144,21 +144,21 @@ ${mapData.description}
 }
 
 function calcTimeRemaining(timestamp) {
-    const now = Date.now();
-    const timeRemaining = timestamp - now;
-    if (timeRemaining <= 0) {
-        return "0s";
-    } 
-    const seconds = Math.floor(timeRemaining / 1000) % 60;
-    const minutes = Math.floor(timeRemaining / (60 * 1000)) % 60;
-    const hours = Math.floor(timeRemaining / (60 * 60 * 1000)) % 24;
-    if (hours > 0) {
-        return `${hours} hours`;
-    } else if (minutes > 0) {
-        return `${minutes} minutes`;
-    } 
-    // keeping it simple
-    return `${seconds} seconds`;
+  const now = Date.now();
+  const timeRemaining = timestamp - now;
+  if (timeRemaining <= 0) {
+    return "0s";
+  }
+  const seconds = Math.floor(timeRemaining / 1000) % 60;
+  const minutes = Math.floor(timeRemaining / (60 * 1000)) % 60;
+  const hours = Math.floor(timeRemaining / (60 * 60 * 1000)) % 24;
+  if (hours > 0) {
+    return `${hours} hours`;
+  } else if (minutes > 0) {
+    return `${minutes} minutes`;
+  }
+  // keeping it simple
+  return `${seconds} seconds`;
 }
 function populateTravelBlocks(DATA, user) {
   let blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-travel"]));
@@ -174,8 +174,51 @@ function populateTravelBlocks(DATA, user) {
   return blocks;
 }
 
-function populateFishingBlocks(DATA, user, toolId, baitId, boatId, mapId) {
-    
+function populatePreFishingBlocks(DATA, user, toolId, baitId, boatId, mapId) {
+  const mapData = DATA.maps[mapId];
+  const blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-prefish"]));
+  blocks[0].text.text = `${user.username} - Fishing at ${mapData.name}`;
+  blocks[1].text = `You've arrived at \`${mapData.name}\`! The tool, bait, and boat you selected are shown below. You can start fishing once you're ready!`;
+  // populate cards with tool, bait, boat info
+  const userData = JSON.parse(user.data);
+  const equipment = userData.equipment;
+  const tool = equipment.find((item) => item.id === toolId && item.etype === "tool");
+  const bait = equipment.find((item) => item.id === baitId && item.etype === "bait");
+  const boat = userData.boats.find((item) => item.id === boatId);
+
+  // they shoudl all technically exist ^^
+  const boatData = DATA.boats[boat.type];
+  blocks[2].elements[0].title.text = boatData.name;
+  blocks[2].elements[0].subtitle.text = `Boat - ID: ${boat.id}`;
+  blocks[2].elements[0].body.text = `${boatData.description}`;
+
+  const toolData = DATA.tools[tool.type];
+  blocks[2].elements[1].title.text = toolData.name;
+  blocks[2].elements[1].subtitle.text = `Tool - ID: ${tool.id}`;
+  blocks[2].elements[1].body.text = `${toolData.description}`;
+
+  const baitData = DATA.baits[bait.type];
+  blocks[2].elements[2].title.text = baitData.name;
+  blocks[2].elements[2].subtitle.text = `Bait - ID: ${bait.id}`;
+  blocks[2].elements[2].body.text = `${baitData.description}`;
+  return blocks;
+}
+function populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId) {
+  let blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-wait"]));
+  const mapData = DATA.maps[mapId];
+  const userData = JSON.parse(user.data);
+  const equipment = userData.equipment;
+  const tool = equipment.find((item) => item.id === toolId && item.etype === "tool");
+  const bait = equipment.find((item) => item.id === baitId && item.etype === "bait");
+  const boat = userData.boats.find((item) => item.id === boatId);
+  const boatData = DATA.boats[boat.type];
+  const toolData = DATA.tools[tool.type];
+  const baitData = DATA.baits[bait.type];
+  const txt = `You're at \`${mapData.name}\` with a \`${boatData.name}\`, using a \`${toolData.name}\` and \`${baitData.name}\``;
+  blocks[0].title.text = `${user.username} - Line Casted`;
+  blocks[0].subtext.text = txt;
+  return blocks;
+
 }
 
 module.exports = {
@@ -274,23 +317,60 @@ module.exports = {
           },
         },
       });
-    
     } else if (state.current === "traveling") {
-        if (state.time_reach <= Date.now()) {
-            // reached place -> change to fishing UI
-            state.current = "fishing";
-            db.prepare("UPDATE users SET state = ? WHERE id = ?").run(JSON.stringify(state), user.id);
-
-        }
-        const blocks = populateTravelBlocks(DATA, user);
+      if (state.time_reach <= Date.now()) {
+        // reached place -> change to fishing UI
+        state.current = "prefish";
+        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+          JSON.stringify(state),
+          user.id,
+        );
+        const metadata = state.metadata;
+        toolId = metadata.toolId;
+        baitId = metadata.baitId;
+        boatId = metadata.boatId;
+        mapId = state.location;
+        const blocks = populatePreFishingBlocks(DATA, user, toolId, baitId, boatId, mapId);
         await client.chat.postMessage({
-            channel: command.channel_id,
-            user: command.user_id,
-            blocks: blocks,
+          channel: command.channel_id,
+          user: command.user_id,
+          blocks: blocks
         });
-        // so it turns out no metadata is needed for this since you can't really go on anyways
-    } else if (state.current === "fishing") {
-
+        return;
+      }
+      const blocks = populateTravelBlocks(DATA, user);
+      await client.chat.postMessage({
+        channel: command.channel_id,
+        user: command.user_id,
+        blocks: blocks,
+      });
+      // so it turns out no metadata is needed for this since you can't really go on anyways
+    } else if (state.current === "prefish") {
+      const metadata = state.metadata;
+      toolId = metadata.toolId;
+      baitId = metadata.baitId;
+      boatId = metadata.boatId;
+      mapId = state.location;
+      const blocks = populatePreFishingBlocks(DATA, user, toolId, baitId, boatId, mapId);
+      await client.chat.postMessage({
+        channel: command.channel_id,
+        user: command.user_id,
+        blocks: blocks
+      });
+    } else if (state.current === "casting") {
+      const metadata = state.metadata;
+      toolId = metadata.toolId;
+      baitId = metadata.baitId;
+      boatId = metadata.boatId;
+      mapId = state.location;
+      const blocks = populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId);
+      await client.chat.postMessage({
+        channel: command.channel_id,
+        user: command.user_id,
+        blocks: blocks
+      });
+      // show warning
+      
     }
   },
   actions: {
@@ -476,6 +556,11 @@ module.exports = {
       }
       userState.current = "traveling";
       userState.location = mapId;
+      userState.metadata = {
+        toolId: toolId,
+        baitId: baitId,
+        boatId: boatId,
+      };
       // time to reach = distance / speed (minutes)
       const user_data = JSON.parse(user.data);
       const boats = user_data.boats;
@@ -493,10 +578,7 @@ module.exports = {
         userId,
       );
       user.state = JSON.stringify(userState);
-      const blocks = populateTravelBlocks(
-        DATA,
-        user
-      );
+      const blocks = populateTravelBlocks(DATA, user);
       await client.chat.update({
         channel: body.channel.id,
         ts: body.message.ts,
@@ -513,5 +595,49 @@ module.exports = {
         // }, No metadata needed see explanation above
       });
     },
+    fish_rstart:async ({ action, ack, client, body, respond}) => {
+        // cast line -> showing pre catch and then catch screen with delay
+        await ack();
+        const userId = body.user.id;
+        const DATA = global.data;
+        const db = global.db;
+        const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+        if (!user) {
+          const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+          // theoretically shouldn't happen ig
+          blocks[0].text.text = "Somehow, the user doesn't exist. Please try getting started with the /f-start command. ";
+          await client.chat.postEphemeral({
+            channel: body.channel.id,
+            user: body.user.id,
+            blocks: blocks
+          });
+          return;
+        }
+        const userState = JSON.parse(user.state);
+        if (userState.current !== "prefish") {
+          // should be super uncommon
+          const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+          blocks[0].text.text = "You are not currently preparing to fish. Please use the /f-fish command again. ";
+          await client.chat.postEphemeral({
+            channel: body.channel.id,
+            user: body.user.id,
+            blocks: blocks
+          });
+          return;
+        }
+        userState.current = "casting";
+        const toolId = userState.metadata.toolId;
+        const baitId = userState.metadata.baitId;
+        const boatId = userState.metadata.boatId;
+        const mapId = userState.location;
+        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(JSON.stringify(userState), userId);
+        const blocks = populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId);
+        await client.chat.update({
+          channel: body.channel.id,
+          ts: body.message.ts,
+          blocks: blocks
+        });
+
+    }
   },
 };

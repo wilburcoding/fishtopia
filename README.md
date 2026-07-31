@@ -29,8 +29,11 @@ An interactive Slack bot fishing game
        - [x] Start functionality
        - [x] Check for no boat, no tools, or no baits
      - [ ] Travel page
-       - [ ] Layout
-       - [ ] Show basic info
+       - [x] Layout
+       - [x] Show basic info
+     - [ ] Prefishing apge
+       - [x] Show basic info
+       - [x] Option to cast
      - [ ] Fishing page
    - [ ] /f-shop
      - [x] Paginated layout
