@@ -67,6 +67,9 @@ An interactive Slack bot fishing game
      - [x] Completion stats section
      - [x] usage stats sectio
    - [ ] an overall command message catch?
+ - [ ] Tool effects
+   - [x] Figure out what tool effects theres going to eb -> its just going to be the same as the boats pretty much
+   - [ ] Implement in /f-fish
  - [ ] some way for me to edit my own data?
  - [ ] bugs + fixes
    - [x] Trying to select a tool in profile doesn't work after you select it the second time? -> forgot to set action id lol whoops
@@ -205,8 +208,8 @@ An interactive Slack bot fishing game
    - Equipment
      - Tiers -> same as boat tiers
      - Tools
-       - Hand
-       - Pole
+       - Hand -> no effects
+       - Pole -> 
        - Spear
        - Fishing Rod
        - Net
@@ -216,8 +219,15 @@ An interactive Slack bot fishing game
        - More special tools TBD
        - Different levels -> increased durability or effect
        - Multipliers:
-         - catch rate
-         - catch speed 
+         - catch speed -> catch_speed
+         - catch nothing rate -> catch_nothing
+         - catch count -> catch_count
+         - weight multiplier -> weight_multiplier
+         - xp multiplier -> xp_multiplier
+         - multiplier for each rarity (common, uncommon, rare, epic, legendary) -> x_multipluer
+         - Variant multiplier (shiny or chroma) -> x_multiplier
+         - Item multiplier -> item_multiplier
+         - Pretty much all the same as the bait ones 
        - Gradually lose durability -> can repair but otherwise breaks
      - Baits -> real stuff
        - No bait
@@ -255,6 +265,7 @@ An interactive Slack bot fishing game
          - item_multiplier -> higher chance of getting an item when fishing
          - xp_multiplier -> (multiplies by percentage)
          - All of the effects are on top of the basic boat's effects
+           - If there is going to be?
        - Baits can be reused to a certain point and then they self destruct. No chance of like repairing or anything. 
  - Database? -> keep it simple and use local sqlite
  - Unfortunately it looks like I need to do art for this one
@@ -284,3 +295,7 @@ XP processing (checking levels and stuff) is going to be done whenever the user 
 Max carousel size is 10. I guess I have to redo whatever is happening with the shop layout. 
 
 How did i not come up with this helper function based command population earlier
+
+Catch time should be limited to up to 15 seconds
+
+Used AI to brainstorm effects for each tool

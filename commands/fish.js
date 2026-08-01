@@ -204,7 +204,7 @@ function populatePreFishingBlocks(DATA, user, toolId, baitId, boatId, mapId) {
   return blocks;
 }
 function populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId) {
-  let blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-wait"]));
+  let blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-waitfish"]));
   const mapData = DATA.maps[mapId];
   const userData = JSON.parse(user.data);
   const equipment = userData.equipment;
@@ -259,6 +259,7 @@ module.exports = {
       if (tools.length > 0) {
         toolId = tools[0].id;
       }
+
 
       let baits = equipment.filter((item) => item.etype === "bait");
       baits.sort((a, b) => b.tier - a.tier);
@@ -370,7 +371,13 @@ module.exports = {
         blocks: blocks
       });
       // show warning
-      
+      const blocks2 = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+      blocks2[0].text.text = "You are already current casting your line. The /f-fish command message where you casted will be the only one that updates with your catch. ";
+      await client.chat.postEphemeral({
+        channel: command.channel_id,
+        user: command.user_id,
+        blocks: blocks2
+      });
     }
   },
   actions: {
@@ -637,6 +644,11 @@ module.exports = {
           ts: body.message.ts,
           blocks: blocks
         });
+        const catch_time = null;
+        // catch time depends on tool and bait
+        setTimeout(async () => {
+          //
+        }, 5000);
 
     }
   },

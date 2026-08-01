@@ -129,7 +129,12 @@
       "cost": 50,
       "tier": 1,
       "level": 2,
-      "effects": {}
+      "effects": {
+        "catch_speed": [1, 2],
+        "catch_nothing": -0.05,
+        "common_multiplier": 0.1,
+        "xp_multiplier": 0.05
+      }
     },
     "spear": {
       "name": "Fishing Spear",
@@ -137,7 +142,16 @@
       "level": 4,
       "cost": 120,
       "description": "A simple hunting spear for shallow water fishing",
-      "effects": {}
+      "effects": {
+        "catch_speed": [1, 3],
+        "catch_nothing": -0.12,
+        "catch_count": [-1, 0],
+        "weight": 1.05,
+        "uncommon_multiplier": 0.1,
+        "rare_multiplier": 0.05,
+        "shiny_multiplier": 0.02,
+        "xp_multiplier": 0.05
+      }
     },
     "fishing_rod": {
       "name": "Fishing Rod",
@@ -145,7 +159,17 @@
       "level": 6,
       "cost": 300,
       "description": "A reliable fishing rod for standard fishing trips",
-      "effects": {}
+      "effects": {
+        "catch_speed": [2, 3],
+        "catch_nothing": -0.1,
+        "catch_count": [0, 1],
+        "weight": 1.1,
+        "common_multiplier": 0.15,
+        "uncommon_multiplier": 0.1,
+        "shiny_multiplier": 0.03,
+        "item_multiplier": 0.03,
+        "xp_multiplier": 0.1
+      }
     },
     "net": {
       "name": "Fishing Net",
@@ -153,7 +177,19 @@
       "level": 8,
       "cost": 500,
       "description": "A large net for catching multiple fish in open water",
-      "effects": {}
+      "effects": {
+        "catch_speed": [-1, 0],
+        "catch_nothing": -0.08,
+        "catch_count": [2, 4],
+        "weight": 0.9,
+        "common_multiplier": 0.25,
+        "uncommon_multiplier": 0.1,
+        "rare_multiplier": -0.05,
+        "epic_multiplier": -0.1,
+        "legendary_multiplier": -0.1,
+        "item_multiplier": 0.05,
+        "xp_multiplier": 0.08
+      }
     },
     "reel": {
       "name": "Fishing Reel",
@@ -161,7 +197,18 @@
       "level": 10,
       "cost": 900,
       "description": "A reliable fishing reel for deeper waters",
-      "effects": {}
+      "effects": {
+        "catch_speed": [3, 5],
+        "catch_nothing": -0.15,
+        "catch_count": [0, 1],
+        "weight": 1.15,
+        "common_multiplier": 0.1,
+        "uncommon_multiplier": 0.15,
+        "rare_multiplier": 0.1,
+        "shiny_multiplier": 0.04,
+        "item_multiplier": 0.05,
+        "xp_multiplier": 0.15
+      }
     },
     "speargun": {
       "name": "Spear Gun",
@@ -169,7 +216,21 @@
       "level": 12,
       "cost": 1500,
       "description": "A precision underwater hunting tool",
-      "effects": {}
+      "effects": {
+        "catch_speed": [2, 4],
+        "catch_nothing": -0.2,
+        "catch_count": [-1, 0],
+        "weight": 1.2,
+        "common_multiplier": -0.1,
+        "uncommon_multiplier": 0.1,
+        "rare_multiplier": 0.2,
+        "epic_multiplier": 0.15,
+        "legendary_multiplier": 0.05,
+        "shiny_multiplier": 0.06,
+        "chroma_multiplier": 0.02,
+        "item_multiplier": 0.05,
+        "xp_multiplier": 0.12
+      }
     },
     "weighted_line": {
       "name": "Weighted Line",
@@ -177,7 +238,20 @@
       "level": 15,
       "cost": 2200,
       "description": "Deep-water fishing line with added weight for better stability",
-      "effects": {}
+      "effects": {
+        "catch_speed": [1, 2],
+        "catch_nothing": -0.15,
+        "catch_count": [0, 1],
+        "weight": 1.4,
+        "uncommon_multiplier": 0.1,
+        "rare_multiplier": 0.2,
+        "epic_multiplier": 0.1,
+        "legendary_multiplier": 0.05,
+        "shiny_multiplier": 0.05,
+        "chroma_multiplier": 0.03,
+        "item_multiplier": 0.05,
+        "xp_multiplier": 0.12
+      }
     },
     "trap_cage": {
       "name": "Fishing Trap",
@@ -185,7 +259,18 @@
       "level": 18,
       "cost": 2800,
       "description": "A rigid cage for trapping large quantities of fish",
-      "effects": {}
+      "effects": {
+        "catch_speed": [-3, -1],
+        "catch_nothing": -0.1,
+        "catch_count": [3, 6],
+        "weight": 1.1,
+        "common_multiplier": 0.2,
+        "uncommon_multiplier": 0.15,
+        "rare_multiplier": 0.05,
+        "shiny_multiplier": 0.03,
+        "item_multiplier": 0.15,
+        "xp_multiplier": 0.1
+      }
     },
     "reel_rig": {
       "name": "Electric Reel Rig",
@@ -193,7 +278,20 @@
       "level": 22,
       "cost": 5000,
       "description": "An automated reel system for efficient catching",
-      "effects": {}
+      "effects": {
+        "catch_speed": [4, 7],
+        "catch_nothing": -0.2,
+        "catch_count": [1, 2],
+        "weight": 1.25,
+        "common_multiplier": 0.15,
+        "uncommon_multiplier": 0.2,
+        "rare_multiplier": 0.15,
+        "epic_multiplier": 0.05,
+        "shiny_multiplier": 0.06,
+        "chroma_multiplier": 0.03,
+        "item_multiplier": 0.1,
+        "xp_multiplier": 0.25
+      }
     },
     "harpoon_gun": {
       "name": "Harpoon Gun",
@@ -201,7 +299,20 @@
       "level": 28,
       "cost": 7000,
       "description": "Heavy-duty hunting weapon for large catches",
-      "effects": {}
+      "effects": {
+        "catch_speed": [3, 5],
+        "catch_nothing": -0.3,
+        "catch_count": [-1, 0],
+        "weight": 1.5,
+        "common_multiplier": -0.15,
+        "rare_multiplier": 0.25,
+        "epic_multiplier": 0.25,
+        "legendary_multiplier": 0.15,
+        "shiny_multiplier": 0.1,
+        "chroma_multiplier": 0.06,
+        "item_multiplier": 0.1,
+        "xp_multiplier": 0.2
+      }
     },
     "sonar": {
       "name": "Sonar Fishing Rod",
@@ -209,7 +320,21 @@
       "level": 32,
       "cost": 8500,
       "description": "A high-tech fishing rod with sonar capabilities for locating rare fish",
-      "effects": {}
+      "effects": {
+        "catch_speed": [4, 6],
+        "catch_nothing": -0.35,
+        "catch_count": [1, 2],
+        "weight": [1, 2],
+        "common_multiplier": -0.1,
+        "uncommon_multiplier": 0.1,
+        "rare_multiplier": 0.35,
+        "epic_multiplier": 0.2,
+        "legendary_multiplier": 0.1,
+        "shiny_multiplier": 0.12,
+        "chroma_multiplier": 0.1,
+        "item_multiplier": 0.12,
+        "xp_multiplier": 0.2
+      }
     },
     "drift_net": {
       "name": "Drift Net",
@@ -217,7 +342,19 @@
       "level": 35,
       "cost": 10000,
       "description": "Large-scale fishing net to all kinds of fish at once",
-      "effects": {}
+      "effects": {
+        "catch_speed": [0, 1],
+        "catch_nothing": -0.2,
+        "catch_count": [5, 9],
+        "weight": 0.95,
+        "common_multiplier":0.3,
+        "uncommon_multiplier": 0.25,
+        "rare_multiplier": 0.1,
+        "shiny_multiplier": 0.05,
+        "chroma_multiplier": 0.02,
+        "item_multiplier": 0.2,
+        "xp_multiplier": 0.2
+      }
     },
     "hydraulic": {
       "name": "Hydraulic Fishing System",
@@ -225,7 +362,21 @@
       "level": 45,
       "cost": 14000,
       "description": "A powerful hydraulic system for efficient fishing in deep waters",
-      "effects": {}
+      "effects": {
+        "catch_speed": [5, 8],
+        "catch_nothing": -0.25,
+        "catch_count": [2, 4],
+        "weight": 1.6,
+        "common_multiplier": 0.1,
+        "uncommon_multiplier": 0.2,
+        "rare_multiplier": 0.2,
+        "epic_multiplier": 0.15,
+        "legendary_multiplier": 0.05,
+        "shiny_multiplier": 0.08,
+        "chroma_multiplier": 0.05,
+        "item_multiplier": 0.15,
+        "xp_multiplier": 0.3
+      }
     },
     "magnet": {
       "name": "Magnet Fishing Rig",
@@ -233,7 +384,21 @@
       "level": 50,
       "cost": 16000,
       "description": "A high-tech fishing rig that allows you to target deep-sea fish with ease",
-      "effects": {}
+      "effects": {
+        "catch_speed": [5, 9],
+        "catch_nothing": -0.25,
+        "catch_count": [2, 4],
+        "weight": 1.6,
+        "common_multiplier": 0.1,
+        "uncommon_multiplier": 0.2,
+        "rare_multiplier": 0.2,
+        "epic_multiplier": 0.15,
+        "legendary_multiplier": 0.05,
+        "shiny_multiplier": 0.08,
+        "chroma_multiplier": 0.05,
+        "item_multiplier": 0.15,
+        "xp_multiplier": 0.3
+      }
     },
     "deep_sea": {
       "name": "Deep-Sea Longline",
@@ -241,7 +406,21 @@
       "level": 60,
       "cost": 20000,
       "description": "A specialized fishing tool for targeting large, deep-sea fish",
-      "effects": {}
+      "effects": {
+        "catch_speed": [3, 5],
+        "catch_nothing": -0.3,
+        "catch_count": [4, 7],
+        "weight": 1.7,
+        "common_multiplier": 0.05,
+        "uncommon_multiplier": 0.15,
+        "rare_multiplier": 0.25,
+        "epic_multiplier": 0.2,
+        "legendary_multiplier": 0.15,
+        "shiny_multiplier": 0.1,
+        "chroma_multiplier": 0.08,
+        "item_multiplier": 0.2,
+        "xp_multiplier": 0.3
+      }
     },
     "plasma": {
       "name": "Plasma Harpoon Gun",
@@ -249,7 +428,21 @@
       "level": 75,
       "cost": 35000,
       "description": "A high-energy weapon for elite deep-sea hunters",
-      "effects": {}
+      "effects": {
+        "catch_speed": [6, 10],
+        "catch_nothing": -0.45,
+        "catch_count": [0, 2],
+        "weight": 1.8,
+        "common_multiplier": -0.2,
+        "uncommon_multiplier": -0.05,
+        "rare_multiplier": 0.3,
+        "epic_multiplier": 0.35,
+        "legendary_multiplier": 0.3,
+        "shiny_multiplier": 0.18,
+        "chroma_multiplier": 0.15,
+        "item_multiplier": 0.25,
+        "xp_multiplier": 0.4
+      }
     },
     "drone": {
       "name": "Autonomous Fishing Drone",
@@ -257,7 +450,21 @@
       "level": 85,
       "cost": 50000,
       "description": "An autonomous drone for smart fishing operations",
-      "effects": {}
+      "effects": {
+        "catch_speed": [10, 15],
+        "catch_nothing": -0.5,
+        "catch_count": [4, 8],
+        "weight": 1.5,
+        "common_multiplier": 0.2,
+        "uncommon_multiplier": 0.3,
+        "rare_multiplier": 0.3,
+        "epic_multiplier": 0.25,
+        "legendary_multiplier": 0.2,
+        "shiny_multiplier": 0.15,
+        "chroma_multiplier": 0.12,
+        "item_multiplier": 0.35,
+        "xp_multiplier": 0.6
+      }
     },
     "quantum": {
       "name": "Quantum Fishing Rig",
@@ -265,7 +472,21 @@
       "level": 100,
       "cost": 75000,
       "description": "A cutting-edge fishing rig with quantum technology for unparalleled fishing performance",
-      "effects": {}
+      "effects": {
+        "catch_speed": [12, 20],
+        "catch_nothing": -0.6,
+        "catch_count": [6, 10],
+        "weight": 2,
+        "common_multiplier": 0.05,
+        "uncommon_multiplier": 0.1,
+        "rare_multiplier": 0.2,
+        "epic_multiplier": 0.4,
+        "legendary_multiplier": 0.4,
+        "shiny_multiplier": 0.25,
+        "chroma_multiplier": 0.2,
+        "item_multiplier": 0.5,
+        "xp_multiplier": 0.76
+      }
     }
   },
   "fish": {
@@ -5148,7 +5369,7 @@
         ]
       }
     ],
-    "fish_waitfish": [
+    "fish-waitfish": [
       {
         "type": "card",
         "title": {
@@ -5159,7 +5380,7 @@
         "body": {
           "type": "mrkdwn",
           "text": "Your line is in the water! Just waiting for a fish to bite...",
-          "verbatim":false
+          "verbatim": false
         },
         "subtext": {
           "type": "mrkdwn",
