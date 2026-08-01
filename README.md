@@ -296,6 +296,6 @@ Max carousel size is 10. I guess I have to redo whatever is happening with the s
 
 How did i not come up with this helper function based command population earlier
 
-Catch time should be limited to up to 15 seconds
+Catch time should be limited to up to 15 seconds -> 6-8 seconds now
 
 Used AI to brainstorm effects for each tool
