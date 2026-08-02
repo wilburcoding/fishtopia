@@ -79,7 +79,7 @@ module.exports = {
     };
     let effects = "";
     for (const [effect, value] of Object.entries(itemData.effects)) {
-      if (item.etype == "bait") {
+      if (item.etype == "bait" || item.etype === "tool") {
         if (typeof value === "number") {
           if (value < 0) {
             effects += `\`Decrease ${bait_effect_templates[effect]} by ${Math.floor(Math.abs(value) * 100)}%\`\n`;
@@ -90,9 +90,11 @@ module.exports = {
           // has to be an array
           effects += `\`Increase ${bait_effect_templates[effect]} by ${value[0]} to ${value[1]}\`\n`;
         }
-      } else {
-        // tool effects -> TBD
       }
+      // } else {
+      //   // tool effects -> same text
+      //   if (typeof value === "numer")
+      // }
     }
     if (effects === "") {
       effects = "\`No effects\`";

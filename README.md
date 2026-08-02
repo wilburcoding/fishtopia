@@ -67,7 +67,7 @@ An interactive Slack bot fishing game
      - [x] Completion stats section
      - [x] usage stats sectio
    - [ ] an overall command message catch?
- - [ ] Tool effects
+ - [x] Tool effects
    - [x] Figure out what tool effects theres going to eb -> its just going to be the same as the boats pretty much
    - [ ] Implement in /f-fish
  - [ ] some way for me to edit my own data?
@@ -251,7 +251,7 @@ An interactive Slack bot fishing game
        - Different levels for each bait -> effect multiplier
        - List of multipliers
          - catch speed (increase by range amount so [1, 2] decreases by 1-2 seconds) catch_speed
-         - catching nothing (reduces it by the percentage) catch_nothing
+         - catching nothing (reduces it by the percentage) catch_nothing  
          - catch count bonus (range increase by [x, y]) catch_count 
          - weight multiplier (multiplies) weight
          - multipliers for every rarity (all percentage increases)

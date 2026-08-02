@@ -182,8 +182,12 @@ function populatePreFishingBlocks(DATA, user, toolId, baitId, boatId, mapId) {
   // populate cards with tool, bait, boat info
   const userData = JSON.parse(user.data);
   const equipment = userData.equipment;
-  const tool = equipment.find((item) => item.id === toolId && item.etype === "tool");
-  const bait = equipment.find((item) => item.id === baitId && item.etype === "bait");
+  const tool = equipment.find(
+    (item) => item.id === toolId && item.etype === "tool",
+  );
+  const bait = equipment.find(
+    (item) => item.id === baitId && item.etype === "bait",
+  );
   const boat = userData.boats.find((item) => item.id === boatId);
 
   // they shoudl all technically exist ^^
@@ -208,8 +212,12 @@ function populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId) {
   const mapData = DATA.maps[mapId];
   const userData = JSON.parse(user.data);
   const equipment = userData.equipment;
-  const tool = equipment.find((item) => item.id === toolId && item.etype === "tool");
-  const bait = equipment.find((item) => item.id === baitId && item.etype === "bait");
+  const tool = equipment.find(
+    (item) => item.id === toolId && item.etype === "tool",
+  );
+  const bait = equipment.find(
+    (item) => item.id === baitId && item.etype === "bait",
+  );
   const boat = userData.boats.find((item) => item.id === boatId);
   const boatData = DATA.boats[boat.type];
   const toolData = DATA.tools[tool.type];
@@ -218,7 +226,6 @@ function populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId) {
   blocks[0].title.text = `${user.username} - Line Casted`;
   blocks[0].subtext.text = txt;
   return blocks;
-
 }
 
 module.exports = {
@@ -259,7 +266,6 @@ module.exports = {
       if (tools.length > 0) {
         toolId = tools[0].id;
       }
-
 
       let baits = equipment.filter((item) => item.etype === "bait");
       baits.sort((a, b) => b.tier - a.tier);
@@ -331,11 +337,18 @@ module.exports = {
         baitId = metadata.baitId;
         boatId = metadata.boatId;
         mapId = state.location;
-        const blocks = populatePreFishingBlocks(DATA, user, toolId, baitId, boatId, mapId);
+        const blocks = populatePreFishingBlocks(
+          DATA,
+          user,
+          toolId,
+          baitId,
+          boatId,
+          mapId,
+        );
         await client.chat.postMessage({
           channel: command.channel_id,
           user: command.user_id,
-          blocks: blocks
+          blocks: blocks,
         });
         return;
       }
@@ -352,11 +365,18 @@ module.exports = {
       baitId = metadata.baitId;
       boatId = metadata.boatId;
       mapId = state.location;
-      const blocks = populatePreFishingBlocks(DATA, user, toolId, baitId, boatId, mapId);
+      const blocks = populatePreFishingBlocks(
+        DATA,
+        user,
+        toolId,
+        baitId,
+        boatId,
+        mapId,
+      );
       await client.chat.postMessage({
         channel: command.channel_id,
         user: command.user_id,
-        blocks: blocks
+        blocks: blocks,
       });
     } else if (state.current === "casting") {
       const metadata = state.metadata;
@@ -364,19 +384,27 @@ module.exports = {
       baitId = metadata.baitId;
       boatId = metadata.boatId;
       mapId = state.location;
-      const blocks = populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId);
+      const blocks = populateFishingWaitBlocks(
+        DATA,
+        user,
+        toolId,
+        baitId,
+        boatId,
+        mapId,
+      );
       await client.chat.postMessage({
         channel: command.channel_id,
         user: command.user_id,
-        blocks: blocks
+        blocks: blocks,
       });
       // show warning
       const blocks2 = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-      blocks2[0].text.text = "You are already current casting your line. The /f-fish command message where you casted will be the only one that updates with your catch. ";
+      blocks2[0].text.text =
+        "You are already current casting your line. The /f-fish command message where you casted will be the only one that updates with your catch. ";
       await client.chat.postEphemeral({
         channel: command.channel_id,
         user: command.user_id,
-        blocks: blocks2
+        blocks: blocks2,
       });
     }
   },
@@ -602,54 +630,104 @@ module.exports = {
         // }, No metadata needed see explanation above
       });
     },
-    fish_rstart:async ({ action, ack, client, body, respond}) => {
-        // cast line -> showing pre catch and then catch screen with delay
-        await ack();
-        const userId = body.user.id;
-        const DATA = global.data;
-        const db = global.db;
-        const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
-        if (!user) {
-          const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-          // theoretically shouldn't happen ig
-          blocks[0].text.text = "Somehow, the user doesn't exist. Please try getting started with the /f-start command. ";
-          await client.chat.postEphemeral({
-            channel: body.channel.id,
-            user: body.user.id,
-            blocks: blocks
-          });
-          return;
-        }
-        const userState = JSON.parse(user.state);
-        if (userState.current !== "prefish") {
-          // should be super uncommon
-          const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-          blocks[0].text.text = "You are not currently preparing to fish. Please use the /f-fish command again. ";
-          await client.chat.postEphemeral({
-            channel: body.channel.id,
-            user: body.user.id,
-            blocks: blocks
-          });
-          return;
-        }
-        userState.current = "casting";
-        const toolId = userState.metadata.toolId;
-        const baitId = userState.metadata.baitId;
-        const boatId = userState.metadata.boatId;
-        const mapId = userState.location;
-        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(JSON.stringify(userState), userId);
-        const blocks = populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId);
-        await client.chat.update({
+    fish_rstart: async ({ action, ack, client, body, respond }) => {
+      // cast line -> showing pre catch and then catch screen with delay
+      await ack();
+      const userId = body.user.id;
+      const DATA = global.data;
+      const db = global.db;
+      const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+      if (!user) {
+        const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        // theoretically shouldn't happen ig
+        blocks[0].text.text =
+          "Somehow, the user doesn't exist. Please try getting started with the /f-start command. ";
+        await client.chat.postEphemeral({
           channel: body.channel.id,
-          ts: body.message.ts,
-          blocks: blocks
+          user: body.user.id,
+          blocks: blocks,
         });
-        const catch_time = null;
-        // catch time depends on tool and bait
-        setTimeout(async () => {
-          //
-        }, 5000);
+        return;
+      }
+      const userState = JSON.parse(user.state);
+      if (userState.current !== "prefish") {
+        // should be super uncommon
+        const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text =
+          "You are not currently preparing to fish. Please use the /f-fish command again. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
+      userState.current = "casting";
+      userState.storage = []; // to put all fish caught already. Make sure to cap at boat capacity
+      const toolId = userState.metadata.toolId;
+      const baitId = userState.metadata.baitId;
+      const boatId = userState.metadata.boatId;
+      const mapId = userState.location;
+      const userData = JSON.parse(user.data);
+      db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+        JSON.stringify(userState),
+        userId,
+      );
+      const blocks = populateFishingWaitBlocks(
+        DATA,
+        user,
+        toolId,
+        baitId,
+        boatId,
+        mapId,
+      );
+      await client.chat.update({
+        channel: body.channel.id,
+        ts: body.message.ts,
+        blocks: blocks,
+      });
+      const tool = userData.equipment.find(
+        (item) => item.id === toolId && item.etype === "tool",
+      );
+      const bait = userData.equipment.find(
+        (item) => item.id === baitId && item.etype === "bait",
+      );
+      const tool_data = DATA.tools[tool.type];
+      const bait_data = DATA.baits[bait.type];
 
-    }
+      let catch_time = Math.floor(Math.random() * 4) + 6; // so default time is 6-10 seconds
+      // catch time depends on tool and bait
+      if (tool_data.effects.catch_speed) {
+        catch_time -=
+          Math.floor(
+            Math.random() *
+              Math.abs(
+                tool_data.effects.catch_speed[1] -
+                  tool_data.effects.catch_speed[0],
+              ),
+          ) + tool_data.effects.catch_speed[0];
+      }
+      if (bait_data.effects.catch_speed) {
+        catch_time -=
+          Math.floor(
+            Math.random() *
+              Math.abs(
+                bait_data.effects.catch_speed[1] -
+                  bait_data.effects.catch_speed[0],
+              ),
+          ) + bait_data.effects.catch_speed[0];
+      }
+      if (catch_time < 0) {
+        catch_time = 0;
+      }
+
+      let catch_nothing_chance = 0.2; // base 20% chance to catch nothing
+      if (tool_data.effects.catch_nothing) {
+        catch_nothing_chance 
+      }
+      setTimeout(async () => {
+        //
+      }, 5000);
+    },
   },
 };
