@@ -165,8 +165,8 @@
         "catch_count": [0, 1],
         "weight": 1.1,
         "uncommon_multiplier": 0.18,
-        "rare_multiplier": 0.45, 
-        "epic_multiplier": 0.28, 
+        "rare_multiplier": 0.45,
+        "epic_multiplier": 0.28,
         "shiny_multiplier": 0.09,
         "item_multiplier": 0.04,
         "xp_multiplier": 0.1
@@ -240,7 +240,7 @@
       "description": "Deep-water fishing line with added weight for better stability",
       "effects": {
         "catch_speed": [0, 1],
-        "catch_nothing": 0.28 ,
+        "catch_nothing": 0.28,
         "catch_count": [0, 1],
         "weight": 1.4,
         "common_multiplier": -0.1,
@@ -309,13 +309,13 @@
         "weight": 1.5,
         "common_multiplier": -0.2,
         "uncommon_multiplier": -0.09,
-        "rare_multiplier": 0.60,
+        "rare_multiplier": 0.6,
         "epic_multiplier": 1.92,
-        "legendary_multiplier": 2.70,
+        "legendary_multiplier": 2.7,
         "shiny_multiplier": 0.3,
         "chroma_multiplier": 0.18,
         "item_multiplier": 0.15,
-        "xp_multiplier": 0.20
+        "xp_multiplier": 0.2
       }
     },
     "sonar": {
@@ -328,11 +328,11 @@
         "catch_speed": [2, 3],
         "catch_nothing": 0.52,
         "catch_count": [1, 2],
-        "weight": [1, 2],
+        "weight": 1.2,
         "common_multiplier": -0.15,
         "rare_multiplier": 0.9,
         "epic_multiplier": 1.92,
-        "legendary_multiplier": 2.70,
+        "legendary_multiplier": 2.7,
         "shiny_multiplier": 0.36,
         "chroma_multiplier": 0.3,
         "item_multiplier": 0.18,
@@ -348,9 +348,9 @@
       "effects": {
         "catch_speed": [0, 1],
         "catch_nothing": 0.34,
-        "catch_count": [5, 9],
+        "catch_count": [2, 4],
         "weight": 0.95,
-        "common_multiplier":0.2,
+        "common_multiplier": 0.2,
         "uncommon_multiplier": 0.27,
         "rare_multiplier": -0.15,
         "epic_multiplier": -0.82,
@@ -358,7 +358,7 @@
         "shiny_multiplier": 0.15,
         "chroma_multiplier": 0.06,
         "item_multiplier": 0.3,
-        "xp_multiplier": 0.2  
+        "xp_multiplier": 0.2
       }
     },
     "hydraulic": {
@@ -370,13 +370,13 @@
       "effects": {
         "catch_speed": [3, 4],
         "catch_nothing": 0.58,
-        "catch_count": [2, 4],
+        "catch_count": [1, 2],
         "weight": 1.6,
         "common_multiplier": -0.1,
         "uncommon_multiplier": 0.09,
         "rare_multiplier": 0.75,
         "epic_multiplier": 1.92,
-        "legendary_multiplier": 2.70,
+        "legendary_multiplier": 2.7,
         "shiny_multiplier": 0.24,
         "chroma_multiplier": 0.15,
         "item_multiplier": 0.22,
@@ -392,12 +392,12 @@
       "effects": {
         "catch_speed": [1, 2],
         "catch_nothing": 0.44,
-        "catch_count": [1, 3],
+        "catch_count": [1, 2],
         "weight": 1.35,
         "common_multiplier": -0.15,
         "rare_multiplier": 0.45,
         "epic_multiplier": 1.38,
-        "legendary_multiplier": 1.80,
+        "legendary_multiplier": 1.8,
         "shiny_multiplier": 0.24,
         "chroma_multiplier": 0.18,
         "item_multiplier": 0.6,
@@ -413,7 +413,7 @@
       "effects": {
         "catch_speed": [1, 2],
         "catch_nothing": 0.54,
-        "catch_count": [4, 7],
+        "catch_count": [2, 3],
         "weight": 1.7,
         "common_multiplier": -0.1,
         "uncommon_multiplier": 0.09,
@@ -435,7 +435,7 @@
       "effects": {
         "catch_speed": [3, 4],
         "catch_nothing": 0.68,
-        "catch_count": [0, 2],
+        "catch_count": [0, 1],
         "weight": 1.8,
         "common_multiplier": -0.25,
         "uncommon_multiplier": -0.1,
@@ -457,7 +457,7 @@
       "effects": {
         "catch_speed": [4, 5],
         "catch_nothing": 0.76,
-        "catch_count": [4, 8],
+        "catch_count": [2, 4],
         "weight": 1.5,
         "common_multiplier": -0.1,
         "uncommon_multiplier": 0.18,
@@ -479,7 +479,7 @@
       "effects": {
         "catch_speed": [5, 6],
         "catch_nothing": 0.88,
-        "catch_count": [6, 10],
+        "catch_count": [3, 5],
         "weight": 2,
         "common_multiplier": -0.2,
         "uncommon_multiplier": 0.09,
@@ -3308,8 +3308,8 @@
         "rare_multiplier": 0.81,
         "epic_multiplier": 0.66,
         "legendary_multiplier": 0.45,
-        "shiny_multiplier": 0.3,
-        "chroma_multiplier": 0.3
+        "shiny_multiplier": 0.1,
+        "chroma_multiplier": 0.1
       }
     },
     "scented": {
@@ -3327,8 +3327,8 @@
         "rare_multiplier": 0.18,
         "epic_multiplier": 0.16,
         "legendary_multiplier": 0.09,
-        "shiny_multiplier": 0.15,
-        "chroma_multiplier": 0.15
+        "shiny_multiplier": 0.05,
+        "chroma_multiplier": 0.05
       }
     },
     "golden": {
@@ -3339,8 +3339,8 @@
       "tier": 3,
       "image": "",
       "effects": {
-        "chroma_multiplier": 0.6,
-        "shiny_multiplier": 0.6,
+        "chroma_multiplier": 0.2,
+        "shiny_multiplier": 0.2,
         "catch_speed": [-1, -4],
         "catch_nothing": 0.3,
         "common_multiplier": -0.1,
@@ -3359,8 +3359,8 @@
       "effects": {
         "catch_speed": [-1, -3],
         "catch_nothing": -0.2,
-        "chroma_multiplier": 0.45,
-        "shiny_multiplier": 0.45,
+        "chroma_multiplier": 0.15,
+        "shiny_multiplier": 0.15,
         "item_multiplier": 0.75
       }
     },
@@ -3405,12 +3405,12 @@
       "effects": {
         "catch_speed": [-1, -4],
         "catch_nothing": -0.3,
-        "chroma_multiplier": 0.75,
-        "shiny_multiplier": 0.75,
-        "legendary_multiplier":1.8,
+        "chroma_multiplier": 0.25,
+        "shiny_multiplier": 0.25,
+        "legendary_multiplier": 1.8,
         "epic_multiplier": 1.38,
         "rare_multiplier": 0.6,
-        "uncommon_multiplier":   -0.18,
+        "uncommon_multiplier": -0.18,
         "common_multiplier": -0.2
       }
     },
@@ -3445,8 +3445,8 @@
         "rare_multiplier": 0.15,
         "epic_multiplier": 0.55,
         "legendary_multiplier": 1.35,
-        "shiny_multiplier": 0.3,
-        "chroma_multiplier": 0.3,
+        "shiny_multiplier": 0.1,
+        "chroma_multiplier": 0.1,
         "item_multiplier": 0.3
       }
     }
@@ -5151,7 +5151,7 @@
                 "type": "plain_text",
                 "text": "Fishing Pole (id: 1246)",
                 "emoji": true
-               },
+              },
               "value": "1246"
             }
           ],
@@ -5397,6 +5397,67 @@
           "text": "You're at `Crystal Lake` with a `Trawler`, using a `Fishing Rod` and `Worm Bait`."
         },
         "actions": []
+      }
+    ],
+    "fish-postfish": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person - Cast Results!"
+        },
+        "level": 1
+      },
+      {
+        "type": "markdown",
+        "text": "You're at `Crystal Lake` with a `Trawler`, using a `Fishing Rod` and `Worm Bait`."
+      },
+      {
+        "type": "carousel",
+        "elements": [
+          {
+            "type": "card",
+            "title": {
+              "type":"mrkdwn",
+              "text": "Trout",
+              "verbatim": false
+            },
+            "subtitle": {
+              "type": "mrkdwn",
+              "text": "Rare Fish - Shiny Variant"
+            },
+            "body": {
+              "type": "mrkdwn",
+              "text": "Fish description\n*Weight*: `5 lbs`\n*Variant*: `None`\n*Sell Value*: `$50`"
+            },
+            "actions": []
+          }
+        ]
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Release Fish and Cast",
+              "emoji": true
+            },
+            "value": "fish_rcast",
+            "action_id": "fish_rcast"
+          },
+          {
+            "type": "button",
+            "text": {
+              "type" :"plain_text",
+              "text": "Keep Fish and Cast",
+              "emoji": true
+            },
+            "value": "fish_kcast",
+            "action_id": "fish_kcast"
+          }
+        ]
       }
     ]
   }

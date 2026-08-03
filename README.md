@@ -35,6 +35,10 @@ An interactive Slack bot fishing game
        - [x] Show basic info
        - [x] Option to cast
      - [ ] Fishing page
+       - [ ] Results layout
+       - [x] Prefish layout
+       - [ ] Handle fishing random logic
+         - [ ] Value calculation
    - [ ] /f-shop
      - [x] Paginated layout
      - [x] Functionality
@@ -251,7 +255,7 @@ An interactive Slack bot fishing game
        - Different levels for each bait -> effect multiplier
        - List of multipliers
          - catch speed (increase by range amount so [1, 2] decreases by 1-2 seconds) catch_speed
-         - catching nothing (reduces it by the percentage) catch_nothing  
+         - catching nothing (reduces it by the percentage) catch_nothing
          - catch count bonus (range increase by [x, y]) catch_count 
          - weight multiplier (multiplies) weight
          - multipliers for every rarity (all percentage increases)

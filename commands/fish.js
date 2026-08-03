@@ -228,6 +228,170 @@ function populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId) {
   return blocks;
 }
 
+function populateFishingResultsBlocks(DATA, user, toolId, baitId, boatId, mapId) {
+  let blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-postfish"]));
+  let userState = JSON.parse(user.state);
+  const results = userState.results;
+  let equipment = JSON.parse(user.data).equipment;
+  let tool = equipment.find((item) => item.id === toolId && item.etype === "tool");
+  let bait = equipment.find((item) => item.id === baitId && item.etype === "bait");
+  let boat = JSON.parse(user.data).boats.find((item) => item.id === boatId);
+  let mapData = DATA.maps[mapId];
+  let toolData = DATA.tools[tool.type];
+  let baitData = DATA.baits[bait.type];
+  let boatData = DATA.boats[boat.type];
+  blocks[0].text.text = `${user.username} - Fishing Results`;
+  blocks[1].text = `You fished at \`${mapData.name}\` with a \`${boatData.name}\`, using a \`${toolData.name}\` and \`${baitData.name}\`. You caught a total of \`${results.length}\` fish!`;
+  blocks[2].elements = results.map((fish) => {
+    let fishData = DATA.fish[fish.type];
+    let variantText = fish.variant ? `- ${String(fish.variant).slice(0, 1).toUpperCase() + String(fish.variant).slice(1)}` : "";
+    let vtext = fish.variant ? String(fish.variant).slice(0, 1).toUpperCase() + String(fish.variant).slice(1) : "Normal"
+    return {
+      type: "card",
+      title: {
+        type :"mrkdwn",
+        text: `${fishData.name}`,
+        verbatim: false
+      },
+      subtitle: {
+        type:"mrkdwn",
+        text: `${fishData.rarity} Fish ${variantText}`,
+      },
+      body: {
+        type: "mrkdwn",
+        text: `*Weight*: \`${fish.weight} lbs\`\n*Variant*: \`${vtext}\`\n*Sell Value*: \`${fish.value} coins\`` 
+      },
+      actions: []
+    }
+  });
+  return blocks;
+}
+
+function catchFish(DATA, tool_data, bait_data, mapId) {
+  let catch_nothing_chance = 0.25; // base 20% chance to catch nothing
+  let catch_nothing_multiplier = 1;
+
+  if (tool_data.effects.catch_nothing) {
+    catch_nothing_multiplier -= tool_data.effects.catch_nothing;
+  }
+  if (bait_data.effects.catch_nothing) {
+    catch_nothing_multiplier -= bait_data.effects.catch_nothing;
+  }
+  catch_nothing_chance *= catch_nothing_multiplier;
+
+  // base rarity probs
+  let rarity_probs = {
+    common: 0.5,
+    uncommon: 0.27,
+    rare: 0.16,
+    epic: 0.05,
+    legendary: 0.02,
+  };
+
+  let variant_probs = {
+    shiny: 0.02,
+    chroma: 0.005,
+  };
+
+  for (let rarity of Object.keys(rarity_probs)) {
+    let rarity_multiplier = 1;
+    if (tool_data.effects[`${rarity}_multiplier`]) {
+      rarity_multiplier += tool_data.effects[`${rarity}_multiplier`];
+    }
+    if (bait_data.effects[`${rarity}_multiplier`]) {
+      rarity_multiplier += bait_data.effects[`${rarity}_multiplier`];
+    }
+    rarity_probs[rarity] *= rarity_multiplier;
+  }
+  for (let variant of Object.keys(variant_probs)) {
+    let variant_multiplier = 1;
+    if (tool_data.effects[`${variant}_multiplier`]) {
+      variant_multiplier += tool_data.effects[`${variant}_multiplier`];
+    }
+    if (bait_data.effects[`${variant}_multiplier`]) {
+      variant_multiplier += bait_data.effects[`${variant}_multiplier`];
+    }
+    variant_probs[variant] *= variant_multiplier;
+  }
+
+  let fish_catch = null;
+  let variant = null;
+
+  // first check if catch nothing
+  if (Math.random() < catch_nothing_chance) {
+    fish_catch = null;
+  } else {
+    // determine rarity
+    let rarity_total = 0; // need to normalize
+    for (let rarity of Object.keys(rarity_probs)) {
+      rarity_total += rarity_probs[rarity];
+    }
+    let rarity_roll = Math.random() * rarity_total;
+    let rarity = "common";
+    let cumulative = 0;
+    for (let r of Object.keys(rarity_probs)) {
+      cumulative += rarity_probs[r];
+      if (rarity_roll < cumulative) {
+        rarity = r;
+        break;
+      }
+    }
+
+    // variants
+    let variant_roll = Math.random();
+    let cumulative_variant = 0;
+    for (let v of Object.keys(variant_probs)) {
+      cumulative_variant += variant_probs[v];
+      if (variant_roll < cumulative_variant) {
+        variant = v;
+        break;
+      }
+    }
+  }
+  // get fish now
+  let fish_available = {};
+  for (let fish of Object.keys(DATA.fish)) {
+    if (Object.keys(DATA.fish[fish]["maps"]).includes(mapId)) {
+      fish_available[fish] = DATA.fish[fish]["maps"][mapId];
+    }
+  }
+  let fish_total = 0;
+  for (let fish of Object.keys(fish_available)) {
+    fish_total += fish_available[fish];
+  }
+  const fish_roll = Math.random() * fish_total;
+  let cumulative_fish = 0;
+  for (let fish of Object.keys(fish_available)) {
+    cumulative_fish += fish_available[fish];
+    if (fish_roll < cumulative_fish) {
+      fish_catch = fish;
+      break;
+    }
+  }
+  let weight_multi = 1;
+  if (tool_data.effects.weight) {
+    weight_multi *= tool_data.effects.weight;
+  }
+  if (bait_data.effects.weight) {
+    weight_multi *= bait_data.effects.weight;
+  }
+  let fish_data = DATA.fish[fish_catch];
+
+  let weight =
+    Math.random() * (fish_data.weight["max"] - fish_data.weight["min"]) +
+    fish_data.weight["min"];
+  weight *= weight_multi;
+  weight = Math.round(weight * 100) / 100;
+  console.log(`Rarity probs: ${JSON.stringify(rarity_probs)}`);
+  console.log(`Variant probs: ${JSON.stringify(variant_probs)}`);
+  // console.log(`Catch time: ${catch_time}`);
+  console.log(`Catch nothing chance: ${catch_nothing_chance}`);
+  let value = fish_data.sell_value;
+  let mean_weight = (fish_data.weight["max"] + fish_data.weight["min"]) / 2;
+  let value_multi = weight / mean_weight;
+  let fish_value = Math.round(value * value_multi)
+  return { type: fish_catch, variant: variant, value: fish_value, weight: weight };
+}
 module.exports = {
   name: "/f-fish",
   description: "Go fishing!",
@@ -720,14 +884,43 @@ module.exports = {
       if (catch_time < 0) {
         catch_time = 0;
       }
-
-      let catch_nothing_chance = 0.2; // base 20% chance to catch nothing
-      if (tool_data.effects.catch_nothing) {
-        catch_nothing_chance 
+      let catch_amt = 1; // default 1 fish
+      if (tool_data.effects.catch_amt) {
+        catch_amt +=
+          Math.floor(
+            Math.random() *
+              (tool_data.effects.catch_count[1] -
+                tool_data.effects.catch_count[0]),
+          ) + tool_data.effects.catch_count[0];
       }
+      if (bait_data.effects.catch_amt) {
+        catch_amt +=
+          Math.floor(
+            Math.random() *
+              (bait_data.effects.catch_count[1] -
+                bait_data.effects.catch_count[0]),
+          ) + bait_data.effects.catch_count[0];
+      }
+      catch_amt = Math.min(6, catch_amt); // hard ceiling for fish amt
+      let fish_caught = [];
+      for (let i = 0; i < catch_amt; i++) {
+        fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
+      }
+      console.log(fish_caught);
+
       setTimeout(async () => {
-        //
-      }, 5000);
+        // update message with catch results
+        userState.current = "results";
+        userState.results = fish_caught;
+        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(JSON.stringify(userState), userId);
+        user.state = JSON.stringify(userState);
+        const blocks = populateFishingResultsBlocks(DATA, user, toolId, baitId, boatId, mapId);
+        await client.chat.update({
+          channel: body.channel.id,
+          ts: body.message.ts,
+          blocks: blocks
+        });
+      }, catch_time * 1000);
     },
   },
 };
