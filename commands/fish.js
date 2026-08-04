@@ -228,41 +228,61 @@ function populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId) {
   return blocks;
 }
 
-function populateFishingResultsBlocks(DATA, user, toolId, baitId, boatId, mapId) {
+function populateFishingResultsBlocks(
+  DATA,
+  user,
+  toolId,
+  baitId,
+  boatId,
+  mapId,
+) {
   let blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-postfish"]));
   let userState = JSON.parse(user.state);
   const results = userState.results;
   let equipment = JSON.parse(user.data).equipment;
-  let tool = equipment.find((item) => item.id === toolId && item.etype === "tool");
-  let bait = equipment.find((item) => item.id === baitId && item.etype === "bait");
+  let tool = equipment.find(
+    (item) => item.id === toolId && item.etype === "tool",
+  );
+  let bait = equipment.find(
+    (item) => item.id === baitId && item.etype === "bait",
+  );
   let boat = JSON.parse(user.data).boats.find((item) => item.id === boatId);
   let mapData = DATA.maps[mapId];
   let toolData = DATA.tools[tool.type];
   let baitData = DATA.baits[bait.type];
   let boatData = DATA.boats[boat.type];
+  let storageMessage = `Your boat storage is at \`${userState.storage.length}/${boatData.stats.capacity}\`.`;
+  if (userState.storage.length == boatData.stats.capacity) {
+    storageMessage = ":warning: Your boat storage is full!";
+  }
   blocks[0].text.text = `${user.username} - Fishing Results`;
-  blocks[1].text = `You fished at \`${mapData.name}\` with a \`${boatData.name}\`, using a \`${toolData.name}\` and \`${baitData.name}\`. You caught a total of \`${results.length}\` fish!`;
+  blocks[1].text = `You fished at \`${mapData.name}\` with a \`${boatData.name}\`, using a \`${toolData.name}\` and \`${baitData.name}\`. \nYou caught a total of \`${results.length}\` fish! ${storageMessage}`;
   blocks[2].elements = results.map((fish) => {
     let fishData = DATA.fish[fish.type];
-    let variantText = fish.variant ? `- ${String(fish.variant).slice(0, 1).toUpperCase() + String(fish.variant).slice(1)}` : "";
-    let vtext = fish.variant ? String(fish.variant).slice(0, 1).toUpperCase() + String(fish.variant).slice(1) : "Normal"
+    let variantText = fish.variant
+      ? `- ${String(fish.variant).slice(0, 1).toUpperCase() + String(fish.variant).slice(1)}`
+      : "";
+    let vtext = fish.variant
+      ? String(fish.variant).slice(0, 1).toUpperCase() +
+        String(fish.variant).slice(1)
+      : "Normal";
     return {
       type: "card",
       title: {
-        type :"mrkdwn",
+        type: "mrkdwn",
         text: `${fishData.name}`,
-        verbatim: false
+        verbatim: false,
       },
       subtitle: {
-        type:"mrkdwn",
+        type: "mrkdwn",
         text: `${fishData.rarity} Fish ${variantText}`,
       },
       body: {
         type: "mrkdwn",
-        text: `*Weight*: \`${fish.weight} lbs\`\n*Variant*: \`${vtext}\`\n*Sell Value*: \`${fish.value} coins\`` 
+        text: `*Weight*: \`${fish.weight} lbs\`\n*Variant*: \`${vtext}\`\n*Sell Value*: \`${fish.value} coins\``,
       },
-      actions: []
-    }
+      actions: [],
+    };
   });
   return blocks;
 }
@@ -389,8 +409,13 @@ function catchFish(DATA, tool_data, bait_data, mapId) {
   let value = fish_data.sell_value;
   let mean_weight = (fish_data.weight["max"] + fish_data.weight["min"]) / 2;
   let value_multi = weight / mean_weight;
-  let fish_value = Math.round(value * value_multi)
-  return { type: fish_catch, variant: variant, value: fish_value, weight: weight };
+  let fish_value = Math.round(value * value_multi);
+  return {
+    type: fish_catch,
+    variant: variant,
+    value: fish_value,
+    weight: weight,
+  };
 }
 module.exports = {
   name: "/f-fish",
@@ -569,6 +594,25 @@ module.exports = {
         channel: command.channel_id,
         user: command.user_id,
         blocks: blocks2,
+      });
+    } else if (state.current === "results") {
+      const metadata = state.metadata;
+      toolId = metadata.toolId;
+      baitId = metadata.baitId;
+      boatId = metadata.boatId;
+      mapId = state.location;
+      const blocks = populateFishingResultsBlocks(
+        DATA,
+        user,
+        toolId,
+        baitId,
+        boatId,
+        mapId,
+      );
+      await client.chat.postMessage({
+        channel: command.channel_id,
+        user: command.user_id,
+        blocks: blocks,
       });
     }
   },
@@ -858,6 +902,7 @@ module.exports = {
       );
       const tool_data = DATA.tools[tool.type];
       const bait_data = DATA.baits[bait.type];
+      const boat = userData.boats.find((item) => item.id === boatId);
 
       let catch_time = Math.floor(Math.random() * 4) + 6; // so default time is 6-10 seconds
       // catch time depends on tool and bait
@@ -902,12 +947,165 @@ module.exports = {
           ) + bait_data.effects.catch_count[0];
       }
       catch_amt = Math.min(6, catch_amt); // hard ceiling for fish amt
+      if (
+        catch_amt + userState.storage.length >
+        DATA.boats[boat.type].stats.capacity
+      ) {
+        catch_amt =
+          DATA.boats[boat.type].stats.capacity - userState.storage.length;
+      }
       let fish_caught = [];
       for (let i = 0; i < catch_amt; i++) {
         fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
       }
       console.log(fish_caught);
 
+      setTimeout(async () => {
+        // update message with catch results
+        userState.current = "results";
+        userState.results = fish_caught;
+        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+          JSON.stringify(userState),
+          userId,
+        );
+        user.state = JSON.stringify(userState);
+        const blocks = populateFishingResultsBlocks(
+          DATA,
+          user,
+          toolId,
+          baitId,
+          boatId,
+          mapId,
+        );
+        await client.chat.update({
+          channel: body.channel.id,
+          ts: body.message.ts,
+          blocks: blocks,
+        });
+      }, catch_time * 1000);
+    },
+    fish_rcast: async ({ action, ack, client, body, respond }) => {
+      await ack();
+      const userId = body.user.id;
+      const DATA = global.data;
+      const db = global.db;
+      const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+      if (!user) {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text =
+          "Somehow, this user doesn't exist. Please try getting started with the /f-start command.";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
+      const userState = JSON.parse(user.state);
+      if (userState.current !== "results") {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text =
+          "It dosen't look like you are ready to do this action. Please use the /f-fish command again. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+      }
+
+      userState.current = "casting";
+      for (let fish of userState.results) {
+        userState.storage.push(fish);
+      }
+      userState.results = [];
+      const metadata = userState.metadata;
+      const toolId = metadata.toolId;
+      const baitId = metadata.baitId;
+      const boatId = metadata.boatId;
+      const mapId = userState.location;
+      const userData = JSON.parse(user.data);
+      db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+        JSON.stringify(userState),
+        userId,
+      );
+      const blocks = populateFishingWaitBlocks(
+        DATA,
+        user,
+        toolId,
+        baitId,
+        boatId,
+        mapId,
+      );
+      await client.chat.update({
+        channel: body.channel.id,
+        ts: body.message.ts,
+        blocks: blocks,
+      });
+      const tool = userData.equipment.find(
+        (item) => item.id === toolId && item.etype === "tool",
+      );
+      const bait = userData.equipment.find(
+        (item) => item.id === baitId && item.etype === "bait",
+      );
+      const tool_data = DATA.tools[tool.type];
+      const bait_data = DATA.baits[bait.type];
+      const boat = userData.boats.find((item) => item.id === boatId);
+
+      let catch_time = Math.floor(Math.random() * 4) + 6; // default time
+      // basically copy and paste from fish_rstart action handler
+      if (tool_data.effects.catch_speed) {
+        catch_time -=
+          Math.floor(
+            Math.random() *
+              Math.abs(
+                tool_data.effects.catch_speed[1] -
+                  tool_data.effects.catch_speed[0],
+              ),
+          ) + tool_data.effects.catch_speed[0];
+      }
+      if (bait_data.effects.catch_speed) {
+        catch_time -=
+          Math.floor(
+            Math.random() *
+              Math.abs(
+                bait_data.effects.catch_speed[1] -
+                  bait_data.effects.catch_speed[0],
+              ),
+          ) + bait_data.effects.catch_speed[0];
+      }
+      if (catch_time < 0) {
+        catch_time = 0;
+      }
+      let catch_amt = 1; // default
+      if (tool_data.effects.catch_amt) {
+        catch_amt +=
+          Math.floor(
+            Math.random() *
+              (tool_data.effects.catch_count[1] -
+                tool_data.effects.catch_count[0]),
+          ) + tool_data.effects.catch_count[0];
+      }
+      if (bait_data.effects.catch_amt) {
+        catch_amt +=
+          Math.floor(
+            Math.random() *
+              (bait_data.effects.catch_count[1] -
+                bait_data.effects.catch_count[0]),
+          ) + bait_data.effects.catch_count[0];
+      }
+      catch_amt = Math.min(6, catch_amt); // hard ceiling
+      if (
+        catch_amt + userState.storage.length >
+        DATA.boats[boat.type].stats.capacity
+      ) {
+        catch_amt =
+          DATA.boats[boat.type].stats.capacity - userState.storage.length;
+      }
+      let fish_caught = [];
+      for (let i =0 ; i < catch_amt;i++) {
+        fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
+      }
+      console.log(fish_caught);
       setTimeout(async () => {
         // update message with catch results
         userState.current = "results";
@@ -920,7 +1118,7 @@ module.exports = {
           ts: body.message.ts,
           blocks: blocks
         });
-      }, catch_time * 1000);
+      }, catch_time * 1000)
     },
   },
 };
