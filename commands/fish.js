@@ -417,6 +417,33 @@ function catchFish(DATA, tool_data, bait_data, mapId) {
     weight: weight,
   };
 }
+
+function catchTime(tool_data, bait_data) {
+  let catch_time = Math.floor(Math.random() * 4) + 6; // default time
+  if (tool_data.effects.catch_speed) {
+    catch_time -=
+      Math.floor(
+        Math.random() *
+          Math.abs(
+            tool_data.effects.catch_speed[1] - tool_data.effects.catch_speed[0],
+          ),
+      ) + tool_data.effects.catch_speed[0];
+  }
+  if (bait_data.effects.catch_speed) {
+    catch_time -=
+      Math.floor(
+        Math.random() *
+          Math.abs(
+            bait_data.effects.catch_speed[1] - bait_data.effects.catch_speed[0],
+          ),
+      ) + bait_data.effects.catch_speed[0];
+  }
+  if (catch_time < 0) {
+    catch_time = 0;
+  }
+  return catch_time;
+}
+
 module.exports = {
   name: "/f-fish",
   description: "Go fishing!",
@@ -904,31 +931,7 @@ module.exports = {
       const bait_data = DATA.baits[bait.type];
       const boat = userData.boats.find((item) => item.id === boatId);
 
-      let catch_time = Math.floor(Math.random() * 4) + 6; // so default time is 6-10 seconds
-      // catch time depends on tool and bait
-      if (tool_data.effects.catch_speed) {
-        catch_time -=
-          Math.floor(
-            Math.random() *
-              Math.abs(
-                tool_data.effects.catch_speed[1] -
-                  tool_data.effects.catch_speed[0],
-              ),
-          ) + tool_data.effects.catch_speed[0];
-      }
-      if (bait_data.effects.catch_speed) {
-        catch_time -=
-          Math.floor(
-            Math.random() *
-              Math.abs(
-                bait_data.effects.catch_speed[1] -
-                  bait_data.effects.catch_speed[0],
-              ),
-          ) + bait_data.effects.catch_speed[0];
-      }
-      if (catch_time < 0) {
-        catch_time = 0;
-      }
+      let catch_time = catchTime(tool_data, bait_data);
       let catch_amt = 1; // default 1 fish
       if (tool_data.effects.catch_amt) {
         catch_amt +=
@@ -1011,12 +1014,13 @@ module.exports = {
           user: body.user.id,
           blocks: blocks,
         });
+        return;
       }
 
       userState.current = "casting";
-      for (let fish of userState.results) {
-        userState.storage.push(fish);
-      }
+      // for (let fish of userState.results) {
+      //   userState.storage.push(fish);
+      // }
       userState.results = [];
       const metadata = userState.metadata;
       const toolId = metadata.toolId;
@@ -1051,31 +1055,8 @@ module.exports = {
       const bait_data = DATA.baits[bait.type];
       const boat = userData.boats.find((item) => item.id === boatId);
 
-      let catch_time = Math.floor(Math.random() * 4) + 6; // default time
-      // basically copy and paste from fish_rstart action handler
-      if (tool_data.effects.catch_speed) {
-        catch_time -=
-          Math.floor(
-            Math.random() *
-              Math.abs(
-                tool_data.effects.catch_speed[1] -
-                  tool_data.effects.catch_speed[0],
-              ),
-          ) + tool_data.effects.catch_speed[0];
-      }
-      if (bait_data.effects.catch_speed) {
-        catch_time -=
-          Math.floor(
-            Math.random() *
-              Math.abs(
-                bait_data.effects.catch_speed[1] -
-                  bait_data.effects.catch_speed[0],
-              ),
-          ) + bait_data.effects.catch_speed[0];
-      }
-      if (catch_time < 0) {
-        catch_time = 0;
-      }
+      let catch_time = catchTime(tool_data, bait_data);
+ 
       let catch_amt = 1; // default
       if (tool_data.effects.catch_amt) {
         catch_amt +=
@@ -1102,12 +1083,104 @@ module.exports = {
           DATA.boats[boat.type].stats.capacity - userState.storage.length;
       }
       let fish_caught = [];
-      for (let i =0 ; i < catch_amt;i++) {
+      for (let i = 0; i < catch_amt; i++) {
         fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
       }
       console.log(fish_caught);
       setTimeout(async () => {
         // update message with catch results
+        userState.current = "results";
+        userState.results = fish_caught;
+        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+          JSON.stringify(userState),
+          userId,
+        );
+        user.state = JSON.stringify(userState);
+        const blocks = populateFishingResultsBlocks(
+          DATA,
+          user,
+          toolId,
+          baitId,
+          boatId,
+          mapId,
+        );
+        await client.chat.update({
+          channel: body.channel.id,
+          ts: body.message.ts,
+          blocks: blocks,
+        });
+      }, catch_time * 1000);
+    },
+    fish_kcast: async ({ action, ack, client, body, respond }) => {
+      await ack();
+      const userId = body.user.id;
+      const DATA = global.data;
+      const db = global.db;
+      const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+      if (!user) {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = "Somehow, this user doesn't exist. Please try getting started with the /f-start command.";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks
+        });
+        return;
+      }
+      const userState = JSON.parse(user.state);
+      if (userState.current !== "results") {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = "It dosen't look like you are ready to do this action. Please use the /f-fish command again";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks
+        });
+        return;
+      }
+      userState.current = "casting";
+      for (let fish of userState.results) {
+        userState.storage.push(fish);
+      }
+      userState.results = [];
+      const metadata = userState.metadata;
+      const toolId = metadata.toolId;
+      const baitId = metadata.baitId;
+      const boatId = metadata.boatId;
+      const mapId = userState.location;
+      const userData = JSON.parse(user.data);
+      db.prepare("UPDATE users SET state = ? WHERE id = ?").run(JSON.stringify(userState), userId);
+      const blocks = populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId);
+      await client.chat.update({
+        channel: body.channel.id,
+        ts: body.message.ts,
+        blocks: blocks
+      });
+      const tool = userData.equipment.find(item => item.id === toolId && item.etype === "tool");
+      const bait = userData.equipment.find(item => item.id === baitId && item.etype === "bait");
+      const tool_data = DATA.tools[tool.type];
+      const bait_data = DATA.baits[bait.type];
+      const boat = userData.boats.find(item => item.id === boatId);
+
+      let catch_time = catchTime(tool_data, bait_data);
+      let catch_amt = 1; // default catch amt
+      if (tool_data.effects.catch_amt) {
+        catch_amt += Math.floor(Math.random() * (tool_data.effects.catch_count[1] - tool_data.effects.catch_count[0]) + tool_data.effects.catch_count[0]);
+      }
+      if (bait_data.effects.catch_amt) {
+        catch_amt += Math.floor(Math.random() * (bait_data.effects.catch_count[1] - bait_data.effects.catch_count[0]) + bait_data.effects.catch_count[0]); 
+      }
+      catch_amt = Math.min(6, catch_amt); // catch amt ceiling
+      if (catch_amt + userState.storage.length > DATA.boats[boat.type].stats.capacity) {
+        catch_amt = DATA.boats[boat.type].stats.capacity - userState.storage.length;
+      }
+      let fish_caught = [];
+      for (let i = 0; i < catch_amt; i++ ) {
+        fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
+      }
+
+      console.log(fish_caught); // will prob keep this in for debugging
+      setTimeout(async () => {
         userState.current = "results";
         userState.results = fish_caught;
         db.prepare("UPDATE users SET state = ? WHERE id = ?").run(JSON.stringify(userState), userId);
@@ -1118,7 +1191,8 @@ module.exports = {
           ts: body.message.ts,
           blocks: blocks
         });
-      }, catch_time * 1000)
-    },
+
+      }, catch_time * 1000);
+    }
   },
 };

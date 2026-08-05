@@ -35,10 +35,11 @@ An interactive Slack bot fishing game
        - [x] Show basic info
        - [x] Option to cast
      - [ ] Fishing page
-       - [ ] Results layout
+       - [x] Results layout
        - [x] Prefish layout
-       - [ ] Handle fishing random logic
-         - [ ] Value calculation
+       - [x] Handle fishing random logic
+         - [x] Value calculation
+       - [ ] Full storage check
    - [ ] /f-shop
      - [x] Paginated layout
      - [x] Functionality

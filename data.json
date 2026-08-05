@@ -5456,6 +5456,26 @@
             },
             "value": "fish_kcast",
             "action_id": "fish_kcast"
+          },
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "View Storage",
+              "emoji": true 
+            },
+            "value": "fish_storage",
+            "action_id": "fish_storage"
+          },
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "End Trip",
+              "emoji": true
+            },
+            "value": "fish_endtrip",
+            "action_id": "fish_endtrip"
           }
         ]
       }
