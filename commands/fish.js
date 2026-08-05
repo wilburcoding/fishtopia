@@ -1193,6 +1193,77 @@ module.exports = {
         });
 
       }, catch_time * 1000);
+    },
+    fish_storage: async ({ action, ack, client, body, respond }) => {
+      // dismissable ephemeral message with list of all fish in storage
+      await ack();
+      const userId = body.user.id;
+      const DATA = global.data;
+      const db = global.db;
+      const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+      if (!user) {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = "Somehow, this user doesn't exist. Please try getting started with the /f-start command.";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks
+        });
+        return;
+      }
+      const userState = JSON.parse(user.state);
+      const storage = userState.storage;
+      console.log(storage);
+      let fish_counts = {};
+      for (let fish of storage) {
+        if (fish_counts[fish.type]) {
+          fish_counts[fish.type] += 1;
+        } else {
+          fish_counts[fish.type] = 1;
+        }
+      }
+      let blocks = [{
+        "type": "header",
+        "text": {
+          "type":"plain_text",
+          "text": `${user.username}'s Fish Storage`
+        },
+        "level": 1
+      }]; // this one is ismple so no custom blocks are needed
+      let txt = "";
+      for (let fish_type of Object.keys(fish_counts)) {
+        txt += `**${fish_counts[fish_type]}x** ${DATA.fish[fish_type].name} (${DATA.fish[fish_type].rarity})\n`
+      }
+      if (txt === "") {
+        txt = "You have no fish in your storage.";
+      }
+      blocks.push({
+        "type": "markdown",
+        "text": txt
+      });
+      blocks.push({
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type" :"plain_text",
+              "text": "Dismiss",
+              "emoji": true
+            },
+            "value": "dismiss",
+            "action_id": "dismiss"
+          }
+        ]
+      });
+      await client.chat.postEphemeral({
+        channel: body.channel.id,
+        user: body.user.id,
+        blocks: blocks
+      });
+//
+
+
     }
   },
 };
