@@ -1017,6 +1017,17 @@ module.exports = {
         return;
       }
 
+      const boat = userData.boats.find((item) => item.id === boatId);
+      if (userState.storage.length == boat.stats.capacity) {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = "Your storage is full, you can't continue fishing. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks
+        });
+        return;
+      }
       userState.current = "casting";
       // for (let fish of userState.results) {
       //   userState.storage.push(fish);
@@ -1053,7 +1064,6 @@ module.exports = {
       );
       const tool_data = DATA.tools[tool.type];
       const bait_data = DATA.baits[bait.type];
-      const boat = userData.boats.find((item) => item.id === boatId);
 
       let catch_time = catchTime(tool_data, bait_data);
  
@@ -1139,6 +1149,18 @@ module.exports = {
         return;
       }
       userState.current = "casting";
+            const boat = userData.boats.find(item => item.id === boatId);
+
+      if (userState.storage.length == boat.stats.capacity) {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = "Your storage is full, you can't continue fishing. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks
+        });
+        return;
+      }
       for (let fish of userState.results) {
         userState.storage.push(fish);
       }
@@ -1160,7 +1182,6 @@ module.exports = {
       const bait = userData.equipment.find(item => item.id === baitId && item.etype === "bait");
       const tool_data = DATA.tools[tool.type];
       const bait_data = DATA.baits[bait.type];
-      const boat = userData.boats.find(item => item.id === boatId);
 
       let catch_time = catchTime(tool_data, bait_data);
       let catch_amt = 1; // default catch amt
