@@ -39,7 +39,8 @@ An interactive Slack bot fishing game
        - [x] Prefish layout
        - [x] Handle fishing random logic
          - [x] Value calculation
-       - [ ] Full storage check
+       - [x] Full storage check
+       - [x] End trip functionality
    - [ ] /f-shop
      - [x] Paginated layout
      - [x] Functionality
@@ -103,6 +104,7 @@ An interactive Slack bot fishing game
    - /boat -> view your boat (with options)
    - /equipment -> tools, baits, other equipment
    - /profile -> overview of your equipment, boat
+   - /inventory -> see what actual fish you have bruh i forgot about this
  - Gameplay
    - Use /start command
    - Users start with basic tools and a boat
@@ -172,6 +174,15 @@ An interactive Slack bot fishing game
        - Stats -> other usage stats (ex. times fished)
      - Ability to search up other users
    - Fish species with rarity
+   - Use /inventory to see what fish you have and manage them
+       - Condensed list of all fishes (shows variants separately)
+       - Option to sell x amount of a type of fish (maybe a select menu (select a type) and an input area (amt))
+       - Layout
+         - Header
+         - Main body -> list of fishes. Full list
+         - Sell type static select -> including all fish types wiht actual amoutns + sell all option
+         - Sell amt -> input text, ,optional. Defaults to 1
+         - Perform action button
  - Additional gameplay features
    - Fish
      - Rarity tags: Common, Uncommon, Rare, Epic, Legendary

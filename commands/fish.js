@@ -163,14 +163,22 @@ function calcTimeRemaining(timestamp) {
 function populateTravelBlocks(DATA, user) {
   let blocks = JSON.parse(JSON.stringify(DATA.blocks["fish-travel"]));
   let user_state = JSON.parse(user.state);
-  let map = user_state.location;
-  const mapData = DATA.maps[map];
-  blocks[0].text.text = `${user.username} - Traveling to ${mapData.name}`;
-  blocks[1].title.text = `Destination: ${mapData.name}`;
-  blocks[1].body.text = `
+  console.log(user_state);
+  if (user_state.location === "home") {
+    blocks[0].text.text = `${user.username} - Traveling Home`;
+    blocks[1].title.text = `Destination: Home`;
+    blocks[1].body.text = `Traveling back home!
+*ETA*: ${calcTimeRemaining(user_state.time_reach)}`;
+  } else {
+    let map = user_state.location;
+    const mapData = DATA.maps[map];
+    blocks[0].text.text = `${user.username} - Traveling to ${mapData.name}`;
+    blocks[1].title.text = `Destination: ${mapData.name}`;
+    blocks[1].body.text = `
     ${mapData.description}
 *ETA*: ${calcTimeRemaining(user_state.time_reach)}
     `;
+  }
   return blocks;
 }
 
@@ -1017,14 +1025,21 @@ module.exports = {
         return;
       }
 
+      const userData = JSON.parse(user.data);
+      const metadata = userState.metadata;
+      const toolId = metadata.toolId;
+      const baitId = metadata.baitId;
+      const boatId = metadata.boatId;
+      const mapId = userState.location;
       const boat = userData.boats.find((item) => item.id === boatId);
       if (userState.storage.length == boat.stats.capacity) {
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-        blocks[0].text.text = "Your storage is full, you can't continue fishing. ";
+        blocks[0].text.text =
+          "Your storage is full, you can't continue fishing. ";
         await client.chat.postEphemeral({
           channel: body.channel.id,
           user: body.user.id,
-          blocks: blocks
+          blocks: blocks,
         });
         return;
       }
@@ -1033,12 +1048,7 @@ module.exports = {
       //   userState.storage.push(fish);
       // }
       userState.results = [];
-      const metadata = userState.metadata;
-      const toolId = metadata.toolId;
-      const baitId = metadata.baitId;
-      const boatId = metadata.boatId;
-      const mapId = userState.location;
-      const userData = JSON.parse(user.data);
+
       db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
         JSON.stringify(userState),
         userId,
@@ -1066,7 +1076,7 @@ module.exports = {
       const bait_data = DATA.baits[bait.type];
 
       let catch_time = catchTime(tool_data, bait_data);
- 
+
       let catch_amt = 1; // default
       if (tool_data.effects.catch_amt) {
         catch_amt +=
@@ -1129,74 +1139,107 @@ module.exports = {
       const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
       if (!user) {
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-        blocks[0].text.text = "Somehow, this user doesn't exist. Please try getting started with the /f-start command.";
+        blocks[0].text.text =
+          "Somehow, this user doesn't exist. Please try getting started with the /f-start command.";
         await client.chat.postEphemeral({
           channel: body.channel.id,
           user: body.user.id,
-          blocks: blocks
+          blocks: blocks,
         });
         return;
       }
       const userState = JSON.parse(user.state);
       if (userState.current !== "results") {
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-        blocks[0].text.text = "It dosen't look like you are ready to do this action. Please use the /f-fish command again";
+        blocks[0].text.text =
+          "It dosen't look like you are ready to do this action. Please use the /f-fish command again";
         await client.chat.postEphemeral({
           channel: body.channel.id,
           user: body.user.id,
-          blocks: blocks
+          blocks: blocks,
         });
         return;
       }
-      userState.current = "casting";
-            const boat = userData.boats.find(item => item.id === boatId);
-
-      if (userState.storage.length == boat.stats.capacity) {
-        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-        blocks[0].text.text = "Your storage is full, you can't continue fishing. ";
-        await client.chat.postEphemeral({
-          channel: body.channel.id,
-          user: body.user.id,
-          blocks: blocks
-        });
-        return;
-      }
-      for (let fish of userState.results) {
-        userState.storage.push(fish);
-      }
-      userState.results = [];
+      const userData = JSON.parse(user.data);
       const metadata = userState.metadata;
       const toolId = metadata.toolId;
       const baitId = metadata.baitId;
       const boatId = metadata.boatId;
       const mapId = userState.location;
-      const userData = JSON.parse(user.data);
-      db.prepare("UPDATE users SET state = ? WHERE id = ?").run(JSON.stringify(userState), userId);
-      const blocks = populateFishingWaitBlocks(DATA, user, toolId, baitId, boatId, mapId);
+      const boat = userData.boats.find((item) => item.id === boatId);
+
+      if (userState.storage.length == boat.stats.capacity) {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text =
+          "Your storage is full, you can't continue fishing. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
+      userState.current = "casting";
+
+      for (let fish of userState.results) {
+        userState.storage.push(fish);
+      }
+      userState.results = [];
+
+      db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+        JSON.stringify(userState),
+        userId,
+      );
+      const blocks = populateFishingWaitBlocks(
+        DATA,
+        user,
+        toolId,
+        baitId,
+        boatId,
+        mapId,
+      );
       await client.chat.update({
         channel: body.channel.id,
         ts: body.message.ts,
-        blocks: blocks
+        blocks: blocks,
       });
-      const tool = userData.equipment.find(item => item.id === toolId && item.etype === "tool");
-      const bait = userData.equipment.find(item => item.id === baitId && item.etype === "bait");
+      const tool = userData.equipment.find(
+        (item) => item.id === toolId && item.etype === "tool",
+      );
+      const bait = userData.equipment.find(
+        (item) => item.id === baitId && item.etype === "bait",
+      );
       const tool_data = DATA.tools[tool.type];
       const bait_data = DATA.baits[bait.type];
 
       let catch_time = catchTime(tool_data, bait_data);
       let catch_amt = 1; // default catch amt
       if (tool_data.effects.catch_amt) {
-        catch_amt += Math.floor(Math.random() * (tool_data.effects.catch_count[1] - tool_data.effects.catch_count[0]) + tool_data.effects.catch_count[0]);
+        catch_amt += Math.floor(
+          Math.random() *
+            (tool_data.effects.catch_count[1] -
+              tool_data.effects.catch_count[0]) +
+            tool_data.effects.catch_count[0],
+        );
       }
       if (bait_data.effects.catch_amt) {
-        catch_amt += Math.floor(Math.random() * (bait_data.effects.catch_count[1] - bait_data.effects.catch_count[0]) + bait_data.effects.catch_count[0]); 
+        catch_amt += Math.floor(
+          Math.random() *
+            (bait_data.effects.catch_count[1] -
+              bait_data.effects.catch_count[0]) +
+            bait_data.effects.catch_count[0],
+        );
       }
       catch_amt = Math.min(6, catch_amt); // catch amt ceiling
-      if (catch_amt + userState.storage.length > DATA.boats[boat.type].stats.capacity) {
-        catch_amt = DATA.boats[boat.type].stats.capacity - userState.storage.length;
+      if (
+        catch_amt + userState.storage.length >
+        DATA.boats[boat.type].stats.capacity
+      ) {
+        catch_amt =
+          DATA.boats[boat.type].stats.capacity - userState.storage.length;
       }
       let fish_caught = [];
-      for (let i = 0; i < catch_amt; i++ ) {
+      for (let i = 0; i < catch_amt; i++) {
         fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
       }
 
@@ -1204,15 +1247,24 @@ module.exports = {
       setTimeout(async () => {
         userState.current = "results";
         userState.results = fish_caught;
-        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(JSON.stringify(userState), userId);
+        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+          JSON.stringify(userState),
+          userId,
+        );
         user.state = JSON.stringify(userState);
-        const blocks = populateFishingResultsBlocks(DATA, user, toolId, baitId, boatId, mapId);
+        const blocks = populateFishingResultsBlocks(
+          DATA,
+          user,
+          toolId,
+          baitId,
+          boatId,
+          mapId,
+        );
         await client.chat.update({
           channel: body.channel.id,
           ts: body.message.ts,
-          blocks: blocks
+          blocks: blocks,
         });
-
       }, catch_time * 1000);
     },
     fish_storage: async ({ action, ack, client, body, respond }) => {
@@ -1224,11 +1276,12 @@ module.exports = {
       const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
       if (!user) {
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-        blocks[0].text.text = "Somehow, this user doesn't exist. Please try getting started with the /f-start command.";
+        blocks[0].text.text =
+          "Somehow, this user doesn't exist. Please try getting started with the /f-start command.";
         await client.chat.postEphemeral({
           channel: body.channel.id,
           user: body.user.id,
-          blocks: blocks
+          blocks: blocks,
         });
         return;
       }
@@ -1243,48 +1296,113 @@ module.exports = {
           fish_counts[fish.type] = 1;
         }
       }
-      let blocks = [{
-        "type": "header",
-        "text": {
-          "type":"plain_text",
-          "text": `${user.username}'s Fish Storage`
+      let blocks = [
+        {
+          type: "header",
+          text: {
+            type: "plain_text",
+            text: `${user.username}'s Fish Storage`,
+          },
+          level: 1,
         },
-        "level": 1
-      }]; // this one is ismple so no custom blocks are needed
+      ]; // this one is ismple so no custom blocks are needed
       let txt = "";
       for (let fish_type of Object.keys(fish_counts)) {
-        txt += `**${fish_counts[fish_type]}x** ${DATA.fish[fish_type].name} (${DATA.fish[fish_type].rarity})\n`
+        txt += `**${fish_counts[fish_type]}x** ${DATA.fish[fish_type].name} (${DATA.fish[fish_type].rarity})\n`;
       }
       if (txt === "") {
         txt = "You have no fish in your storage.";
       }
       blocks.push({
-        "type": "markdown",
-        "text": txt
+        type: "markdown",
+        text: txt,
       });
       blocks.push({
-        "type": "actions",
-        "elements": [
+        type: "actions",
+        elements: [
           {
-            "type": "button",
-            "text": {
-              "type" :"plain_text",
-              "text": "Dismiss",
-              "emoji": true
+            type: "button",
+            text: {
+              type: "plain_text",
+              text: "Dismiss",
+              emoji: true,
             },
-            "value": "dismiss",
-            "action_id": "dismiss"
-          }
-        ]
+            value: "dismiss",
+            action_id: "dismiss",
+          },
+        ],
       });
       await client.chat.postEphemeral({
         channel: body.channel.id,
         user: body.user.id,
-        blocks: blocks
+        blocks: blocks,
       });
-//
+      //
+    },
+    fish_endtrip: async ({ action, ack, client, body, respond }) => {
+      // set state, set time return, store in metadata
+      await ack();
+      const userId = body.user.id;
+      const DATA = global.data;
+      const db = global.db;
+      const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+      if (!user) {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text =
+          "Somehow, this user doesn't exist. Please try getting started with the /f-start command.";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
+      const userState = JSON.parse(user.state);
+      if (userState.current !== "results") {
+        let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text =
+          "It dosen't look like you are ready to do this action. Please use the /f-fish comamnd again. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
 
+      // put fish into inventory
+      let userData = JSON.parse(user.data);
+      let inventory = userData.inventory;
+      for (let fish of userState.storage) {
+        inventory.push(fish);
+      }
+      const mapId = userState.location;
+      userData.inventory = inventory;
+      userState.storage = [];
+      userState.current = "traveling";
+      userState.location = "home";
+      const boat = userData.boats.find(
+        (item) => item.id === userState.metadata.boatId,
+      );
+      const time_to_reach = Math.ceil(
+        DATA.maps[mapId].distance / DATA.boats[boat.type].stats.speed,
+      );
+      const time_reach = Date.now() + time_to_reach * 60 * 1000;
+      userState.time_reach = time_reach;
 
-    }
+      // TODO: update stats
+      db.prepare("UPDATE users SET data = ?, state = ? WHERE id = ?").run(
+        JSON.stringify(userData),
+        JSON.stringify(userState),
+        userId,
+      );
+      user.state = JSON.stringify(userState);
+      const blocks = populateTravelBlocks(DATA, user);
+      await client.chat.update({
+        channel: body.channel.id,
+        ts: body.message.ts,
+        blocks: blocks,
+      });
+    },
   },
 };
