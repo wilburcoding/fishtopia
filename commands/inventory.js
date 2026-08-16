@@ -1,4 +1,5 @@
-function populateInventoryBlocks(user_data, DATA) {
+function populateInventoryBlocks(user_data, DATA, metadata) {
+  const type = metadata.type;
   const inventory = user_data.inventory;
   let counts = {};
   for (const item of inventory) {
@@ -43,6 +44,14 @@ function populateInventoryBlocks(user_data, DATA) {
       ? ` (${variant.charAt(0).toUpperCase() + variant.slice(1)})`
       : "";
     const fish_data = DATA.fish[fish_name];
+    // console.log({
+    //   text: {
+    //     type: "plain_text",
+    //     text: `${fish_data.name}${v_text} (${counts[key].length}x)`,
+    //     emoji: true,
+    //   },
+    //   value: key,
+    // });
     return {
       text: {
         type: "plain_text",
@@ -54,12 +63,44 @@ function populateInventoryBlocks(user_data, DATA) {
   });
   blocks[4].elements[0].options.push({
     text: {
-        type: "plain_text",
-        text: "All Fish",
-        emoji: true,
+      type: "plain_text",
+      text: "All Fish",
+      emoji: true,
     },
     value: "all",
   });
+  if (type !== "none") {
+    let tlabel = "Select All";
+    if (type !== "all") {
+      let fish = type.includes("-") ? type.split("-")[0] : type;
+      const variant = type.includes("-") ? type.split("-")[1] : null;
+      let vtext =
+        variant == null
+          ? ""
+          : `(${variant.charAt(0).toUpperCase() + variant.slice(1)})`;
+      const fish_data = DATA.fish[fish];
+      tlabel = `${fish_data.name} ${vtext}`;
+    }
+    // console.log(counts);
+    // console.log({
+    //     text: {
+    //         type: "plain_text",
+    //         text: tlabel + "(" + counts[type].length + "x)",
+    //         emoji: true
+    //     },
+    //     value: type
+    // });
+    blocks[4].elements[0].initial_option = {
+      text: {
+        type: "plain_text",
+        text: tlabel + "(" + counts[type].length + "x)",
+        emoji: true,
+      },
+      value: type,
+    };
+  }
+  console.log(metadata);
+
   return blocks;
 }
 
@@ -152,16 +193,22 @@ module.exports = {
     //   },
     //   value: "all",
     // });
-    let blocks = populateInventoryBlocks(user_data, DATA);
+    let blocks = populateInventoryBlocks(user_data, DATA, {
+      type: "none",
+      amt: "", // amt doesn't really matter here but whatever
+    });
 
     await client.chat.postMessage({
       channel: command.channel_id,
       user: command.user_id,
       blocks: blocks,
-      metadata: JSON.stringify({
-        type: "none", // fish type selected
-        amt: 1, // amount of fish entered
-      }),
+      metadata: {
+        event_type: "inventory_view",
+        event_payload: {
+          type: "none",
+          amt: "", // amt doesn't really matter
+        },
+      },
     });
     // metadata for this command would probably just be the different options the user supplies
   },
@@ -187,6 +234,118 @@ module.exports = {
       const user_data = JSON.parse(user.data);
 
       // realistically all u gotta do is reupdate it but show max fish atm somewhere
+      let metadata = body.message.metadata.event_payload;
+      const new_type = action.selected_option.value;
+      metadata.type = new_type;
+      const blocks = populateInventoryBlocks(user_data, DATA, metadata);
+      await client.chat.update({
+        channel: body.channel.id,
+        ts: body.message.ts,
+        blocks: blocks,
+        metadata: {
+          event_type: "inventory_view",
+          event_payload: metadata,
+        },
+      });
+    },
+    inventory_sell: async ({ action, ack, client, body, response }) => {
+      await ack();
+      const db = global.db;
+      const DATA = global.data;
+      const user = db
+        .prepare("SELECT * FROM users WHERE id = ?")
+        .get(body.user.id);
+      if (!user) {
+        const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text =
+          "You need to get started before you can use this command. Try using the /f-start command to get started. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks,
+        });
+        return;
+      }
+
+      // otherwise, check data
+      let amt =
+        body.state.values["inventory_sell_amt"]["inventory_sell_amt_input"]
+          .value;
+      if (
+        amt === null ||
+        amt === undefined ||
+        isNaN(amt) ||
+        parseInt(amt) <= 0
+      ) {
+        amt = 1; // default to 1 if invalid
+      }
+      // check if user has enough
+      const user_data = JSON.parse(user.data);
+      const metadata = body.message.metadata.event_payload;
+      const type = metadata.type; // type of fish or all
+      let counts = {};
+      for (const item of user_data.inventory) {
+        if (item.variant == null) {
+          if (counts[item.type]) {
+            counts[item.type].push({ weight: item.weight, value: item.value });
+          } else {
+            counts[item.type] = [{ weight: item.weight, value: item.value }];
+          }
+        } else {
+          const key = `${item.type}-${item.variant}`;
+          if (counts[key]) {
+            counts[key].push({ weight: item.weight, value: item.value });
+          } else {
+            counts[key] = [{ weight: item.weight, value: item.value }];
+          }
+        }
+      }
+      let sold = []; // juet keep track of everything so we can populate a results thing later
+      if (type === "all") {
+        let total_fish = 0;
+        for (const key in counts) {
+            total_fish += counts[key].length;
+        }
+        // if (parseInt(amt) > total_fish) {
+        //     const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        //     blocks[0].text.text = `You only have ${total_fish} fish in your inventory. `;
+        //     await client.chat.postEphemeral({
+        //         channel: body.channel.id,
+        //         user: body.user.id,
+        //         blocks: blocks
+        //     });
+        //     return;
+        // }
+        for (const key in counts) {
+            const fish_list = counts[key];
+            for (let i =0; i < fish_list.length; i++) {
+                sold.push({
+                    type: key,
+                    weight: fish_list[i].weight,
+                    value: fish_list[i].value
+                });
+            }
+        }
+      } else {
+        const fish_list = counts[type];
+        const fish_type = type.includes("-") ? type.split("-")[0]: type;
+        const fish_variant = type.includes("-") ? type.split("-")[1]: null;
+        const fish_data = DATA.fish[fish_type];
+        const v_text = fish_variant ? ` (${fish_variant.charAt(0).toUpperCase() + fish_variant.slice(1)})` : "";
+        if (parseInt(amt) > fish_list.length) {
+
+            const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+            blocks[0].text.text = `You only have ${fish_list.length} of ${fish_data.name}${v_text} in your inventory. `;
+            await client.chat.postEphemeral({
+                channel: body.channel.id,
+                user: body.user.id,
+                blocks: blocks
+            });
+            return; 
+        }
+
+      }
+      
     },
   },
 };
