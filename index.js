@@ -250,7 +250,7 @@ function resetData(username) {
   global.db = database.db;
   global.generateID = generateID;
   global.data = DATA;
-  resetData("jellyfish"); // reset data for testing only
+  // resetData("jellyfish"); // reset data for testing only
 
   // let userdata = getData("jellyfish");
 

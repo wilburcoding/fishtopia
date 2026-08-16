@@ -5485,7 +5485,7 @@
         "type": "header",
         "text": {
           "type": "plain_text",
-          "text": "Person - FIsh Inventory Overview"
+          "text": "Person - Fish Inventory Overview"
         },
         "level": 1
       },
@@ -5545,7 +5545,7 @@
         },
         "label": {
           "type": "plain_text",
-          "text": "Enter an amount of fish to sell (or leave empty to default to '1')",
+          "text": "Enter an amount of fish to sell (or leave empty to default to 1)",
           "emoji": true
         },
         "optional": false
@@ -5557,7 +5557,7 @@
             "type": "button",
             "text": {
               "type": "plain_text",
-              "text": "Select",
+              "text": "Sell Selected Fish",
               "emoji": true
             },
             "value": "inventory_sell",
