@@ -77,9 +77,10 @@ function setData(username, data, coins, gold, level, xp, state) {
     if (state === undefined) {
       state = user.state;
     }
+    console.log(state);
     db.prepare(
-      "UPDATE users SET data = ?, coins = ?, gold = ?, level = ?, xp = ? WHERE username = ?",
-    ).run(data, coins, gold, level, xp, username);
+      "UPDATE users SET data = ?, coins = ?, gold = ?, level = ?, xp = ?, state = ? WHERE username = ?",
+    ).run(data, coins, gold, level, xp, state, username);
     console.log("Successfully updated data for user: " + username);
   } else {
     console.error(`User with username ${username} not found.`);
@@ -225,9 +226,9 @@ function resetData(username) {
         current: "idle",
         location: "home",
         time_reach: 0,
-        metadata:{}
+        metadata: {},
       }),
-      username
+      username,
     );
     // const new_data = db
     //   .prepare("SELECT * FROM users WHERE username = ?")
@@ -256,9 +257,31 @@ function resetData(username) {
 
   // userdata = JSON.parse(userdata.data);
   // console.log(userdata.boats);
-  // userdata.boats = [];
-  // console.log(userdata.boats);
-  // setData("jellyfish", JSON.stringify(userdata), undefined, undefined, undefined, undefined, undefined); // for testing only
+  // userdata.boats.push({
+  //   id: global.generateID(4),
+  //   type: "trawler",
+  //   addons: ["Upgraded Engine"],
+  //   durability: 100,
+  //   default: false,
+  //   stats: { trips: 1, distance: 1, fish: 1}
+  // });
+
+  // // userdata.boats = [];
+  // // console.log(userdata.boats);
+  // setData(
+  //   "jellyfish",
+  //   undefined,
+  //   undefined,
+  //   undefined,
+  //   undefined,
+  //   undefined,
+  //   JSON.stringify({
+  //     current: "idle", // alternative options: traveling, fishing
+  //     location: "home", // alternative options: any map id
+  //     time_reach: 0, // when applicable -> for the time when user is reaching a new location
+  //     metadata: {}, // extra data to store (ex. boat, tool, bait IDs )
+  //   }),
+  // ); // for testing only
 
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);

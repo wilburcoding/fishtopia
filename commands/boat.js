@@ -344,6 +344,10 @@ module.exports = {
       const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
       const index = boats.indexOf(boat);
       if (actionType === "default") {
+        for (let i = 0; i < boats.length; i++) {
+          boats[i].default = false;
+        }
+        boat.default = true;
         blocks[0].text.text =
           "You have successfully set this boat as your default boat.";
       } else if (actionType === "sell") {
@@ -468,6 +472,9 @@ module.exports = {
       if (!boat) {
         boat = boats[0];
       }
+      
+      const blocks = JSON.parse(JSON.stringify(DATA.blocks["boats-main"]));
+      const boat_data = DATA.boats[boat.type];
       
       // basically copy and paste from main execute function
       blocks[0].text.text = `${user.username}'s Boats`;

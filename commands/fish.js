@@ -482,7 +482,7 @@ module.exports = {
     let boatId = null;
     let mapId = null;
     const state = JSON.parse(user.state);
-    console.log(state.current);
+    console.log(state);
     if (state.current === "idle") {
       // automatically select the best tool and bait
       let tools = equipment.filter((item) => item.etype === "tool");
@@ -516,6 +516,7 @@ module.exports = {
           mapId = map;
         }
       }
+      console.log("map Id")
       console.log(mapId);
 
       // console.log(toolId);
@@ -844,9 +845,13 @@ module.exports = {
       const boats = user_data.boats;
       const boat = boats.find((b) => b.id === boatId);
 
-      const time_to_reach = Math.ceil(
+      let time_to_reach = Math.ceil(
         DATA.maps[mapId].distance / DATA.boats[boat.type].stats.speed,
       );
+
+
+      // TESTING ONLY
+      time_to_reach = 1/60; 
       const time_reach = Date.now() + time_to_reach * 60 * 1000;
       userState.time_reach = time_reach;
 

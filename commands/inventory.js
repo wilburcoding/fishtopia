@@ -284,23 +284,26 @@ module.exports = {
       const metadata = body.message.metadata.event_payload;
       const type = metadata.type; // type of fish or all
       let counts = {};
+      let index = 0;
       for (const item of user_data.inventory) {
         if (item.variant == null) {
           if (counts[item.type]) {
-            counts[item.type].push({ weight: item.weight, value: item.value });
+            counts[item.type].push({ weight: item.weight, value: item.value, index: index });
           } else {
-            counts[item.type] = [{ weight: item.weight, value: item.value }];
+            counts[item.type] = [{ weight: item.weight, value: item.value, index: index }];
           }
         } else {
           const key = `${item.type}-${item.variant}`;
           if (counts[key]) {
-            counts[key].push({ weight: item.weight, value: item.value });
+            counts[key].push({ weight: item.weight, value: item.value, index: index });
           } else {
-            counts[key] = [{ weight: item.weight, value: item.value }];
+            counts[key] = [{ weight: item.weight, value: item.value, index: index }];
           }
         }
+        index++;
       }
       let sold = []; // juet keep track of everything so we can populate a results thing later
+      let total_profit = 0;
       if (type === "all") {
         let total_fish = 0;
         for (const key in counts) {
@@ -318,14 +321,25 @@ module.exports = {
         // }
         for (const key in counts) {
             const fish_list = counts[key];
+            const fish_type = key.includes("-") ? key.split("-")[0]: key;
+            const fish_variant = key.includes("-") ? key.split("-")[1] : null;
+            const fish_data = DATA.fish(fish_type);
+            const v_text = fish_variant ? ` (${fish_variant.charAt(0).toUpperCase() + fish_variant.slice(1)})` : "";
+
             for (let i =0; i < fish_list.length; i++) {
                 sold.push({
                     type: key,
                     weight: fish_list[i].weight,
-                    value: fish_list[i].value
+                    value: fish_list[i].value, 
+                    name: fish_data.name + v_text,
+                    index: fish_list[i].index
                 });
+                total_profit += fish_list[i].value;
             }
         }
+        console.log(sold);
+        console.log(total_profit);
+
       } else {
         const fish_list = counts[type];
         const fish_type = type.includes("-") ? type.split("-")[0]: type;
@@ -343,8 +357,38 @@ module.exports = {
             });
             return; 
         }
+        // first x amt of fish are sold -> so from the beginning of the list
+        for (let i =0 ; i < parseInt(amt); i++) {
+            const fish = fish_list.splice(0, 1)[0];
+            // console.log(fish);
+            sold.push({
+                type: type,
+                weight: fish.weight,
+                index: fish.index,
+                name: fish_data.name + v_text,
+                value: fish.value
+            });
+            total_profit += fish.value;
+        }
+        console.log(sold);
+        console.log(total_profit);
+
+        
 
       }
+      const indexes_to_remove = sold.map((fish) => fish.index); // remove fish
+      for (let i = user_data.inventory.length - 1; i >= 0; i--) {
+        if (indexes_to_remove.includes(i)) {
+            user_data.inventory.splice(i, 1);
+        }
+      }
+
+      db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+        JSON.stringify(user_data),
+        user.id
+      )
+      console.log(user_data.inventory);
+      // populate results block
       
     },
   },

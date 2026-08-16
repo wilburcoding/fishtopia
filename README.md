@@ -76,7 +76,7 @@ An interactive Slack bot fishing game
  - [x] Tool effects
    - [x] Figure out what tool effects theres going to eb -> its just going to be the same as the boats pretty much
    - [ ] Implement in /f-fish
- - [ ] some way for me to edit my own data?
+ - [ ] some way for me to edit my own data? better than the awkward functions i have right now?
  - [ ] bugs + fixes
    - [x] Trying to select a tool in profile doesn't work after you select it the second time? -> forgot to set action id lol whoops
    - [ ] Didn't really implement checks to ensure that the right user is interacting
@@ -90,6 +90,8 @@ An interactive Slack bot fishing game
    - [x] markdown not working for /f-shop command? apparently it decided to only take single *
    - [ ] Just realized different button styles exist -> put in later
    - [ ] Tool, bait, and boat IDs are not transferred between traveling and fishing states
+   - [x] Setting fishes as default doesn't change the one that is currently default
+   - [ ] Going to set travel time to be 1s for now - make sure to remove!!
 
 
 
