@@ -73,6 +73,10 @@ An interactive Slack bot fishing game
      - [x] Completion stats section
      - [x] usage stats sectio
    - [ ] an overall command message catch?
+   - [x] /f-inventory
+     - [x] Layout
+     - [x] Specific type selling functionality
+     - [x] Sell all functionality
  - [x] Tool effects
    - [x] Figure out what tool effects theres going to eb -> its just going to be the same as the boats pretty much
    - [ ] Implement in /f-fish
@@ -185,6 +189,8 @@ An interactive Slack bot fishing game
          - Sell type static select -> including all fish types wiht actual amoutns + sell all option
          - Sell amt -> input text, ,optional. Defaults to 1
          - Perform action button
+         - Sell results layout
+           - Simple title, text. Don't think there is going to be a confirmation for this one
  - Additional gameplay features
    - Fish
      - Rarity tags: Common, Uncommon, Rare, Epic, Legendary

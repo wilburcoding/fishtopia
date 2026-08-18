@@ -5565,6 +5565,35 @@
           }
         ]
       }
+    ],
+    "inventory-sell": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person - Inventory Sell Results",
+          "emoji": true
+        }
+      },
+      {
+        "type": "markdown",
+        "text": "something something somethign here"
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Dismiss",
+              "emoji": true
+            },
+            "value": "dismiss",
+            "action_id": "dismiss"
+          }
+        ]
+      }
     ]
   }
 }

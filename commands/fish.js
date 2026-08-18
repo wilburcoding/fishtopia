@@ -552,6 +552,24 @@ module.exports = {
     } else if (state.current === "traveling") {
       if (state.time_reach <= Date.now()) {
         // reached place -> change to fishing UI
+        if (state.location === "home") {
+          const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+          blocks[0].text.text = "Congrats! You have returned home from your trip. ";
+          state.current = "idle";
+          state.location = "home";
+          state.metadata = {};
+          state.time_reach = 0;
+          db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+            JSON.stringify(state),
+            user.id
+          );
+          await client.chat.postEphemeral({
+            channel: command.channel_id,
+            user: command.user_id,
+            blocks: blocks
+          });
+          return;
+        }
         state.current = "prefish";
         db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
           JSON.stringify(state),
