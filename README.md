@@ -212,6 +212,9 @@ An interactive Slack bot fishing game
          - Perform action button
          - Sell results layout
            - Simple title, text. Don't think there is going to be a confirmation for this one
+   - /f-use to use an item
+     - You have include item name (static select)
+     - Press and then updates message to show results
  - Additional gameplay features
    - Fish
      - Rarity tags: Common, Uncommon, Rare, Epic, Legendary
@@ -221,7 +224,7 @@ An interactive Slack bot fishing game
      - Will likely be a separate percentage from fish
      - mix of common ish to rare ish items
      - Maybe usable items? (boxes?? gamblign???)
-     - How to put this into current data?
+     - How to put this into current data????
    - Maps
      - Different fish for each location
      - Differnt distances from home location
@@ -316,9 +319,17 @@ An interactive Slack bot fishing game
  - Unfortunately it looks like I need to do art for this one
  - How items are going to work
    - They are going to be found in inventory
+   - Need to update to make sure they work in /f-fish command as well as /f-inventory
    - I alreayd have an item chance thing and multipliers so that should be easy to implement
      - Should be on top of the catch (which is capped at 6)
      - You can only get 1 item at a time 
+     - Data format
+       - Coins range -> coins will always be given
+       - Probs for bait
+         - List of probs for each tier
+       - Probs for no item
+       - Probs for tool
+         - List of probs for each tier
    - Need a /use command to use item
 
 
@@ -353,3 +364,5 @@ Used AI to brainstorm effects for each tool
 I don't really want this to stretch to far. honestly, adding items and then market will probably be the last few things. 
 
 Market is getting scrapped. :(
+
+Used AI to help brainstorm balanced items

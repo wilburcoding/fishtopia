@@ -493,6 +493,191 @@
       }
     }
   },
+  "items": {
+    "sea_glass": {
+      "name": "Sea Glass",
+      "description": "A smooth, useless shard worn down by the ocean waves",
+      "sell_value": 8,
+      "type": "collectible",
+      "tier": 1
+    },
+    "broken_shell": {
+      "name": "Broken Shell",
+      "description": "A shiny, broken shell from a molusk",
+      "sell_value": 10,
+      "type": "collectible",
+      "tier": 1
+    },
+    "waterlogged_boat": {
+      "name": "Waterlogged Boat",
+      "description": "Someone's fishing trip did not end well...",
+      "sell_value": 13,
+      "type": "collectible",
+      "tier": 1
+    },
+    "driftwood_chunk": {
+      "name": "Driftwood Chunk",
+      "description": "Bleached wood shaped by current and time",
+      "type": "collectible",
+      "tier": 2,
+      "sell_value": 15
+    },
+    "barnacle_cluster": {
+      "name": "Barnacle Cluster",
+      "description": "A knot of barnacles pried from something much bigger.",
+      "type": "collectible",
+      "tier": 2,
+      "sell_price": 30
+    },
+    "message_in_a_bottle": {
+      "name": "Message in a Bottle",
+      "description": "The ink has smeared, but you can just make out a signature.",
+      "type": "collectible",
+      "tier": 2,
+      "sell_price": 40
+    },
+    "tarnished_compass": {
+      "name": "Tarnished Compass",
+      "description": "The needle still spins, though it no longer points north.",
+      "type": "collectible",
+      "tier": 3,
+      "sell_price": 50
+    },
+    "pearl": {
+      "name": "Pearl",
+      "description": "Small, flawless, and worth a story about how you found it.",
+      "type": "collectible",
+      "tier": 3,
+      "sell_price": 80
+    },
+    "captains_pocket_watch": {
+      "name": "Captain's Pocket Watch",
+      "description": "Stopped at the exact moment it went into the water.",
+      "type": "collectible",
+      "tier": 4,
+      "sell_price": 120
+    },
+    "kraken_tooth": {
+      "name": "Kraken Tooth",
+      "description": "Too big to belong to anything that should exist.",
+      "type": "collectible",
+      "tier": 4,
+      "sell_price": 220
+    },
+    "sunken_crown": {
+      "name": "Sunken Crown",
+      "description": "Impossibly light, and it shimmers even out of water.",
+      "type": "collectible",
+      "tier": 5,
+      "sell_price": 260
+    },
+    "leviathan_fang": {
+      "name": "Leviathan Fang",
+      "description": "Legends say the deep sea has a ruler. This might be proof.",
+      "type": "collectible",
+      "tier": 5,
+      "sell_price": 550
+    },
+    "rusty_chest": {
+      "name": "Rusty Chest",
+      "description": "The lock gave way years ago. Something's still inside.",
+      "type": "chest",
+      "tier": 1,
+      "sell_price": 10,
+      "loot_table": {
+        "coins": [15, 35],
+        "bait_prob": 0.5,
+        "tool_prob": 0.08,
+        "no_item_prob": 0.42,
+        "bait_tier_probs": {
+          "1": 1
+        },
+        "tool_tier_probs": {
+          "1": 0.7,
+          "2": 0.3
+        }
+      }
+    },
+    "barnacled_chest": {
+      "name": "Barnacled Chest",
+      "description": "Crusted shut. Whatever's inside has been down there a while.",
+      "tier": 2,
+      "sell_price": 25,
+      "loot_table": {
+        "coins": [25, 60],
+        "bait_prob": 0.55,
+        "tool_prob": 0.12,
+        "no_item_prob": 0.33,
+        "bait_tier_probs": {
+          "1": 0.5,
+          "2": 0.5
+        },
+        "tool_tier_probs": {
+          "2": 1
+        }
+      }
+    },
+    "treasure_chest": {
+      "name": "Treasure Chest",
+      "description": "The kind of chest every fisherman dreams of snagging.",
+      "type": "chest",
+      "tier": 3,
+      "sell_price": 70,
+      "loot_table": {
+        "coins": [60, 130],
+        "bait_prob": 0.65,
+        "tool_prob": 0.2,
+        "no_item_prob": 0.15,
+        "bait_tier_probs": {
+          "3": 1
+        },
+        "tool_tier_probs": {
+          "3": 0.6,
+          "4": 0.4
+        }
+      }
+    },
+    "golden_chest": {
+      "name": "Golden Chest",
+      "description": "It gleams even caked in silt.",
+      "type": "chest",
+      "tier": 4,
+      "sell_price": 125,
+      "loot_table": {
+        "coins": [100, 220],
+        "bait_prob": 0.65,
+        "tool_prob": 0.25,
+        "no_item_prob": 0.1,
+        "bait_tier_probs": {
+          "3": 0.35,
+          "4": 0.65
+        },
+        "tool_tier_probs": {
+          "4": 1
+        }
+      }
+    },
+    "mythic_vault": {
+      "name": "Mythic Vault",
+      "description": "Sealed with something more than a lock.",
+      "type": "chest",
+      "tier": 5,
+      "sell_price": 250,
+      "loot_table": {
+        "coins": [200, 450],
+        "bait_prob": 0.65,
+        "tool_prob": 0.35,
+        "no_item_prob": 0.05,
+        "bait_item_probs": {
+          "4": 0.3,
+          "5": 0.7
+        },
+        "tool_tier_probs": {
+          "5": 1
+        }
+      }
+    }
+  },
   "fish": {
     "bluegill": {
       "name": "Bluegill",
@@ -5598,9 +5783,6 @@
           }
         ]
       }
-    ],
-    "market-front": [
-      
     ]
   }
 }
