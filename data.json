@@ -4561,6 +4561,10 @@
       },
       {
         "type": "markdown",
+        "text": "**Default?**: `Yes`"
+      },
+      {
+        "type": "markdown",
         "text": "**Durability**: `100%`"
       },
       {
@@ -5418,7 +5422,7 @@
           {
             "type": "card",
             "title": {
-              "type":"mrkdwn",
+              "type": "mrkdwn",
               "text": "Trout",
               "verbatim": false
             },
@@ -5450,7 +5454,7 @@
           {
             "type": "button",
             "text": {
-              "type" :"plain_text",
+              "type": "plain_text",
               "text": "Keep Fish and Cast",
               "emoji": true
             },
@@ -5462,7 +5466,7 @@
             "text": {
               "type": "plain_text",
               "text": "View Storage",
-              "emoji": true 
+              "emoji": true
             },
             "value": "fish_storage",
             "action_id": "fish_storage"
@@ -5594,6 +5598,9 @@
           }
         ]
       }
+    ],
+    "market-front": [
+      
     ]
   }
 }

@@ -49,20 +49,22 @@ module.exports = {
     const boat_data = DATA.boats[boat.type];
     blocks[2].text = `**Boat Type**: \`${boat_data.name}\``;
     blocks[3].text = `**ID**: \`${boat.id}\``;
-    blocks[4].text = `**Durability**: \`${boat.durability}%\``;
-    blocks[5].text = `**Total Trips**: \`${boat.stats.trips}\``;
-    blocks[6].text = `**Total Distance**: \`${boat.stats.distance}\``;
-    blocks[7].text = `**Total Fish**: \`${boat.stats.fish}\``;
-    blocks[9].text = `**Speed**: \`${boat_data.stats.speed}\``;
-    blocks[10].text = `**Capacity**: \`${boat_data.stats.capacity}\``;
-    blocks[11].text = `**Sturdiness**: \`${boat_data.stats.sturdiness}\``;
-    blocks[12].text = `**Range**: \`${boat_data.stats.range}\``;
-    blocks[13].text = `**Tier**: \`${boat_data.tier}\``;
-    blocks[14].text = `**Addons**: \`${boat.addons.join(", ")}\``;
+    blocks[4].text = `**Default**: \`${boat.default ? "Yes" : "No"}\``;
+    blocks[5].text = `**Durability**: \`${boat.durability}%\``;
+    blocks[6].text = `**Total Trips**: \`${boat.stats.trips}\``;
+    blocks[7].text = `**Total Distance**: \`${boat.stats.distance}\``;
+    blocks[8].text = `**Total Fish**: \`${boat.stats.fish}\``;
+    blocks[10].text = `**Speed**: \`${boat_data.stats.speed}\``;
+    blocks[11].text = `**Capacity**: \`${boat_data.stats.capacity}\``;
+    blocks[12].text = `**Sturdiness**: \`${boat_data.stats.sturdiness}\``;
+    blocks[13].text = `**Range**: \`${boat_data.stats.range}\``;
+    blocks[14].text = `**Tier**: \`${boat_data.tier}\``;
+    blocks[15].text = `**Addons**: \`${boat.addons.join(", ")}\``;
+    console.log(blocks[17]);
     if (boat.default) {
-      blocks[16].elements[0].options.splice(0, 1);
+      blocks[17].elements[0].options.splice(0, 1);
     } else {
-      blocks[16].elements[0].options[0] = {
+      blocks[17].elements[0].options[0] = {
         text: {
           type: "plain_text",
           text: "Set as Default",
@@ -71,7 +73,7 @@ module.exports = {
         value: "default",
       };
     }
-    blocks[17].elements[0].options = boats.map((b, index) => {
+    blocks[18].elements[0].options = boats.map((b, index) => {
       return {
         text: {
           type: "plain_text",
@@ -261,20 +263,21 @@ module.exports = {
       blocks[1].text.text = `Boat Overview (${boats.indexOf(boat) + 1}/${boats.length})`;
       blocks[2].text = `**Boat Type**: \`${boat_data.name}\``;
       blocks[3].text = `**ID**: \`${boat.id}\``;
-      blocks[4].text = `**Durability**: \`${boat.durability}%\``;
-      blocks[5].text = `**Total Trips**: \`${boat.stats.trips}\``;
-      blocks[6].text = `**TOtal Distance**: \`${boat.stats.distance}\``;
-      blocks[7].text = `**Total Fish**: \`${boat.stats.fish}\``;
-      blocks[9].text = `**Speed**: \`${boat_data.stats.speed}\``;
-      blocks[10].text = `**Capacity**: \`${boat_data.stats.capacity}\``;
-      blocks[11].text = `**Sturdiness**: \`${boat_data.stats.sturdiness}\``;
-      blocks[12].text = `**Range**: \`${boat_data.stats.range}\``;
-      blocks[13].text = `**Tier**: \`${boat_data.tier}\``;
-      blocks[14].text = `**Addons**: \`${boat.addons.join(", ")}\``;
+      blocks[4].text = `**Default**: \`${boat.default ? "Yes" : "No"}\``;
+      blocks[5].text = `**Durability**: \`${boat.durability}%\``;
+      blocks[6].text = `**Total Trips**: \`${boat.stats.trips}\``;
+      blocks[7].text = `**TOtal Distance**: \`${boat.stats.distance}\``;
+      blocks[8].text = `**Total Fish**: \`${boat.stats.fish}\``;
+      blocks[10].text = `**Speed**: \`${boat_data.stats.speed}\``;
+      blocks[11].text = `**Capacity**: \`${boat_data.stats.capacity}\``;
+      blocks[12].text = `**Sturdiness**: \`${boat_data.stats.sturdiness}\``;
+      blocks[13].text = `**Range**: \`${boat_data.stats.range}\``;
+      blocks[14].text = `**Tier**: \`${boat_data.tier}\``;
+      blocks[15].text = `**Addons**: \`${boat.addons.join(", ")}\``;
       if (boat.default) {
-        blocks[16].elements[0].options.splice(0, 1);
+        blocks[17].elements[0].options.splice(0, 1);
       } else {
-        blocks[16].elements[0].options[0] = {
+        blocks[17].elements[0].options[0] = {
           text: {
             type: "plain_text",
             text: "Set as Default",
@@ -283,7 +286,7 @@ module.exports = {
           value: "default",
         };
       }
-      blocks[17].elements[0].options = boats.map((b, index) => {
+      blocks[18].elements[0].options = boats.map((b, index) => {
         return {
           text: {
             type: "plain_text",
@@ -462,9 +465,9 @@ module.exports = {
             event_type: "boats_main",
             event_payload: {
               userId: user.id,
-              boatId: null
-            }
-          }
+              boatId: null,
+            },
+          },
         });
         return;
       }
@@ -472,45 +475,46 @@ module.exports = {
       if (!boat) {
         boat = boats[0];
       }
-      
+
       const blocks = JSON.parse(JSON.stringify(DATA.blocks["boats-main"]));
       const boat_data = DATA.boats[boat.type];
-      
+
       // basically copy and paste from main execute function
       blocks[0].text.text = `${user.username}'s Boats`;
       blocks[1].text.text = `Boat Overview (${boats.length})`;
       blocks[2].text = `**Boat Type**: \`${boat_data.name}\``;
       blocks[3].text = `**ID**: \`${boat.id}\``;
-      blocks[4].text = `**Durability**: \`${boat.durability}%\``;
-      blocks[5].text = `**Total Trips**: \`${boat.stats.trips}\``;
-      blocks[6].text = `**Total Distance** \`${boat.stats.distance}\``;
-      blocks[7].text = `**Total Fish**: \`${boat.stats.fish}\``;
-      blocks[9].text = `**Speed**: \`${boat_data.stats.speed}\``;
-      blocks[10].text = `**Capacity**: \`${boat_data.stats.capacity}\``;
-      blocks[11].text = `**Sturdiness**: \`${boat_data.stats.sturdiness}\``;
-      blocks[12].text = `**Range**: \`${boat_data.stats.range}\``;
-      blocks[13].text =`**Tier**: \`${boat_data.tier}\``;
-      blocks[14].text = `**Addons**: \`${boat.addons.join(", ")}\``;
+      blocks[4].text = `**Default**: \`${boat.default ? "Yes" : "No"}\``;
+      blocks[5].text = `**Durability**: \`${boat.durability}%\``;
+      blocks[6].text = `**Total Trips**: \`${boat.stats.trips}\``;
+      blocks[7].text = `**Total Distance** \`${boat.stats.distance}\``;
+      blocks[8].text = `**Total Fish**: \`${boat.stats.fish}\``;
+      blocks[10].text = `**Speed**: \`${boat_data.stats.speed}\``;
+      blocks[11].text = `**Capacity**: \`${boat_data.stats.capacity}\``;
+      blocks[12].text = `**Sturdiness**: \`${boat_data.stats.sturdiness}\``;
+      blocks[13].text = `**Range**: \`${boat_data.stats.range}\``;
+      blocks[14].text = `**Tier**: \`${boat_data.tier}\``;
+      blocks[15].text = `**Addons**: \`${boat.addons.join(", ")}\``;
       if (boat.default) {
-        blocks[16].elements[0].options.splice(0, 1);
+        blocks[17].elements[0].options.splice(0, 1);
       } else {
-        blocks[16].elements[0].options[0] = {
+        blocks[17].elements[0].options[0] = {
           text: {
             type: "plain_text",
             text: "Set as Default",
             emoji: true,
           },
-          value: "default"
+          value: "default",
         };
       }
-      blocks[17].elements[0].options = boats.map((b, index) => {
+      blocks[18].elements[0].options = boats.map((b, index) => {
         return {
           text: {
             type: "plain_text",
             text: `${b.type} (id: ${b.id})`,
-            emoji: true
+            emoji: true,
           },
-          value: String(b.id)
+          value: String(b.id),
         };
       });
       await client.chat.update({
@@ -522,9 +526,9 @@ module.exports = {
           event_type: "boats_main",
           event_payload: {
             userId: user.id,
-            boatId: boat.id
-          }
-        }
+            boatId: boat.id,
+          },
+        },
       });
     },
   },

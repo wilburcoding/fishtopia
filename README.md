@@ -48,7 +48,12 @@ An interactive Slack bot fishing game
        - [x] Buying option
        - [ ] Bulk buying
        - [x] Search option?
-   - [ ] /f-market
+   <!-- - [ ] /f-market
+     - [ ] UI layout
+     - [ ] Functionality
+       - [ ] Paginated list of active offers
+       - [ ] Creating offers
+       - [ ] Managing offers -->
    - [x] /f-start
    - [x] /f-equipment
      - [x] UI Layout -> similar to boat comamnd layout
@@ -87,7 +92,7 @@ An interactive Slack bot fishing game
    - [x] Metadata not updating? -> weirdly disappeared will monitor. Marking as fixed for now but will monitor. 
    - [x] Weird message timestamping issue -> new messages will change their timestamps to become very, very old. Fixed, this was a weird typo
    - [x] wow i even forgot to store balance information
-   - [ ] issue: performing an action (ex. repairing a boat) doesn't update the original message -> possible solution: refresh button with reminders to do so.  Need this like like every command with direct action comamnds
+     - [x] issue: performing an action (ex. repairing a boat) doesn't update the original message -> possible solution: refresh button with reminders to do so.  Need this like like every command with direct action comamnds
      - [x] /equipment
      - [x] /boat
    - [ ] I missed metadata in a lot of plaecs -> double check 
@@ -96,6 +101,8 @@ An interactive Slack bot fishing game
    - [ ] Tool, bait, and boat IDs are not transferred between traveling and fishing states
    - [x] Setting fishes as default doesn't change the one that is currently default
    - [ ] Going to set travel time to be 1s for now - make sure to remove!!
+   - [ ] Items! Big thing i forgot about. 
+     - [ ] 
 
 
 
@@ -161,6 +168,20 @@ An interactive Slack bot fishing game
        - search bar?
            - 
    - Use /market to put offers and trade things with other people
+     - Main front layout
+       - Goals
+         - Easy for user to search?
+         - Allow users to search for specific items?
+         - Easy for users to manage existing offers and post new ones?
+         - Multi-paginated?
+         - Shop should primarily be for getting items (chests and stuff)?
+       - Title (obviously)
+       - Carousel (10 items) -> by default show random 10 items
+       - Pagination options (next, prev button with text somewhere showing page number)
+       - Divider and then some search options
+         - Static select different itesm for offered and requested fields 
+         - Option to view only offers that the user can fulfill
+     - Sadge market is getting scrapped
    - Use /boat to select main boat, see other boats 
      - Actions - show confirmation menu
        - Sell -> sell at 70% of buy price * the durability
@@ -293,7 +314,12 @@ An interactive Slack bot fishing game
        - Baits can be reused to a certain point and then they self destruct. No chance of like repairing or anything. 
  - Database? -> keep it simple and use local sqlite
  - Unfortunately it looks like I need to do art for this one
- - 
+ - How items are going to work
+   - They are going to be found in inventory
+   - I alreayd have an item chance thing and multipliers so that should be easy to implement
+     - Should be on top of the catch (which is capped at 6)
+     - You can only get 1 item at a time 
+   - Need a /use command to use item
 
 
 # NOTES
@@ -323,3 +349,7 @@ How did i not come up with this helper function based command population earlier
 Catch time should be limited to up to 15 seconds -> 6-8 seconds now
 
 Used AI to brainstorm effects for each tool
+
+I don't really want this to stretch to far. honestly, adding items and then market will probably be the last few things. 
+
+Market is getting scrapped. :(
