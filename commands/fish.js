@@ -264,7 +264,7 @@ function populateFishingResultsBlocks(
     storageMessage = ":warning: Your boat storage is full!";
   }
   blocks[0].text.text = `${user.username} - Fishing Results`;
-  blocks[1].text = `You fished at \`${mapData.name}\` with a \`${boatData.name}\`, using a \`${toolData.name}\` and \`${baitData.name}\`. \nYou caught a total of \`${results.length}\` fish! ${storageMessage}`;
+  blocks[1].text = `You fished at \`${mapData.name}\` with a \`${boatData.name}\`, using a \`${toolData.name}\` and \`${baitData.name}\`. \nYou caught a total of \`${results.length}\` fish/items! ${storageMessage}`;
   blocks[2].elements = results.map((fish) => {
     let fishData = DATA.fish[fish.type];
     if (fishData === undefined) {
@@ -916,7 +916,7 @@ module.exports = {
       );
 
       // TESTING ONLY
-      time_to_reach = 1 / 60;
+      // time_to_reach = 1 / 60;
       const time_reach = Date.now() + time_to_reach * 60 * 1000;
       userState.time_reach = time_reach;
 
@@ -1348,7 +1348,12 @@ module.exports = {
         item_prob_multiplier += bait_data.effects.item_multiplier;
       }
       item_prob *= item_prob_multiplier;
-      console.log(item_prob);
+      if (
+        catch_amt + userState.storage.length == 
+        DATA.boats[boat.type].stats.capacity
+      ) {
+        item_prob = 0; // no item if storage is full
+      }
 
       if (Math.random() < item_prob) {
         // add totally random item
