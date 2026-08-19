@@ -267,6 +267,26 @@ function populateFishingResultsBlocks(
   blocks[1].text = `You fished at \`${mapData.name}\` with a \`${boatData.name}\`, using a \`${toolData.name}\` and \`${baitData.name}\`. \nYou caught a total of \`${results.length}\` fish! ${storageMessage}`;
   blocks[2].elements = results.map((fish) => {
     let fishData = DATA.fish[fish.type];
+    if (fishData === undefined) {
+      const itemData = DATA.items[fish.type];
+      return {
+        type: "card",
+        title: {
+          type: "mrkdwn",
+          text: `${itemData.name}`,
+          verbatim: false,
+        },
+        subtitle: {
+          type: "mrkdwn",
+          text: `${itemData.rarity} Item`,
+        },
+        body: {
+          type: "mrkdwn",
+          text: `*Sell Value*: \`${itemData.sell_value} coins\`\n*Type*: \`${itemData.type.charAt(0).toUpperCase() + itemData.type.slice(1)}\``,
+        },
+        actions: [],
+      };
+    }
     let variantText = fish.variant
       ? `- ${String(fish.variant).slice(0, 1).toUpperCase() + String(fish.variant).slice(1)}`
       : "";
@@ -292,6 +312,21 @@ function populateFishingResultsBlocks(
       actions: [],
     };
   });
+  if (blocks[2].elements.length === 0) {
+    blocks[2].elements.push({
+      type: "card",
+      title: {
+        type: "plain_text",
+        text: "No Fish Caught",
+        emoji: true,
+      },
+      body: {
+        type: "mrkdwn",
+        text: "Unfortunately, you didn't catch any fish this time. Better luck next time!",
+      },
+      actions: [],
+    });
+  }
   return blocks;
 }
 
@@ -418,8 +453,14 @@ function catchFish(DATA, tool_data, bait_data, mapId) {
   let mean_weight = (fish_data.weight["max"] + fish_data.weight["min"]) / 2;
   let value_multi = weight / mean_weight;
   let fish_value = Math.round(value * value_multi);
+  if (variant === "shiny") {
+    fish_value *=8;
+  } else if (variant === "chroma") {
+    fish_value *= 40;
+  }
   return {
     type: fish_catch,
+    item: false,
     variant: variant,
     value: fish_value,
     weight: weight,
@@ -516,7 +557,7 @@ module.exports = {
           mapId = map;
         }
       }
-      console.log("map Id")
+      console.log("map Id");
       console.log(mapId);
 
       // console.log(toolId);
@@ -554,19 +595,20 @@ module.exports = {
         // reached place -> change to fishing UI
         if (state.location === "home") {
           const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-          blocks[0].text.text = "Congrats! You have returned home from your trip. ";
+          blocks[0].text.text =
+            "Congrats! You have returned home from your trip. ";
           state.current = "idle";
           state.location = "home";
           state.metadata = {};
           state.time_reach = 0;
           db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
             JSON.stringify(state),
-            user.id
+            user.id,
           );
           await client.chat.postEphemeral({
             channel: command.channel_id,
             user: command.user_id,
-            blocks: blocks
+            blocks: blocks,
           });
           return;
         }
@@ -678,6 +720,7 @@ module.exports = {
       const baitId = metadata.event_payload.baitId;
       const boatId = metadata.event_payload.boatId;
       const userId = metadata.event_payload.userId;
+      const mapId = metadata.event_payload.mapId;
       const DATA = global.data;
       const db = global.db;
 
@@ -700,6 +743,7 @@ module.exports = {
         new_tool_id,
         baitId,
         boatId,
+        mapId
       );
       await client.chat.update({
         channel: body.channel.id,
@@ -713,6 +757,7 @@ module.exports = {
             toolId: new_tool_id,
             baitId: baitId,
             boatId: boatId,
+            mapId: mapId
           },
         },
       });
@@ -724,6 +769,7 @@ module.exports = {
       const toolId = metadata.event_payload.toolId;
       const boatId = metadata.event_payload.boatId;
       const userId = metadata.event_payload.userId;
+      const mapId = metadata.event_payload.mapId;
       const DATA = global.data;
       const db = global.db;
 
@@ -746,6 +792,7 @@ module.exports = {
         toolId,
         new_bait_id,
         boatId,
+        mapId
       );
       await client.chat.update({
         channel: body.channel.id,
@@ -759,6 +806,7 @@ module.exports = {
             toolId: toolId,
             baitId: new_bait_id,
             boatId: boatId,
+            mapId: mapId
           },
         },
       });
@@ -867,9 +915,8 @@ module.exports = {
         DATA.maps[mapId].distance / DATA.boats[boat.type].stats.speed,
       );
 
-
       // TESTING ONLY
-      time_to_reach = 1/60; 
+      time_to_reach = 1 / 60;
       const time_reach = Date.now() + time_to_reach * 60 * 1000;
       userState.time_reach = time_reach;
 
@@ -930,6 +977,7 @@ module.exports = {
       }
       userState.current = "casting";
       userState.storage = []; // to put all fish caught already. Make sure to cap at boat capacity
+      userState.results = [];
       const toolId = userState.metadata.toolId;
       const baitId = userState.metadata.baitId;
       const boatId = userState.metadata.boatId;
@@ -964,7 +1012,7 @@ module.exports = {
 
       let catch_time = catchTime(tool_data, bait_data);
       let catch_amt = 1; // default 1 fish
-      if (tool_data.effects.catch_amt) {
+      if (tool_data.effects.catch_count) {
         catch_amt +=
           Math.floor(
             Math.random() *
@@ -972,7 +1020,7 @@ module.exports = {
                 tool_data.effects.catch_count[0]),
           ) + tool_data.effects.catch_count[0];
       }
-      if (bait_data.effects.catch_amt) {
+      if (bait_data.effects.catch_count) {
         catch_amt +=
           Math.floor(
             Math.random() *
@@ -994,15 +1042,38 @@ module.exports = {
       }
       console.log(fish_caught);
 
+      let item_prob = 0.08; // base 8% chance to get an item
+      let item_prob_multiplier = 1;
+      if (tool_data.effects.item_multiplier) {
+        item_prob_multiplier += tool_data.effects.item_multiplier;
+      }
+      if (bait_data.effects.item_multiplier) {
+        item_prob_multiplier += bait_data.effects.item_multiplier;
+      }
+      item_prob *= item_prob_multiplier;
+      console.log(item_prob);
+      if (Math.random() < item_prob) {
+        // add totally random item
+        let item_types = Object.keys(DATA.items);
+        let random_item =
+          item_types[Math.floor(Math.random() * item_types.length)];
+        fish_caught.push({
+          type: random_item,
+          item: true,
+          value: DATA.items[random_item].sell_value,
+        });
+        console.log(random_item);
+      }
       setTimeout(async () => {
         // update message with catch results
         userState.current = "results";
         userState.results = fish_caught;
-        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
-          JSON.stringify(userState),
-          userId,
-        );
+
+        for (let fish of userState.results) {
+          userState.storage.push(fish);
+        }
         user.state = JSON.stringify(userState);
+
         const blocks = populateFishingResultsBlocks(
           DATA,
           user,
@@ -1010,6 +1081,10 @@ module.exports = {
           baitId,
           boatId,
           mapId,
+        );
+        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+          JSON.stringify(userState),
+          userId,
         );
         await client.chat.update({
           channel: body.channel.id,
@@ -1101,7 +1176,7 @@ module.exports = {
       let catch_time = catchTime(tool_data, bait_data);
 
       let catch_amt = 1; // default
-      if (tool_data.effects.catch_amt) {
+      if (tool_data.effects.catch_count) {
         catch_amt +=
           Math.floor(
             Math.random() *
@@ -1109,7 +1184,7 @@ module.exports = {
                 tool_data.effects.catch_count[0]),
           ) + tool_data.effects.catch_count[0];
       }
-      if (bait_data.effects.catch_amt) {
+      if (bait_data.effects.catch_count) {
         catch_amt +=
           Math.floor(
             Math.random() *
@@ -1202,12 +1277,8 @@ module.exports = {
         });
         return;
       }
-      userState.current = "casting";
-
-      for (let fish of userState.results) {
-        userState.storage.push(fish);
-      }
       userState.results = [];
+      userState.current = "casting";
 
       db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
         JSON.stringify(userState),
@@ -1237,7 +1308,7 @@ module.exports = {
 
       let catch_time = catchTime(tool_data, bait_data);
       let catch_amt = 1; // default catch amt
-      if (tool_data.effects.catch_amt) {
+      if (tool_data.effects.catch_count) {
         catch_amt += Math.floor(
           Math.random() *
             (tool_data.effects.catch_count[1] -
@@ -1245,7 +1316,7 @@ module.exports = {
             tool_data.effects.catch_count[0],
         );
       }
-      if (bait_data.effects.catch_amt) {
+      if (bait_data.effects.catch_count) {
         catch_amt += Math.floor(
           Math.random() *
             (bait_data.effects.catch_count[1] -
@@ -1267,13 +1338,36 @@ module.exports = {
       }
 
       console.log(fish_caught); // will prob keep this in for debugging
+
+      let item_prob = 0.08; // base 8% chance to get an item
+      let item_prob_multiplier = 1;
+      if (tool_data.effects.item_multiplier) {
+        item_prob_multiplier += tool_data.effects.item_multiplier;
+      }
+      if (bait_data.effects.item_multiplier) {
+        item_prob_multiplier += bait_data.effects.item_multiplier;
+      }
+      item_prob *= item_prob_multiplier;
+      console.log(item_prob);
+
+      if (Math.random() < item_prob) {
+        // add totally random item
+        let item_types = Object.keys(DATA.items);
+        let random_item =
+          item_types[Math.floor(Math.random() * item_types.length)];
+        fish_caught.push({
+          type: random_item,
+          item: true,
+          value: DATA.items[random_item].sell_value,
+        });
+        console.log(random_item);
+      }
       setTimeout(async () => {
         userState.current = "results";
         userState.results = fish_caught;
-        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
-          JSON.stringify(userState),
-          userId,
-        );
+        for (let fish of userState.results) {
+          userState.storage.push(fish);
+        }
         user.state = JSON.stringify(userState);
         const blocks = populateFishingResultsBlocks(
           DATA,
@@ -1282,6 +1376,10 @@ module.exports = {
           baitId,
           boatId,
           mapId,
+        );
+        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+          JSON.stringify(userState),
+          userId,
         );
         await client.chat.update({
           channel: body.channel.id,
@@ -1331,6 +1429,10 @@ module.exports = {
       ]; // this one is ismple so no custom blocks are needed
       let txt = "";
       for (let fish_type of Object.keys(fish_counts)) {
+        if (!DATA.fish[fish_type]) {
+          txt+= `**${fish_counts[fish_type]}x** ${DATA.items[fish_type].name} (${DATA.items[fish_type].rarity})\n`;
+          continue;
+        }
         txt += `**${fish_counts[fish_type]}x** ${DATA.fish[fish_type].name} (${DATA.fish[fish_type].rarity})\n`;
       }
       if (txt === "") {

@@ -255,7 +255,21 @@ function resetData(username) {
 
   // let userdata = getData("jellyfish");
 
+
   // userdata = JSON.parse(userdata.data);
+  // userdata.equipment.push({
+  //   "id": global.generateID(4),
+  //   "type": "quantum",
+  //   "durability": 100,
+  //   "usage_stats": {
+  //     "trips": 1,
+  //     "fish_caught": 50,
+  //     "fish_weight": 200,
+  //     "fish_value": 1000
+  //   },
+  //   "etype": "tool"
+  // });
+  // setData("jellyfish", JSON.stringify(userdata), undefined, undefined, undefined, undefined, undefined);
   // console.log(userdata.boats);
   // userdata.boats.push({
   //   id: global.generateID(4),

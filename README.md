@@ -365,4 +365,5 @@ I don't really want this to stretch to far. honestly, adding items and then mark
 
 Market is getting scrapped. :(
 
-Used AI to help brainstorm balanced items
+Used AI to help brainstorm balanced items (in particular the chests)
+

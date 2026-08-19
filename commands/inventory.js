@@ -1,4 +1,3 @@
-
 function populateInventoryBlocks(user_data, DATA, metadata) {
   const type = metadata.type;
   const inventory = user_data.inventory;
@@ -25,7 +24,7 @@ function populateInventoryBlocks(user_data, DATA, metadata) {
     total_fish += counts[key].length;
   }
   let blocks = JSON.parse(JSON.stringify(DATA.blocks["inventory"]));
-  blocks[1].text.text = `${total_fish} fish in ${total_types} type(s)`;
+  blocks[1].text.text = `${total_fish} fish/items in ${total_types} type(s)`;
   let fish_list = "";
   for (const key in counts) {
     const fish_name = key.includes("-") ? key.split("-")[0] : key;
@@ -34,8 +33,16 @@ function populateInventoryBlocks(user_data, DATA, metadata) {
       ? ` (${variant.charAt(0).toUpperCase() + variant.slice(1)})`
       : "";
     const count = counts[key].length;
-    const fish_data = DATA.fish[fish_name];
-    fish_list += `**${fish_data.name}${v_text}**: \`${count}x\` \n`;
+    if (Object.keys(DATA.fish).includes(fish_name)) {
+      const fish_data = DATA.fish[fish_name];
+      fish_list += `**${fish_data.name}${v_text}**: \`${count}x\` \n`;
+    } else {
+      // has to be item
+      const item_data = DATA.items[fish_name];
+      fish_list += `**${item_data.name}${v_text}**: \`${count}x\` \n`;
+    }
+    // const fish_data = DATA.fish[fish_name];
+    // fish_list += `**${fish_data.name}${v_text}**: \`${count}x\` \n`;
   }
   blocks[2].text = fish_list;
   blocks[4].elements[0].options = Object.keys(counts).map((key) => {
@@ -45,6 +52,17 @@ function populateInventoryBlocks(user_data, DATA, metadata) {
       ? ` (${variant.charAt(0).toUpperCase() + variant.slice(1)})`
       : "";
     const fish_data = DATA.fish[fish_name];
+    if (fish_data === undefined) {
+      const item_data = DATA.items[fish_name];
+      return {
+        text: {
+          type: "plain_text",
+          text: `${item_data.name} (${counts[key].length}x)`,
+          emoji: true,
+        },
+        value: key,
+      };
+    }
     // console.log({
     //   text: {
     //     type: "plain_text",
@@ -65,7 +83,7 @@ function populateInventoryBlocks(user_data, DATA, metadata) {
   blocks[4].elements[0].options.push({
     text: {
       type: "plain_text",
-      text: "All Fish",
+      text: "All Fish/Items",
       emoji: true,
     },
     value: "all",
@@ -80,7 +98,12 @@ function populateInventoryBlocks(user_data, DATA, metadata) {
           ? ""
           : `(${variant.charAt(0).toUpperCase() + variant.slice(1)})`;
       const fish_data = DATA.fish[fish];
-      tlabel = `${fish_data.name} ${vtext}`;
+      if (fish_data === undefined) {
+        const item_data = DATA.items[fish];
+        tlabel = `${item_data.name} `;
+      } else {
+        tlabel = `${fish_data.name} ${vtext}`;
+      }
     }
     // console.log(counts);
     // console.log({
@@ -95,7 +118,7 @@ function populateInventoryBlocks(user_data, DATA, metadata) {
       blocks[4].elements[0].initial_option = {
         text: {
           type: "plain_text",
-          text: "All Fish",
+          text: "All Fish/Items",
           emoji: true,
         },
         value: "all",
@@ -348,7 +371,22 @@ module.exports = {
           const fish_list = counts[key];
           const fish_type = key.includes("-") ? key.split("-")[0] : key;
           const fish_variant = key.includes("-") ? key.split("-")[1] : null;
-          const fish_data = DATA.fish[fish_type];
+          let data = DATA.fish[fish_type];
+          if (data === undefined) {
+            // list of items
+            data = DATA.items[fish_type];
+            for (let i = 0; i < fish_list.length; i++) {
+              sold.push({
+                type: key,
+                item: true,
+                value: fish_list[i].value,
+                name: data.name,
+                index: fish_list[i].index,
+              });
+              total_profit += fish_list[i].value;
+            }
+            continue;
+          }
           const v_text = fish_variant
             ? ` (${fish_variant.charAt(0).toUpperCase() + fish_variant.slice(1)})`
             : "";
@@ -356,6 +394,7 @@ module.exports = {
           for (let i = 0; i < fish_list.length; i++) {
             sold.push({
               type: key,
+              item: false,
               weight: fish_list[i].weight,
               value: fish_list[i].value,
               name: fish_data.name + v_text,
@@ -368,34 +407,62 @@ module.exports = {
         console.log(total_profit);
       } else {
         const fish_list = counts[type];
+        console.log(type);
+        console.log(fish_list);
         const fish_type = type.includes("-") ? type.split("-")[0] : type;
         const fish_variant = type.includes("-") ? type.split("-")[1] : null;
         const fish_data = DATA.fish[fish_type];
-        const v_text = fish_variant
-          ? ` (${fish_variant.charAt(0).toUpperCase() + fish_variant.slice(1)})`
-          : "";
-        if (parseInt(amt) > fish_list.length) {
-          const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-          blocks[0].text.text = `You only have ${fish_list.length} of ${fish_data.name}${v_text} in your inventory. `;
-          await client.chat.postEphemeral({
-            channel: body.channel.id,
-            user: body.user.id,
-            blocks: blocks,
-          });
-          return;
-        }
-        // first x amt of fish are sold -> so from the beginning of the list
-        for (let i = 0; i < parseInt(amt); i++) {
-          const fish = fish_list.splice(0, 1)[0];
-          // console.log(fish);
-          sold.push({
-            type: type,
-            weight: fish.weight,
-            index: fish.index,
-            name: fish_data.name + v_text,
-            value: fish.value,
-          });
-          total_profit += fish.value;
+        if (fish_data === undefined) {
+          // item
+          const item_data = DATA.items[fish_type];
+          if (parseInt(amt) > fish_list.length) {
+            const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+            blocks[0].text.text = `You only have ${fish_list.length} of ${item_data.name}${v_text} in your inventory. `;
+            await client.chat.postEphemeral({
+              channel: body.channel.id,
+              user: body.user.id,
+              blocks: blocks,
+            });
+            return;
+          }
+          for (let i = 0; i < parseInt(amt); i++) {
+            const item = fish_list.splice(0, 1)[0];
+            sold.push({
+              type: type,
+              item: true,
+              value: item.value,
+              name: item_data.name,
+              index: item.index,
+            });
+            total_profit += item.value;
+          }
+        } else {
+          if (parseInt(amt) > fish_list.length) {
+            const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+            blocks[0].text.text = `You only have ${fish_list.length} of ${fish_data.name}${v_text} in your inventory. `;
+            await client.chat.postEphemeral({
+              channel: body.channel.id,
+              user: body.user.id,
+              blocks: blocks,
+            });
+            return;
+          }
+          const v_text = fish_variant
+            ? ` (${fish_variant.charAt(0).toUpperCase() + fish_variant.slice(1)})`
+            : "";
+          // first x amt of fish are sold -> so from the beginning of the list
+          for (let i = 0; i < parseInt(amt); i++) {
+            const fish = fish_list.splice(0, 1)[0];
+            // console.log(fish);
+            sold.push({
+              type: type,
+              weight: fish.weight,
+              index: fish.index,
+              name: fish_data.name + v_text,
+              value: fish.value,
+            });
+            total_profit += fish.value;
+          }
         }
         console.log(sold);
         console.log(total_profit);
@@ -406,14 +473,19 @@ module.exports = {
           user_data.inventory.splice(i, 1);
         }
       }
-
-      db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+      let coins = user.coins + total_profit
+      db.prepare("UPDATE users SET data = ?, coins = ? WHERE id = ?").run(
         JSON.stringify(user_data),
+        coins,
         user.id,
       );
       const blocks = JSON.parse(JSON.stringify(DATA.blocks["inventory-sell"]));
-      let r_text= "";
+      let r_text = "";
       for (const fish of sold) {
+        if (fish.item) {
+          r_text += `**${fish.name}**: \`${fish.value}\`\n`;
+          continue;
+        }
         r_text += `**${fish.name}**: \`${fish.weight} lbs\` - \`$${fish.value}\`\n`;
       }
       blocks[1].text = r_text;
@@ -421,7 +493,7 @@ module.exports = {
       await client.chat.postEphemeral({
         channel: body.channel.id,
         user: body.user.id,
-        blocks: blocks
+        blocks: blocks,
       });
       const new_blocks = populateInventoryBlocks(user_data, DATA, {
         type: "none",
@@ -429,9 +501,8 @@ module.exports = {
       await client.chat.update({
         channel: body.channel.id,
         ts: body.message.ts,
-        blocks: new_blocks
+        blocks: new_blocks,
       });
-      
     },
   },
 };

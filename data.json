@@ -499,6 +499,7 @@
       "description": "A smooth, useless shard worn down by the ocean waves",
       "sell_value": 8,
       "type": "collectible",
+      "rarity": "Common",
       "tier": 1
     },
     "broken_shell": {
@@ -506,6 +507,7 @@
       "description": "A shiny, broken shell from a molusk",
       "sell_value": 10,
       "type": "collectible",
+      "rarity": "Common",
       "tier": 1
     },
     "waterlogged_boat": {
@@ -513,6 +515,7 @@
       "description": "Someone's fishing trip did not end well...",
       "sell_value": 13,
       "type": "collectible",
+      "rarity": "Common",
       "tier": 1
     },
     "driftwood_chunk": {
@@ -520,6 +523,7 @@
       "description": "Bleached wood shaped by current and time",
       "type": "collectible",
       "tier": 2,
+      "rarity": "Uncommon",
       "sell_value": 15
     },
     "barnacle_cluster": {
@@ -527,63 +531,72 @@
       "description": "A knot of barnacles pried from something much bigger.",
       "type": "collectible",
       "tier": 2,
-      "sell_price": 30
+      "rarity": "Uncommon",
+      "sell_value": 30
     },
     "message_in_a_bottle": {
       "name": "Message in a Bottle",
       "description": "The ink has smeared, but you can just make out a signature.",
       "type": "collectible",
       "tier": 2,
-      "sell_price": 40
+      "rarity": "Uncommon",
+      "sell_value": 40
     },
     "tarnished_compass": {
       "name": "Tarnished Compass",
       "description": "The needle still spins, though it no longer points north.",
       "type": "collectible",
       "tier": 3,
-      "sell_price": 50
+      "rarity": "Rare",
+      "sell_value": 50
     },
     "pearl": {
       "name": "Pearl",
       "description": "Small, flawless, and worth a story about how you found it.",
       "type": "collectible",
       "tier": 3,
-      "sell_price": 80
+      "rarity": "Rare",
+      "sell_value": 80
     },
     "captains_pocket_watch": {
       "name": "Captain's Pocket Watch",
       "description": "Stopped at the exact moment it went into the water.",
       "type": "collectible",
       "tier": 4,
-      "sell_price": 120
+      "rarity": "Epic",
+      "sell_value": 120
     },
     "kraken_tooth": {
       "name": "Kraken Tooth",
       "description": "Too big to belong to anything that should exist.",
       "type": "collectible",
       "tier": 4,
-      "sell_price": 220
+      "rarity": "Epic",
+      "sell_value": 220
     },
     "sunken_crown": {
       "name": "Sunken Crown",
       "description": "Impossibly light, and it shimmers even out of water.",
       "type": "collectible",
       "tier": 5,
-      "sell_price": 260
+      "rarity": "Legendary",
+      "sell_value": 260
     },
     "leviathan_fang": {
       "name": "Leviathan Fang",
       "description": "Legends say the deep sea has a ruler. This might be proof.",
       "type": "collectible",
       "tier": 5,
-      "sell_price": 550
+      "rarity": "Legendary",
+      "sell_value": 550
     },
     "rusty_chest": {
       "name": "Rusty Chest",
       "description": "The lock gave way years ago. Something's still inside.",
       "type": "chest",
+      "rarity": "Common",
       "tier": 1,
-      "sell_price": 10,
+      "sell_value": 10,
       "loot_table": {
         "coins": [15, 35],
         "bait_prob": 0.5,
@@ -601,8 +614,9 @@
     "barnacled_chest": {
       "name": "Barnacled Chest",
       "description": "Crusted shut. Whatever's inside has been down there a while.",
+      "rarity": "Uncommon",
       "tier": 2,
-      "sell_price": 25,
+      "sell_value": 25,
       "loot_table": {
         "coins": [25, 60],
         "bait_prob": 0.55,
@@ -621,8 +635,9 @@
       "name": "Treasure Chest",
       "description": "The kind of chest every fisherman dreams of snagging.",
       "type": "chest",
+      "rarity": "Rare",
       "tier": 3,
-      "sell_price": 70,
+      "sell_value": 70,
       "loot_table": {
         "coins": [60, 130],
         "bait_prob": 0.65,
@@ -641,8 +656,9 @@
       "name": "Golden Chest",
       "description": "It gleams even caked in silt.",
       "type": "chest",
+      "rarity": "Epic",
       "tier": 4,
-      "sell_price": 125,
+      "sell_value": 125,
       "loot_table": {
         "coins": [100, 220],
         "bait_prob": 0.65,
@@ -662,7 +678,8 @@
       "description": "Sealed with something more than a lock.",
       "type": "chest",
       "tier": 5,
-      "sell_price": 250,
+      "rarity": "Legendary",
+      "sell_value": 250,
       "loot_table": {
         "coins": [200, 450],
         "bait_prob": 0.65,
@@ -5630,17 +5647,7 @@
             "type": "button",
             "text": {
               "type": "plain_text",
-              "text": "Release Fish and Cast",
-              "emoji": true
-            },
-            "value": "fish_rcast",
-            "action_id": "fish_rcast"
-          },
-          {
-            "type": "button",
-            "text": {
-              "type": "plain_text",
-              "text": "Keep Fish and Cast",
+              "text": "Cast",
               "emoji": true
             },
             "value": "fish_kcast",
@@ -5674,7 +5681,7 @@
         "type": "header",
         "text": {
           "type": "plain_text",
-          "text": "Person - Fish Inventory Overview"
+          "text": "Person - Inventory Overview"
         },
         "level": 1
       },
@@ -5700,7 +5707,7 @@
             "type": "static_select",
             "placeholder": {
               "type": "plain_text",
-              "text": "Select a type of fish, or select all",
+              "text": "Select a type of fish/item, or select all",
               "emoji": true
             },
             "options": [
@@ -5734,7 +5741,7 @@
         },
         "label": {
           "type": "plain_text",
-          "text": "Enter an amount of fish to sell (or leave empty to default to 1)",
+          "text": "Enter an amount to sell (or leave empty to default to 1)",
           "emoji": true
         },
         "optional": false
@@ -5746,7 +5753,7 @@
             "type": "button",
             "text": {
               "type": "plain_text",
-              "text": "Sell Selected Fish",
+              "text": "Sell Selected Fish/Item",
               "emoji": true
             },
             "value": "inventory_sell",
