@@ -3,10 +3,36 @@ An interactive Slack bot fishing game
 
 # How to play
 
+Use the /f-start command to get started!
+
+Some useful commands to know
+ - /f-profile - View your profile
+ - /f-boat - View your boats
+ - /f-equipment - View your tools and baits
+ - /f-shop - Purchase tools/baits/boats
+ - /f-inventory - View the results of your recent fishing trip
+ - /f-fish - Actually go fishing! 
+ - /f-use - Open chests you get from fishing!
+
+
+Note: This is just v1 of the game so there may be some balancing issues. I also missed out on some minor details (ex. completion stats, boat addons, tool/bait durability) since I'm heading off to uni and the deadline is coming up! Also I know it says that I was planning to do artwork (trust me i was) in the TODO but at the end I just couldn't get anything to my liking. So no artwork unfortunately. Full AI usage info in Notes section.
+
+# How to use
+
+All you have to do is install dependencies using `npm install` and run using `npm start`. Make sure you have a `.env` setup as shown below.
+```
+APP_ID=XXXXXXXX
+SLACK_CLIENT_ID=XXXXXX
+SLACK_CLIENT_SECRET=XXXXXXXXXXXXXXXXX
+SLACK_SIGNING_SECRET=XXXXXXXXXXXXXXXXXXXXXXXX
+SLACK_APP_TOKEN=xapp-XXXXXXXXXXXXXXXXXXXXXXXXX
+SLACK_BOT_TOKEN=XXXXXXXXXXXXXXXXXXXXXXX
+PORT=3000
+```
 
 # TODO
  - [x] Create bot application and add to channel
-   - [ ] Create slash commands
+   - [x] Create slash commands
  - [x] Setup database
    - [x] Database schema
  - [x] Preset data
@@ -25,19 +51,19 @@ An interactive Slack bot fishing game
  - [ ] Commands 
    - [ ] /f-fish
      - [x] Layout
-     - [ ] Start page
+     - [x] Start page
        - [x] Tool select
        - [x] Bait select
        - [x] Location select
        - [x] Start functionality
        - [x] Check for no boat, no tools, or no baits
-     - [ ] Travel page
+     - [x] Travel page
        - [x] Layout
        - [x] Show basic info
-     - [ ] Prefishing apge
+     - [x] Prefishing apge
        - [x] Show basic info
        - [x] Option to cast
-     - [ ] Fishing page
+     - [x] Fishing page
        - [x] Results layout
        - [x] Prefish layout
        - [x] Handle fishing random logic
@@ -98,14 +124,17 @@ An interactive Slack bot fishing game
      - [x] issue: performing an action (ex. repairing a boat) doesn't update the original message -> possible solution: refresh button with reminders to do so.  Need this like like every command with direct action comamnds
      - [x] /equipment
      - [x] /boat
-   - [ ] I missed metadata in a lot of plaecs -> double check 
+   - [x] I missed metadata in a lot of plaecs -> double check 
    - [x] markdown not working for /f-shop command? apparently it decided to only take single *
    - [ ] Just realized different button styles exist -> put in later
-   - [ ] Tool, bait, and boat IDs are not transferred between traveling and fishing states
+   - [x] Tool, bait, and boat IDs are not transferred between traveling and fishing states
    - [x] Setting fishes as default doesn't change the one that is currently default
-   - [ ] Going to set travel time to be 1s for now - make sure to remove!!
-   - [ ] Items! Big thing i forgot about. 
-     - [ ] 
+   - [x] Going to set travel time to be 1s for now - make sure to remove!!
+   - [x] Items! Big thing i forgot about.  
+   - [ ] Project clean up
+     - [x] Add README instructions
+     - [x] Clean up starting equipment
+     - [x] Full testing / bugs scan
 
 
 

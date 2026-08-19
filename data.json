@@ -115,14 +115,6 @@
   },
   "tiers": ["Novice", "Amateur", "Professional", "Elite", "Legendary"],
   "tools": {
-    "hand": {
-      "name": "Hand",
-      "description": "Your bare hands, the most basic of fishing tools",
-      "tier": 1,
-      "level": 1,
-      "cost": 0,
-      "effects": {}
-    },
     "pole": {
       "name": "Fishing Pole",
       "description": "A simple fishing pole for catching fish in shallow waters",
@@ -5224,7 +5216,7 @@
           "action_id": "plain_text_input-action",
           "placeholder": {
             "type": "plain_text",
-            "text": "Search for an item...(title & description)",
+            "text": "Search for an item...(title or description)",
             "emoji": true
           }
         },

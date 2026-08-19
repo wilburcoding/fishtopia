@@ -166,27 +166,27 @@ module.exports = {
             {
               "id":global.generateID(4),
               "type": "kayak",
-              "addons": ["Upgraded Engine"],
+              "addons": [],
               "durability": 100,
               "default": true,
               "stats" : {
-                "trips": 1,
-                "distance": 1,
-                "fish": 1
+                "trips": 0,
+                "distance": 0,
+                "fish": 0
               }
             },
-            {
-              "id": global.generateID(4),
-              "type": "rowboat",
-              "addons": ["Upgraded Engine"],
-              "durability": 100,
-              "default": false,
-              "stats": {
-                "trips": 2,
-                "distance": 10,
-                "fish": 5
-              }
-            }
+            // {
+            //   "id": global.generateID(4),
+            //   "type": "rowboat",
+            //   "addons": ["Upgraded Engine"],
+            //   "durability": 100,
+            //   "default": false,
+            //   "stats": {
+            //     "trips": 2,
+            //     "distance": 10,
+            //     "fish": 5
+            //   }
+            // }
           ]
           let sample_tool = {
             "id": global.generateID(4),
@@ -205,10 +205,10 @@ module.exports = {
             "type": "pole",
             "durability": 100,
             "usage_stats": {
-              "trips": 5,
-              "fish_caught": 10,
-              "fish_weight": 50,
-              "fish_value": 200
+              "trips": 0,
+              "fish_caught": 0,
+              "fish_weight": 0,
+              "fish_value": 0
             },
             "etype": "tool"
           }
@@ -226,13 +226,13 @@ module.exports = {
           }
           let sample_bait2 = {
             "id": global.generateID(4),
-            "type": "jumbo",
+            "type": "basic",
             "durability":100,
             "usage_stats": {
-              "trips": 3,
-              "fish_caught": 25,
-              "fish_weight": 150,
-              "fish_value": 700
+              "trips": 0,
+              "fish_caught": 0,
+              "fish_weight": 0,
+              "fish_value": 0
             },
             "etype": "bait"
           }
@@ -244,7 +244,7 @@ module.exports = {
             JSON.stringify({
               inventory: [], // mainly caught fish and other items,
               boats: startingBoats,
-              equipment: [sample_tool, sample_tool2, sample_bait, sample_bait2], // tools and baits
+              equipment: [sample_tool2, sample_bait2], // tools and baits
               stats: stats,
               completion: completion,
             }),

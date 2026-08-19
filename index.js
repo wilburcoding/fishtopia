@@ -296,6 +296,15 @@ function resetData(username) {
   //     metadata: {}, // extra data to store (ex. boat, tool, bait IDs )
   //   }),
   // ); // for testing only
+//     setData(
+//     "jellyfish",
+//     undefined,
+//     10000,
+//     undefined,
+//     undefined,
+//     undefined,
+// undefined
+//   ); // for testing only
 
   await app.start(process.env.PORT || 3000);
   console.log("App is running on port", process.env.PORT || 3000);

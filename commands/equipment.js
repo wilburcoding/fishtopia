@@ -355,6 +355,33 @@ module.exports = {
         },
       });
     },
+    equipment_action_cancel: async ({ action, ack, client, body, respond }) => {
+      await ack();
+      const db = global.db;
+      const DATA = global.data;
+      const metadata = body.message.metadata;
+      const userId = metadata.event_payload.userId;
+      const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+      if (!user) {
+        const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = "You need to get started before you can use this command. Try using the /f-start command to get started. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks
+        });
+        return;
+      }
+      const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+      blocks[0].text.text = "You canceled the action for this equipment item. No changes were made. ";
+      await client.chat.update({
+        channel: body.channel.id,
+        user: body.user.id,
+        blocks: blocks,
+        ts: body.message.ts
+      });
+
+    },
     equipment_action_confirm: async ({
       action,
       ack,
