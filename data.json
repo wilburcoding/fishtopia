@@ -685,7 +685,7 @@
         "bait_prob": 0.65,
         "tool_prob": 0.35,
         "no_item_prob": 0.05,
-        "bait_item_probs": {
+        "bait_tier_probs": {
           "4": 0.3,
           "5": 0.7
         },
@@ -5787,6 +5787,55 @@
             },
             "value": "dismiss",
             "action_id": "dismiss"
+          }
+        ]
+      }
+    ],
+    "use-select": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person - Use an Item"
+        },
+        "level": 1
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select an item to use",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Rusty Chest",
+                  "emoji": true
+                },
+                "value": "rusty_chest"
+              }
+            ],
+            "action_id": "use_item_select"
+          }
+        ]
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "Use Item",
+              "emoji":true
+            },
+            "value": "use_item",
+            "action_id": "use_item"
           }
         ]
       }

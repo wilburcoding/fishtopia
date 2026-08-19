@@ -1,6 +1,9 @@
 # Fishtopia
 An interactive Slack bot fishing game 
 
+# How to play
+
+
 # TODO
  - [x] Create bot application and add to channel
    - [ ] Create slash commands

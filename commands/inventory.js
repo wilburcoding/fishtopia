@@ -96,7 +96,7 @@ function populateInventoryBlocks(user_data, DATA, metadata) {
       let vtext =
         variant == null
           ? ""
-          : `(${variant.charAt(0).toUpperCase() + variant.slice(1)})`;
+          : `(${variant.charAt(0).toUpperCase() + variant.slice(1)}) `;
       const fish_data = DATA.fish[fish];
       if (fish_data === undefined) {
         const item_data = DATA.items[fish];
@@ -349,7 +349,7 @@ module.exports = {
         }
         index++;
       }
-      let sold = []; // juet keep track of everything so we can populate a results thing later
+      let sold = []; // juet keep track of everything so we can    a results thing later
       let total_profit = 0;
       console.log(type);
       if (type === "all") {
