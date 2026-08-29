@@ -914,6 +914,23 @@ module.exports = {
       const user_data = JSON.parse(user.data);
       const boats = user_data.boats;
       const boat = boats.find((b) => b.id === boatId);
+      // add boat/bait/tool stats
+      user_data.equipment.forEach((item) => {
+        if (item.id === toolId) {
+          item.usage_stats.trips +=1;
+          // item.stats.distance += DATA.maps[mapId].distance;
+        }
+        if (item.id === baitId) {
+          item.usage_stats.trips += 1;
+          // item.stats.distance += DATA.maps[mapId].distance;
+        }
+      });
+      user_data.boats.forEach((item) => {
+        if (item.id === boatId) {
+          item.stats.trips += 1;
+          item.stats.distance += DATA.maps[mapId].distance;
+        }
+      });
 
       let time_to_reach = Math.ceil(
         DATA.maps[mapId].distance / DATA.boats[boat.type].stats.speed,
@@ -1422,6 +1439,34 @@ module.exports = {
       stats.total_xp_earned += total_xp;
       console.log(userData.stats);
       userData.stats = stats;
+
+      // add individual boat, bait, and tool usage stats
+      userData.boats.forEach((boat) => {
+        if (boat.id === boatId) {
+          boat.stats.fish += 1;
+        }
+      });
+      let totalValue = 0;
+      let totalWeight = 0;
+      for (let fish of fish_caught) {
+        if (fish.item) {
+          continue;
+        }
+        totalValue += fish.value;
+        totalWeight += fish.weight;
+      }
+      userData.equipment.forEach((item) => {
+        if (item.id === toolId) {
+          item.usage_stats.fish_caught += fish_caught.length;
+          item.usage_stats.fish_value += totalValue;
+          item.usage_stats.fish_weight += totalWeight;
+        }
+        if (item.id === baitId) {
+          item.usage_stats.fish_caught += fish_caught.length;
+          item.usage_stats.fish_value += totalValue;
+          item.usage_stats.fish_weight += totalWeight;
+        }
+      });
 
       setTimeout(async () => {
         userState.current = "results";

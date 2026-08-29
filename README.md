@@ -137,10 +137,10 @@ PORT=3000
      - [x] Full testing / bugs scan
  - [ ] Revisit #1 - hoping to clean things up a little more
    - [x] Fish completion stats
-   - [ ] Overall usage stats
+   - [x] Overall usage stats
      - [x] Total fish caught/sold/value
      - [x] Total amt earned -> this should be where the fish selling is
-       - [ ] Total shop purchases
+       - [x] Total shop purchases
      - [x] Commands used? -> have to put it into every file
        - [x] Boat
        - [x] Equipment
@@ -154,7 +154,7 @@ PORT=3000
      - [x] Total xp -> just keep track when adding
      - [x] Total boats/equipment/baits used - scrapped
    - [x] XP + leveling
-   - [ ] Individual tool/bait/boat usage stats
+   - [x] Individual tool/bait/boat usage stats
 
 
 
@@ -392,6 +392,9 @@ PORT=3000
        - Epic - 70
        - Legendary - 180
    - For total command used, I may have to just the data into every command unfortunately. The main handler doesn't make it easy to use. 
+ - Individual tool usage stats
+   - Boat - stats.trips, stats.distance, stats.fish
+   - Bait/tool - usage_stats.trips, usage_stats.fish_caught, usage_stats.fish_weight, usage_stats.fish_value
 
 
 # NOTES

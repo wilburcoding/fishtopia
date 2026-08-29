@@ -384,7 +384,7 @@ module.exports = {
           if (stat == "total_fish_value" || stat == "total_amount_earned") {
             blocks[c + 1].text = split + ": `" + stats[stat] + " coins`";
           }
-          console.log(blocks[c + 1].text);
+          // console.log(blocks[c + 1].text);
           c++;
         }
 

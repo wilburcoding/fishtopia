@@ -481,6 +481,7 @@ module.exports = {
       let coins = user.coins + total_profit;
       user_data.stats.total_fish_sold += sold.length;
       user_data.stats.total_amount_earned += total_profit;
+      
       db.prepare("UPDATE users SET data = ?, coins = ? WHERE id = ?").run(
         JSON.stringify(user_data),
         coins,
