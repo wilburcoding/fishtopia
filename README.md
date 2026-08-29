@@ -135,6 +135,16 @@ PORT=3000
      - [x] Add README instructions
      - [x] Clean up starting equipment
      - [x] Full testing / bugs scan
+ - [ ] Revisit #1 - hoping to clean things up a little more
+   - [x] Fish completion stats
+   - [ ] Overall usage stats
+     - [ ] Total fish caught/sold/value
+     - [ ] Total amt earned -> this should be where the fish selling is
+       - [ ] Total shop purchases
+     - [ ] Commands used? -> i guess just put it at the command handler code
+     - [ ] Total boats/equipment/baits used
+   - [ ] XP + leveling
+   - [ ] Individual tool/bait/boat usage stats
 
 
 
@@ -363,6 +373,14 @@ PORT=3000
        - Probs for tool
          - List of probs for each tier
    - Need a /use command to use item
+   - XP calculation?
+     - Should be only through fishing
+     - Just different xp at different rarity catches i guess
+       - Common - 5
+       - Uncommon - 12
+       - Rare - 30
+       - Epic - 70
+       - Legendary - 180
 
 
 # NOTES

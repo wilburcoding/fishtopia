@@ -117,8 +117,8 @@ module.exports = {
         let totalCompleted = 0;
 
         for (const map of Object.keys(completion)) {
-          const count = 0;
-          const total = Object.keys(completion[map]).length;
+          let count = 0;
+          let total = Object.keys(completion[map]).length;
           for (const item of Object.keys(completion[map])) {
             if (completion[map][item]) {
               count++;

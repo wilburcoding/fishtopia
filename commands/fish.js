@@ -916,7 +916,7 @@ module.exports = {
       );
 
       // TESTING ONLY
-      // time_to_reach = 1 / 60;
+      time_to_reach = 1 / 60;
       const time_reach = Date.now() + time_to_reach * 60 * 1000;
       userState.time_reach = time_reach;
 
@@ -1012,6 +1012,10 @@ module.exports = {
 
       let catch_time = catchTime(tool_data, bait_data);
       let catch_amt = 1; // default 1 fish
+
+      // catch_time = 0; // testing only
+
+
       if (tool_data.effects.catch_count) {
         catch_amt +=
           Math.floor(
@@ -1204,7 +1208,6 @@ module.exports = {
       for (let i = 0; i < catch_amt; i++) {
         fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
       }
-      console.log(fish_caught);
       setTimeout(async () => {
         // update message with catch results
         userState.current = "results";
@@ -1367,6 +1370,46 @@ module.exports = {
         });
         console.log(random_item);
       }
+
+      // add xp here
+      const XP = {
+        "Common": 5,
+        "Uncommon": 12,
+        "Rare": 30,
+        "Epic": 70,
+        "Legendary": 180
+      };
+
+      let total_xp = 0;
+      for (let fish of fish_caught) {
+        if (fish.item) {
+          const rarity = DATA.items[fish.type].rarity;
+          const xp = XP[rarity] || 0;
+          total_xp += xp;
+        } else {
+          // fish
+          const rarity = DATA.fish[fish.type].rarity;
+          let xp = XP[rarity] || 0;
+          if (fish.variant == "chroma") {
+            xp *= 2; // chroma fish 2x xp
+          } else if (fish.variant == "shiny") {
+            xp *= 1.5; // shiny fish 1.5x xp
+          }
+          total_xp += xp;
+        }
+      }
+      let level = user.level;
+      let xp = user.xp;
+      xp += total_xp;
+      if (xp > DATA.levels[level]) {
+        xp -= DATA.levels[level];
+        level += 1;
+      } 
+      console.log(xp);
+      console.log(total_xp);
+      console.log(level);
+
+
       setTimeout(async () => {
         userState.current = "results";
         userState.results = fish_caught;
@@ -1382,9 +1425,11 @@ module.exports = {
           boatId,
           mapId,
         );
-        db.prepare("UPDATE users SET state = ? WHERE id = ?").run(
+        db.prepare("UPDATE users SET state = ?, level = ?, xp = ? WHERE id = ?").run(
           JSON.stringify(userState),
-          userId,
+          level,
+          xp,
+          userId
         );
         await client.chat.update({
           channel: body.channel.id,
@@ -1413,7 +1458,7 @@ module.exports = {
       }
       const userState = JSON.parse(user.state);
       const storage = userState.storage;
-      console.log(storage);
+      // console.log(storage);
       let fish_counts = {};
       for (let fish of storage) {
         if (fish_counts[fish.type]) {
@@ -1422,6 +1467,7 @@ module.exports = {
           fish_counts[fish.type] = 1;
         }
       }
+      
       let blocks = [
         {
           type: "header",
@@ -1488,6 +1534,8 @@ module.exports = {
         return;
       }
       const userState = JSON.parse(user.state);
+      const mapId = userState.location;
+
       if (userState.current !== "results") {
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
@@ -1506,7 +1554,19 @@ module.exports = {
       for (let fish of userState.storage) {
         inventory.push(fish);
       }
-      const mapId = userState.location;
+
+      let completion = userData.completion;
+      for (let fish of userState.storage){
+        // get base fish type
+        let fish_type = fish.type;
+        if (fish.item) {
+          continue; // skip items
+        }
+        if (completion[mapId][fish_type] == false) {
+          completion[mapId][fish_type] = true;
+        }
+      }
+      userData.completion = completion;
       userData.inventory = inventory;
       userState.storage = [];
       userState.current = "traveling";
@@ -1514,10 +1574,13 @@ module.exports = {
       const boat = userData.boats.find(
         (item) => item.id === userState.metadata.boatId,
       );
-      const time_to_reach = Math.ceil(
+      let time_to_reach = Math.ceil(
         DATA.maps[mapId].distance / DATA.boats[boat.type].stats.speed,
       );
+      time_to_reach = 0; // testing only
+
       const time_reach = Date.now() + time_to_reach * 60 * 1000;
+
       userState.time_reach = time_reach;
 
       // TODO: update stats

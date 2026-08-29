@@ -152,7 +152,6 @@ module.exports = {
             total_fish_sold: 0,
             total_fish_value: 0,
             total_amount_earned: 0,
-            total_fish_released: 0,
             total_trades: 0,
             total_shop_purchases: 0,
             total_commands_used: 0,
