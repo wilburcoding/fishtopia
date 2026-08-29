@@ -523,7 +523,11 @@ module.exports = {
     let boatId = null;
     let mapId = null;
     const state = JSON.parse(user.state);
-    console.log(state);
+    userData.stats.total_commands_used +=1;
+    db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+      JSON.stringify(userData),
+      user.id
+    );
     if (state.current === "idle") {
       // automatically select the best tool and bait
       let tools = equipment.filter((item) => item.etype === "tool");
@@ -557,8 +561,8 @@ module.exports = {
           mapId = map;
         }
       }
-      console.log("map Id");
-      console.log(mapId);
+      // console.log("map Id");
+      // console.log(mapId);
 
       // console.log(toolId);
       // console.log(baitId);
@@ -1398,6 +1402,16 @@ module.exports = {
           total_xp += xp;
         }
       }
+      let stats = userData.stats;
+      stats.total_fish_caught += fish_caught.length;
+      let total_value = 0;
+      for (let fish of fish_caught) {
+        if (fish.item) {
+          continue;
+        }
+        total_value += fish.value;
+      }
+      stats.total_fish_value += total_value;
       let level = user.level;
       let xp = user.xp;
       xp += total_xp;
@@ -1405,10 +1419,9 @@ module.exports = {
         xp -= DATA.levels[level];
         level += 1;
       } 
-      console.log(xp);
-      console.log(total_xp);
-      console.log(level);
-
+      stats.total_xp_earned += total_xp;
+      console.log(userData.stats);
+      userData.stats = stats;
 
       setTimeout(async () => {
         userState.current = "results";
@@ -1425,10 +1438,11 @@ module.exports = {
           boatId,
           mapId,
         );
-        db.prepare("UPDATE users SET state = ?, level = ?, xp = ? WHERE id = ?").run(
+        db.prepare("UPDATE users SET state = ?, level = ?, xp = ?, data = ? WHERE id = ?").run(
           JSON.stringify(userState),
           level,
           xp,
+          JSON.stringify(userData),
           userId
         );
         await client.chat.update({

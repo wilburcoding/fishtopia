@@ -4630,10 +4630,6 @@
       },
       {
         "type": "markdown",
-        "text": "**Total Fish Released**: `1`"
-      },
-      {
-        "type": "markdown",
         "text": "**Total Trades Made**: `2`"
       },
       {
@@ -4647,18 +4643,6 @@
       {
         "type": "markdown",
         "text": "**Total XP Earned**: `500`"
-      },
-      {
-        "type": "markdown",
-        "text": "**Total Equipment Uses**: `5`"
-      },
-      {
-        "type": "markdown",
-        "text": "**Total Boats Uses**: `3`"
-      },
-      {
-        "type": "markdown",
-        "text": "**Total Bait Uses**: `4`"
       },
       {
         "type": "divider"

@@ -50,6 +50,11 @@ module.exports = {
         value: item_type,
       });
     }
+    user_data.stats.total_commands_used +=1;
+    db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+      JSON.stringify(user_data),
+      user.id
+    );
     await client.chat.postMessage({
       channel: command.channel_id,
       user: command.user_id,

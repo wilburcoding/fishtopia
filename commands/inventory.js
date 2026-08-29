@@ -161,6 +161,11 @@ module.exports = {
       return;
     }
     const user_data = JSON.parse(user.data);
+    user_data.stats.total_commands_used += 1;
+    db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+      JSON.stringify(user_data),
+      user.id
+    );
     // const inventory = user_data.inventory;
     // let counts = {};
     // for (const item of inventory) {
@@ -473,7 +478,9 @@ module.exports = {
           user_data.inventory.splice(i, 1);
         }
       }
-      let coins = user.coins + total_profit
+      let coins = user.coins + total_profit;
+      user_data.stats.total_fish_sold += sold.length;
+      user_data.stats.total_amount_earned += total_profit;
       db.prepare("UPDATE users SET data = ?, coins = ? WHERE id = ?").run(
         JSON.stringify(user_data),
         coins,

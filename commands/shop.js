@@ -93,7 +93,11 @@ module.exports = {
 
     const user_data = JSON.parse(user.data);
     const blocks = populateBlock("baits", "", 1, DATA, user);
-
+    user_data.stats.total_commands_used += 1;
+    db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+      JSON.stringify(user_data),
+      user.id
+    );
     await client.chat.postMessage({
       channel: command.channel_id,
       user: command.user_id,
@@ -405,6 +409,7 @@ module.exports = {
             etype: stype.slice(0, stype.length - 1)
         });
         const new_id = user_data.equipment[user_data.equipment.length - 1].id;
+        user_data.stats.total_shop_purchases += 1;
         db.prepare("UPDATE users SET coins = ?, data = ? WHERE id = ?").run(user.coins, JSON.stringify(user_data), user.id);
         const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text = "You have successfully purchased 1x `" + item.name + "` for `" + item.cost + "` coins. The item ID is `" + new_id + "`";

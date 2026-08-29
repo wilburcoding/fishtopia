@@ -12,7 +12,17 @@ module.exports = {
     //   const eventTime = Math.floor(parseFloat(command.ts) * 1000);
     //   const latency = recievedTime - eventTime;
     //   const wsPing = app.receiver.client?.ping + " ms" || "Unknown";
-
+    const db = global.db;
+    const user = db.prepare("SELECT * FROM users WHERE id = ?").get(command.user_id);
+    if (user) {
+      // add usage stat
+      const userData = JSON.parse(user.data);
+      userData.stats.total_commands_used += 1;
+      db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+        JSON.stringify(userData),
+        user.id
+      );
+    }
     try {
       let blocks = DATA.blocks.ping;
       blocks[0].subtitle.text = `${ping} ms`;

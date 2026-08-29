@@ -41,7 +41,6 @@ module.exports = {
     }
     // display user profile
     // console.log(user);
-    console.log(user);
     let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-overview"]));
     const created_date = new Date(user.created_at);
     const created_str = `${created_date.getFullYear()}-${(created_date.getMonth() + 1).toString().padStart(2, "0")}-${created_date.getDate().toString().padStart(2, "0")}`;
@@ -51,6 +50,13 @@ module.exports = {
     blocks[3].text = `**Gold Balance**: \`${user.gold}\``;
     blocks[4].text = `**Level**: \`${user.level}\ (${user.xp}/${DATA.levels[user.level.toString()]})\``;
     blocks[5].text = `**Account Created**: \`${created_str}\``;
+
+    let userData = JSON.parse(user.data);
+    userData.stats.total_commands_used += 1;
+    db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+      JSON.stringify(userData),
+      user.id
+    );
     await client.chat.postMessage({
       channel: command.channel_id,
       user: command.user_id,
@@ -351,15 +357,33 @@ module.exports = {
             },
           },
         });
-      } else if (selected == "usage_stats") {
+      } else if (selected === "usage_stats") {
         // probably future achievement command but for now we'll just keep some numbers
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["profile-usage"]));
         const userData = JSON.parse(user.data);
-        const stats = userData.stats;
+        let stats = userData.stats;
         let c = 0;
+        if (Object.keys(userData.stats).length != 7) {
+          stats = {
+            total_fish_caught: 0,
+            total_fish_sold: 0,
+            total_fish_value: 0,
+            total_amount_earned: 0,
+            total_shop_purchases: 0,
+            total_commands_used: 0,
+            total_xp_earned: 0,
+          };
+          userData.stats = stats;
+          // console.log("updating with new stats");
+          db.prepare("UPDATE users SET data = ? WHERE id = ?").run(JSON.stringify(userData), user.id);
+        }
         for (const stat of Object.keys(stats)) {
           let split = blocks[c + 1].text.split(": ")[0];
           blocks[c + 1].text = split + ": `" + stats[stat] + "`";
+          console.log(stat);
+          if (stat == "total_fish_value" || stat == "total_amount_earned") {
+            blocks[c + 1].text = split + ": `" + stats[stat] + " coins`";
+          }
           console.log(blocks[c + 1].text);
           c++;
         }

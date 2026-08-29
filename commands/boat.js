@@ -22,6 +22,11 @@ module.exports = {
     }
 
     const user_data = JSON.parse(user.data);
+    user_data.stats.total_commands_used +=1;
+    db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+      JSON.stringify(user_data),
+      user.id
+    );
     const boats = user_data.boats; // should always exist
     // console.log(user_data.boats);
     const blocks = JSON.parse(JSON.stringify(DATA.blocks["boats-main"]));

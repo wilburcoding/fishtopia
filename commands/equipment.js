@@ -23,6 +23,12 @@ module.exports = {
 
     let userData = JSON.parse(user.data);
     let equipment = userData.equipment; // should be an array
+    userData.stats.total_commands_used += 1;
+    db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+      JSON.stringify(userData),
+      user.id
+    );
+    
 
     if (equipment.length === 0) {
         const blocks = JSON.parse(JSON.stringify(DATA.blocks["equipment-main"]));
