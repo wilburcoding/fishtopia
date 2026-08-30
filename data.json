@@ -4823,6 +4823,14 @@
                   "emoji": true
                 },
                 "value": "sell"
+              },
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Upgrades",
+                  "emoji": true
+                },
+                "value": "upgrades"
               }
             ],
             "action_id": "boat_action_select"
@@ -5808,6 +5816,96 @@
             },
             "value": "use_item",
             "action_id": "use_item"
+          }
+        ]
+      }
+    ],
+    "boat-upgrade": [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Person's Boat Upgrade"
+        },
+        "level": 1
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Upgrade Overview"
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Boat Type**: `Sailboat`"
+      },
+      {
+        "type": "markdown",
+        "text": "**ID**: `ABCDE`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Default?**: `Yes`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Durability**: `100%`" 
+      },
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Boat Attributes + Addons",
+          "emoji": true
+        },
+        "level": 2
+      },
+      {
+        "type": "markdown",
+        "text": "**Speed**: `8`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Capacity**: `6`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Sturdiness**: `3`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Range**: `6`"
+      },
+      {
+        "type": "markdown",
+        "text": "**Addons**: ``"
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "actions",
+        "elements": [
+          {
+            "type": "static_select",
+            "placeholder": {
+              "type": "plain_text",
+              "text": "Select upgrade to purchase",
+              "emoji": true
+            },
+            "options": [
+              {
+                "text": {
+                  "type": "plain_text",
+                  "text": "Upgraded Engine",
+                  "emoji": true
+                },
+                "value": "upgraded_engine"
+              }
+            ],
+            "action_id": "boat_upgrade_select" 
           }
         ]
       }

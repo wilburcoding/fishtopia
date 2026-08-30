@@ -155,6 +155,13 @@ PORT=3000
      - [x] Total boats/equipment/baits used - scrapped
    - [x] XP + leveling
    - [x] Individual tool/bait/boat usage stats
+ - [ ] Boat addons
+   - [x] Modify layout
+     - [x] Extra message block to handle upgrades only
+     - [x] Populate layout
+   - [x] Functionality handlers
+     - [ ] /f-fish command
+     - [x] /f-boat command
 
 
 
@@ -395,6 +402,15 @@ PORT=3000
  - Individual tool usage stats
    - Boat - stats.trips, stats.distance, stats.fish
    - Bait/tool - usage_stats.trips, usage_stats.fish_caught, usage_stats.fish_weight, usage_stats.fish_value
+ - Boat addons
+   - Upgraded Engine - faster speed to destination. I guess 10% increases in speed.
+   - Extra Bucket - 10 extra slots for boat. 
+   - Autopilot - fasting catching speed
+   - Specialized Radar - lower catch nothing change
+   - You can get as many of each as you want. But certain ones don't stack:
+     - Specialized radar 
+     - Autopilot
+     - Nevermind. You cannot get as much as you want. It'll just update the list when you use the upgrading menu.
 
 
 # NOTES

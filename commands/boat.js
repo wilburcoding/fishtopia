@@ -173,7 +173,67 @@ module.exports = {
           });
           return;
         }
+      } else if (actionValue === "upgrades") {
+        // show upgrades blocks. This will return separately from the other options
+        let blocks3 = JSON.parse(JSON.stringify(DATA.blocks["boat-upgrade"]));
+        blocks3[0].text.text = `${user.username}'s Boat Upgrades`;
+        const boat = boats.find((b) => b.id === boatId);
+        const boat_data = DATA.boats[boat.type];
+        blocks3[2].text = `**Boat Type**: \`${boat_data.name}\``;
+        blocks3[3].text = `**ID**: \`${boat.id}\``;
+        blocks3[4].text = `**Default**: \`${boat.default ? "Yes": "No"}\``;
+        blocks3[5].text = `**Durability**: \`${boat.durability}%\``;
+        blocks3[7].text = `**Speed**: \`${boat_data.stats.speed}\``;
+        blocks3[8].text = `**Capacity**: \`${boat_data.stats.capacity}\``;
+        blocks3[9].text = `**Sturdiness**: \`${boat_data.stats.sturdiness}\``;
+        blocks3[10].text = `**Range**: \`${boat_data.stats.range}\``;
+        blocks3[11].text = `**Addons**: \`${boat.addons.join(", ")}\``;
+
+        // populate upgrades list
+        let all_upgrades = ["Upgraded Engine", "Extra Bucket", "Autopilot System", "Specialized Radar"]
+        all_upgrades = all_upgrades.filter((upgrade) => !boat.addons.includes(upgrade));
+        if (all_upgrades.length === 0) {
+          blocks3[13] = {
+            "type": "markdown",
+            "text": "You've already purchased all available upgrades for this boat. "
+          }
+        } else {
+          const upgrade_costs = {
+            "Upgraded Engine": 50,
+            "Extra Bucket": 30,
+            "Autopilot System": 100,
+            "Specialized Radar": 100
+          };
+          const scaler = boat_data.tier;
+          blocks3[13].elements[0].options = all_upgrades.map((upgrade) => {
+            const cost = upgrade_costs[upgrade];
+            const upgrade_cost = cost * scaler;
+            return {
+              "text": {
+                "type": "plain_text",
+                "text": upgrade + " (" + upgrade_cost + " coins)",
+                "emoji": true
+              },
+              "value": upgrade
+            }
+          })
+        }
+        await client.chat.postMessage({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks3,
+          metadata: {
+            event_type: "boats_upgrades",
+            event_payload: {
+              userId: user.id,
+              boatId: boat.id
+            }
+          }
+        });
+        return;
       }
+
+      
       blocks2[0].actions[0].action_id = "boat_action_confirm";
       blocks2[0].actions[1].action_id = "boat_action_cancel";
       //   console.log({
@@ -537,5 +597,74 @@ module.exports = {
         },
       });
     },
+    boat_upgrade_select: async ({ action, ack, client, respond, body}) => {
+      await ack();
+      const db = global.db;
+      const DATA = global.data;
+      const metadata = body.message.metadata.event_payload;
+      const userId = metadata.userId;
+      const boatId = metadata.boatId;
+      const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId);
+      if (!user) {
+        const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = "You need to get started before you can use this command. Try using the /f-start command to get started. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks
+        });
+        return;
+      }
+
+      const user_data = JSON.parse(user.data);
+      const boats = user_data.boats;
+      const boat = boats.find((b) => b.id === boatId);
+      if (!boat) {
+        const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = "It looks like this user doesn't own this boat anymore. ";
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks
+        });
+        return;
+      }
+
+      const upgrade_costs = {
+        "Upgraded Engine": 50,
+        "Extra Bucket": 30,
+        "Autopilot System": 100,
+        "Specialized Radar": 100
+      };
+      // scale the cost based on boat tier
+      const boat_data = DATA.boats[boat.type];
+      const boat_tier = boat_data.tier;
+      const upgrade_cost = upgrade_costs[action.selected_option.value] * boat_tier;
+      if (user.coins < upgrade_cost) {
+        const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+        blocks[0].text.text = `You don't have enough coins to purchase this upgrade. You need at least ${upgrade_cost} coins to purchase this upgrade. `;
+        await client.chat.postEphemeral({
+          channel: body.channel.id,
+          user: body.user.id,
+          blocks: blocks
+        });
+      }
+      // actually add the upgrade to the boat and update the user data here
+      boat.addons.push(action.selected_option.value);
+      db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+        JSON.stringify(user_data),
+        user.id
+      );
+      // console.log("upgrades selected")
+      const new_blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
+      new_blocks[0].text.text = `You have successfully purchased the ${action.selected_option.value} upgrade for this boat. `;
+      await client.chat.update({
+        channel: body.channel.id,
+        user: body.user.id,
+        ts: body.message.ts,
+        blocks: new_blocks
+      });
+
+    }
   },
 };
