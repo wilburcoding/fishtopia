@@ -330,7 +330,7 @@ function populateFishingResultsBlocks(
   return blocks;
 }
 
-function catchFish(DATA, tool_data, bait_data, mapId) {
+function catchFish(DATA, tool_data, bait_data, mapId, boat) {
   let catch_nothing_chance = 0.25; // base 20% chance to catch nothing
   let catch_nothing_multiplier = 1;
 
@@ -341,6 +341,10 @@ function catchFish(DATA, tool_data, bait_data, mapId) {
     catch_nothing_multiplier -= bait_data.effects.catch_nothing;
   }
   catch_nothing_chance *= catch_nothing_multiplier;
+  if (boat.addons.includes("Specialized Radar")) {
+    catch_nothing_chance *= 0.8; // 20% less chance to catch nothing
+  }
+
 
   // base rarity probs
   let rarity_probs = {
@@ -937,7 +941,11 @@ module.exports = {
       );
 
       // TESTING ONLY
-      time_to_reach = 1 / 60;
+      // time_to_reach = 1 / 60;
+      // check if upgraded engine addon in boat
+      if (boat.addons.includes("Upgraded Engine")) {
+        time_to_reach = Math.ceil(time_to_reach * 0.9); // 10% faster
+      }
       const time_reach = Date.now() + time_to_reach * 60 * 1000;
       userState.time_reach = time_reach;
 
@@ -1032,6 +1040,9 @@ module.exports = {
       const boat = userData.boats.find((item) => item.id === boatId);
 
       let catch_time = catchTime(tool_data, bait_data);
+      if (boat.addons.includes("Autopilot System")) {
+        catch_time = Math.floor(catch_time * 0.8); // 20% faster
+      }
       let catch_amt = 1; // default 1 fish
 
       // catch_time = 0; // testing only
@@ -1063,7 +1074,7 @@ module.exports = {
       }
       let fish_caught = [];
       for (let i = 0; i < catch_amt; i++) {
-        fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
+        fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId, boat));
       }
       console.log(fish_caught);
 
@@ -1227,7 +1238,7 @@ module.exports = {
       }
       let fish_caught = [];
       for (let i = 0; i < catch_amt; i++) {
-        fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
+        fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId, boat));
       }
       setTimeout(async () => {
         // update message with catch results
@@ -1289,8 +1300,12 @@ module.exports = {
       const boatId = metadata.boatId;
       const mapId = userState.location;
       const boat = userData.boats.find((item) => item.id === boatId);
+      let capacity = DATA.boats[boat.type].stats.capacity;
+      if (boat.addons.includes("Extra Bucket")) {
+        capacity += 10; // 10 extra slots
+      }
 
-      if (userState.storage.length == boat.stats.capacity) {
+      if (userState.storage.length == capacity) {
         let blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
         blocks[0].text.text =
           "Your storage is full, you can't continue fishing. ";
@@ -1351,14 +1366,14 @@ module.exports = {
       catch_amt = Math.min(6, catch_amt); // catch amt ceiling
       if (
         catch_amt + userState.storage.length >
-        DATA.boats[boat.type].stats.capacity
+        capacity
       ) {
         catch_amt =
-          DATA.boats[boat.type].stats.capacity - userState.storage.length;
+          capacity - userState.storage.length;
       }
       let fish_caught = [];
       for (let i = 0; i < catch_amt; i++) {
-        fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId));
+        fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId, boat));
       }
 
       console.log(fish_caught); // will prob keep this in for debugging
@@ -1374,7 +1389,7 @@ module.exports = {
       item_prob *= item_prob_multiplier;
       if (
         catch_amt + userState.storage.length == 
-        DATA.boats[boat.type].stats.capacity
+        capacity
       ) {
         item_prob = 0; // no item if storage is full
       }
@@ -1419,6 +1434,7 @@ module.exports = {
           total_xp += xp;
         }
       }
+      total_xp = Math.floor(total_xp);
       let stats = userData.stats;
       stats.total_fish_caught += fish_caught.length;
       let total_value = 0;

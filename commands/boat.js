@@ -649,10 +649,13 @@ module.exports = {
           blocks: blocks
         });
       }
+      user.coins -= upgrade_cost;
+
       // actually add the upgrade to the boat and update the user data here
       boat.addons.push(action.selected_option.value);
-      db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
+      db.prepare("UPDATE users SET data = ?, coins = ? WHERE id = ?").run(
         JSON.stringify(user_data),
+        user.coins,
         user.id
       );
       // console.log("upgrades selected")

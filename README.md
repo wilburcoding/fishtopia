@@ -161,6 +161,10 @@ PORT=3000
      - [x] Populate layout
    - [x] Functionality handlers
      - [ ] /f-fish command
+       - [x] Upgraded engine
+       - [x] Autopilot
+       - [x] Radar
+       - [x] Extra bucket
      - [x] /f-boat command
 
 
@@ -405,12 +409,16 @@ PORT=3000
  - Boat addons
    - Upgraded Engine - faster speed to destination. I guess 10% increases in speed.
    - Extra Bucket - 10 extra slots for boat. 
-   - Autopilot - fasting catching speed
+   - Autopilot System - fasting catching speed
    - Specialized Radar - lower catch nothing change
    - You can get as many of each as you want. But certain ones don't stack:
      - Specialized radar 
      - Autopilot
      - Nevermind. You cannot get as much as you want. It'll just update the list when you use the upgrading menu.
+   - Handling in /f-fish command
+     - Checks for kcast and pre fish
+     - For slots? Uh...I guess we just adjust the check
+     - Everything else should be super easy
 
 
 # NOTES
