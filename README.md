@@ -160,12 +160,17 @@ PORT=3000
      - [x] Extra message block to handle upgrades only
      - [x] Populate layout
    - [x] Functionality handlers
-     - [ ] /f-fish command
+     - [x] /f-fish command
        - [x] Upgraded engine
        - [x] Autopilot
        - [x] Radar
        - [x] Extra bucket
      - [x] /f-boat command
+ - [x] Durability functionality
+   - [x] tools
+   - [x] baits
+   - [x] Low durability warning somewhere
+ - [ ] Fix rounding issues -> mostly with the usage stats
 
 
 
@@ -419,6 +424,12 @@ PORT=3000
      - Checks for kcast and pre fish
      - For slots? Uh...I guess we just adjust the check
      - Everything else should be super easy
+ - Durability for baits/tools
+   - Performance decreases as durability gets lower
+     - Should really be only noticable at the lower levels - should probably do like all normal until 30% - should be linear changes from there on 
+     - Should reduce basically all the effects
+   - Should be a pretty slow effect
+     - Maybe like .5% per use? 200 uses
 
 
 # NOTES

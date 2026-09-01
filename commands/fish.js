@@ -259,8 +259,13 @@ function populateFishingResultsBlocks(
   let toolData = DATA.tools[tool.type];
   let baitData = DATA.baits[bait.type];
   let boatData = DATA.boats[boat.type];
-  let storageMessage = `Your boat storage is at \`${userState.storage.length}/${boatData.stats.capacity}\`.`;
-  if (userState.storage.length == boatData.stats.capacity) {
+  let capacity = boatData.stats.capacity;
+  console.log(boat.addons);
+  if (boat.addons.includes("Extra Bucket")) {
+    capacity += 10;
+  }
+  let storageMessage = `Your boat storage is at \`${userState.storage.length}/${capacity}\`.`;
+  if (userState.storage.length == capacity) {
     storageMessage = ":warning: Your boat storage is full!";
   }
   blocks[0].text.text = `${user.username} - Fishing Results`;
@@ -327,6 +332,21 @@ function populateFishingResultsBlocks(
       actions: [],
     });
   }
+
+  if (tool.durability < 30 || bait.durability < 30) {
+    blocks.splice(3, 0, {
+      type: "markdown",
+      text: ``
+    });
+    if (tool.durability < 30) {
+      blocks[3].text = `:warning: Warning: Your tool is low on durability (\`${tool.durability}%\`). \n`;
+    }
+    if (bait.durability < 30) {
+      blocks[3].text += `:warning: Warning: Your bait is low on durability (\`${bait.durability}%\`). \n`;
+    }
+    blocks[3].text = blocks[3].text.trim();
+
+  }
   return blocks;
 }
 
@@ -344,7 +364,6 @@ function catchFish(DATA, tool_data, bait_data, mapId, boat) {
   if (boat.addons.includes("Specialized Radar")) {
     catch_nothing_chance *= 0.8; // 20% less chance to catch nothing
   }
-
 
   // base rarity probs
   let rarity_probs = {
@@ -458,7 +477,7 @@ function catchFish(DATA, tool_data, bait_data, mapId, boat) {
   let value_multi = weight / mean_weight;
   let fish_value = Math.round(value * value_multi);
   if (variant === "shiny") {
-    fish_value *=8;
+    fish_value *= 8;
   } else if (variant === "chroma") {
     fish_value *= 40;
   }
@@ -527,10 +546,10 @@ module.exports = {
     let boatId = null;
     let mapId = null;
     const state = JSON.parse(user.state);
-    userData.stats.total_commands_used +=1;
+    userData.stats.total_commands_used += 1;
     db.prepare("UPDATE users SET data = ? WHERE id = ?").run(
       JSON.stringify(userData),
-      user.id
+      user.id,
     );
     if (state.current === "idle") {
       // automatically select the best tool and bait
@@ -751,7 +770,7 @@ module.exports = {
         new_tool_id,
         baitId,
         boatId,
-        mapId
+        mapId,
       );
       await client.chat.update({
         channel: body.channel.id,
@@ -765,7 +784,7 @@ module.exports = {
             toolId: new_tool_id,
             baitId: baitId,
             boatId: boatId,
-            mapId: mapId
+            mapId: mapId,
           },
         },
       });
@@ -800,7 +819,7 @@ module.exports = {
         toolId,
         new_bait_id,
         boatId,
-        mapId
+        mapId,
       );
       await client.chat.update({
         channel: body.channel.id,
@@ -814,7 +833,7 @@ module.exports = {
             toolId: toolId,
             baitId: new_bait_id,
             boatId: boatId,
-            mapId: mapId
+            mapId: mapId,
           },
         },
       });
@@ -921,7 +940,7 @@ module.exports = {
       // add boat/bait/tool stats
       user_data.equipment.forEach((item) => {
         if (item.id === toolId) {
-          item.usage_stats.trips +=1;
+          item.usage_stats.trips += 1;
           // item.stats.distance += DATA.maps[mapId].distance;
         }
         if (item.id === baitId) {
@@ -941,7 +960,7 @@ module.exports = {
       );
 
       // TESTING ONLY
-      // time_to_reach = 1 / 60;
+      time_to_reach = 1 / 60;
       // check if upgraded engine addon in boat
       if (boat.addons.includes("Upgraded Engine")) {
         time_to_reach = Math.ceil(time_to_reach * 0.9); // 10% faster
@@ -1047,7 +1066,6 @@ module.exports = {
 
       // catch_time = 0; // testing only
 
-
       if (tool_data.effects.catch_count) {
         catch_amt +=
           Math.floor(
@@ -1065,6 +1083,23 @@ module.exports = {
           ) + bait_data.effects.catch_count[0];
       }
       catch_amt = Math.min(6, catch_amt); // hard ceiling for fish amt
+      console.log(tool.durability);
+      if (tool.durability < 30) {
+        // chance of reduce catch amt
+        if (Math.random() < (tool.durability / 100.0) * (5 / 3) + 0.5) {
+          // reduce by 0-1 fish
+          catch_amt -= Math.round(Math.random());
+        }
+      }
+      if (bait.durability < 30) {
+        if (Math.random() < (bait.durability / 100.0) * (5 / 3) + 0.5) {
+          catch_amt -= Math.round(Math.random());
+        }
+      }
+
+      if (catch_amt < 1) {
+        catch_amt = 1;
+      }
       if (
         catch_amt + userState.storage.length >
         DATA.boats[boat.type].stats.capacity
@@ -1087,7 +1122,48 @@ module.exports = {
         item_prob_multiplier += bait_data.effects.item_multiplier;
       }
       item_prob *= item_prob_multiplier;
-      console.log(item_prob);
+      // reduce prob if item or bait durability is low
+
+      if (tool.durability < 30) {
+        // multiply by 0.5-1.0 based on durability
+        item_prob *= (tool.durability / 100.0) * (5 / 3) + 0.5;
+      }
+      if (bait.durability < 30) {
+        item_prob *= (bait.durability / 100.0) * (5 / 3) + 0.5;
+      }
+
+      let totalValue = 0;
+      let totalWeight = 0;
+      for (let fish of fish_caught) {
+        if (fish.item) {
+          continue;
+        }
+        totalValue += fish.value;
+        totalWeight += fish.weight;
+      }
+      totalValue = Math.round(totalValue * 10) / 10;
+      totalWeight = Math.round(totalWeight * 10) / 10;
+      userData.equipment.forEach((item) => {
+        if (item.id === toolId) {
+          item.usage_stats.fish_caught += fish_caught.length;
+          item.usage_stats.fish_value += totalValue;
+          item.usage_stats.fish_weight += totalWeight;
+          item.durability -= 0.5;
+          if (item.durability < 0) {
+            item.durability = 0;
+          }
+        }
+        if (item.id === baitId) {
+          item.usage_stats.fish_caught += fish_caught.length;
+          item.usage_stats.fish_value += totalValue;
+          item.usage_stats.fish_weight += totalWeight;
+          item.durability -=0.5; 
+          if (item.durability < 0) {
+            item.durability = 0;
+          }
+        }
+      })
+
       if (Math.random() < item_prob) {
         // add totally random item
         let item_types = Object.keys(DATA.items);
@@ -1364,19 +1440,28 @@ module.exports = {
         );
       }
       catch_amt = Math.min(6, catch_amt); // catch amt ceiling
-      if (
-        catch_amt + userState.storage.length >
-        capacity
-      ) {
-        catch_amt =
-          capacity - userState.storage.length;
+      if (tool.durability < 30) {
+        if (Math.random() < (tool.durability / 100.0) * (5 / 3) + 0.5) {
+          catch_amt -= Math.round(Math.random());
+        }
+      }
+      if (bait.durability < 30) {
+        if (Math.random() < (bait.durability / 100.0) * (5 / 3) + 0.5) {
+          catch_amt -= Math.round(Math.random());
+        }
+      }
+      if (catch_amt < 1) {
+        catch_amt = 1;
+      }
+      if (catch_amt + userState.storage.length > capacity) {
+        catch_amt = capacity - userState.storage.length;
       }
       let fish_caught = [];
       for (let i = 0; i < catch_amt; i++) {
         fish_caught.push(catchFish(DATA, tool_data, bait_data, mapId, boat));
       }
 
-      console.log(fish_caught); // will prob keep this in for debugging
+      // console.log(fish_caught); // will prob keep this in for debugging
 
       let item_prob = 0.08; // base 8% chance to get an item
       let item_prob_multiplier = 1;
@@ -1387,10 +1472,13 @@ module.exports = {
         item_prob_multiplier += bait_data.effects.item_multiplier;
       }
       item_prob *= item_prob_multiplier;
-      if (
-        catch_amt + userState.storage.length == 
-        capacity
-      ) {
+      if (tool.durability < 30) {
+        item_prob *= (tool.durability / 100.0) * (5/3) + 0.5;
+      }
+      if (bait.durability < 30) {
+        item_prob *= (bait.durability / 100.0) * (5/3) + 0.5;
+      }
+      if (catch_amt + userState.storage.length == capacity) {
         item_prob = 0; // no item if storage is full
       }
 
@@ -1409,11 +1497,11 @@ module.exports = {
 
       // add xp here
       const XP = {
-        "Common": 5,
-        "Uncommon": 12,
-        "Rare": 30,
-        "Epic": 70,
-        "Legendary": 180
+        Common: 5,
+        Uncommon: 12,
+        Rare: 30,
+        Epic: 70,
+        Legendary: 180,
       };
 
       let total_xp = 0;
@@ -1451,7 +1539,7 @@ module.exports = {
       if (xp > DATA.levels[level]) {
         xp -= DATA.levels[level];
         level += 1;
-      } 
+      }
       stats.total_xp_earned += total_xp;
       console.log(userData.stats);
       userData.stats = stats;
@@ -1471,16 +1559,29 @@ module.exports = {
         totalValue += fish.value;
         totalWeight += fish.weight;
       }
+
+      totalValue = Math.round(totalValue * 10) / 10;
+      totalWeight = Math.round(totalWeight * 10) / 10;
       userData.equipment.forEach((item) => {
         if (item.id === toolId) {
           item.usage_stats.fish_caught += fish_caught.length;
           item.usage_stats.fish_value += totalValue;
           item.usage_stats.fish_weight += totalWeight;
+          // console.log(item);
+          item.durability -= 0.5;
+          if (item.durability < 0) {
+            item.durability = 0;
+          }
         }
         if (item.id === baitId) {
           item.usage_stats.fish_caught += fish_caught.length;
           item.usage_stats.fish_value += totalValue;
           item.usage_stats.fish_weight += totalWeight;
+          // console.log(item);
+          item.durability -= 0.5;
+          if (item.durability < 0) {
+            item.durability =0;
+          }
         }
       });
 
@@ -1499,12 +1600,14 @@ module.exports = {
           boatId,
           mapId,
         );
-        db.prepare("UPDATE users SET state = ?, level = ?, xp = ?, data = ? WHERE id = ?").run(
+        db.prepare(
+          "UPDATE users SET state = ?, level = ?, xp = ?, data = ? WHERE id = ?",
+        ).run(
           JSON.stringify(userState),
           level,
           xp,
           JSON.stringify(userData),
-          userId
+          userId,
         );
         await client.chat.update({
           channel: body.channel.id,
@@ -1542,7 +1645,7 @@ module.exports = {
           fish_counts[fish.type] = 1;
         }
       }
-      
+
       let blocks = [
         {
           type: "header",
@@ -1556,7 +1659,7 @@ module.exports = {
       let txt = "";
       for (let fish_type of Object.keys(fish_counts)) {
         if (!DATA.fish[fish_type]) {
-          txt+= `**${fish_counts[fish_type]}x** ${DATA.items[fish_type].name} (${DATA.items[fish_type].rarity})\n`;
+          txt += `**${fish_counts[fish_type]}x** ${DATA.items[fish_type].name} (${DATA.items[fish_type].rarity})\n`;
           continue;
         }
         txt += `**${fish_counts[fish_type]}x** ${DATA.fish[fish_type].name} (${DATA.fish[fish_type].rarity})\n`;
@@ -1631,7 +1734,7 @@ module.exports = {
       }
 
       let completion = userData.completion;
-      for (let fish of userState.storage){
+      for (let fish of userState.storage) {
         // get base fish type
         let fish_type = fish.type;
         if (fish.item) {
