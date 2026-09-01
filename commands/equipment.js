@@ -28,7 +28,7 @@ module.exports = {
       JSON.stringify(userData),
       user.id
     );
-    
+
 
     if (equipment.length === 0) {
         const blocks = JSON.parse(JSON.stringify(DATA.blocks["equipment-main"]));
@@ -341,7 +341,13 @@ module.exports = {
         blocks2[0].body.text = `Are you sure you want to repair this item for ${repairCost} coins? This will increase its durability by 25%.`;
         if (user.coins < repairCost) {
           const blocks = JSON.parse(JSON.stringify(DATA.blocks["error"]));
-          blocks2[0].body.text += `You don't have enough coins to repair this item. You need at least ${repairCost} coins to repair this item. `;
+          blocks[0].body.text += `You don't have enough coins to repair this item. You need at least ${repairCost} coins to repair this item. `;
+          await client.chat.postEphemeral({
+            channel: body.channel.id,
+            user: body.user.id,
+            blocks: blocks
+          });
+          return;
         }
       }
       blocks2[0].actions[0].action_id = "equipment_action_confirm";

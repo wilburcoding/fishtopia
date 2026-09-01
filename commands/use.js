@@ -199,15 +199,18 @@ module.exports = {
       if (rand < bait_prob) {
         // give bait
         let tier = 1;
-        if (Object.keys(item_data.loot_table.bait_tier_probs).length == 1) {
-            tier = parseInt(Object.keys(item_data.loot_table.bait_tier_probs)[0]);
-        } else {
-            if (Math.random() < item_data.loot_table.bait_tier_probs[0]) {
-                tier = parseInt(Object.keys(item_data.loot_table.bait_tier_probs)[0]);
-            } else {
-                tier = parseInt(Object.keys(item_data.loot_table.bait_tier_probs)[1]);
-            }
+        let probs = item_data.loot_table.bait_tier_probs;
+        let rand = Math.random();
+        // determine tier based on probabilities
+        let sum = 0;
+        for (const ptier of Object.keys(probs)) {
+          sum += probs[ptier];
+          if (rand < sum) {
+            tier = parseInt(ptier);
+            break;
+          }
         }
+
         console.log("get bait")
         console.log(tier);
         // pick random bait from that tier
@@ -235,16 +238,18 @@ module.exports = {
 
       } else if (rand < bait_prob + tool_prob) {
         // give tool
+        let probs = item_data.loot_table.tool_tier_probs;
+        let rand = Math.random();
+        let sum = 0;
         let tier = 1;
-        if (Object.keys(item_data.loot_table.tool_tier_probs).length == 1) {
-            tier = parseInt(Object.keys(item_data.loot_table.tool_tier_probs)[0]);
-        } else {
-            if (Math.random() < item_data.loot_table.tool_tier_probs[0]) {
-                tier = parseInt(Object.keys(item_data.loot_table.tool_tier_probs)[0]);
-            } else {
-                tier = parseInt(Object.keys(item_data.loot_table.tool_tier_probs)[1]);
-            }
+        for (const ptier of Object.keys(probs)) {
+          sum += probs[ptier];
+          if (rand < sum) {
+            tier = parseInt(ptier);
+            break;
+          }
         }
+
         let tools = [];
         for (const tool of Object.keys(DATA.tools)) {
             if (DATA.tools[tool].tier === tier) {

@@ -303,7 +303,7 @@ function resetData(username) {
 //     undefined,
 //     undefined,
 //     undefined,
-// undefined
+// undefined,
 //   ); // for testing only
 
   await app.start(process.env.PORT || 3000);

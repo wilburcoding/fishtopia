@@ -960,7 +960,7 @@ module.exports = {
       );
 
       // TESTING ONLY
-      time_to_reach = 1 / 60;
+      // time_to_reach = 1 / 60;
       // check if upgraded engine addon in boat
       if (boat.addons.includes("Upgraded Engine")) {
         time_to_reach = Math.ceil(time_to_reach * 0.9); // 10% faster
@@ -1755,7 +1755,7 @@ module.exports = {
       let time_to_reach = Math.ceil(
         DATA.maps[mapId].distance / DATA.boats[boat.type].stats.speed,
       );
-      time_to_reach = 0; // testing only
+      // time_to_reach = 0; // testing only
 
       const time_reach = Date.now() + time_to_reach * 60 * 1000;
 

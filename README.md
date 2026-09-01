@@ -165,12 +165,23 @@ PORT=3000
        - [x] Autopilot
        - [x] Radar
        - [x] Extra bucket
-     - [x] /f-boat command
+       - [x] /f-boat command
  - [x] Durability functionality
    - [x] tools
    - [x] baits
    - [x] Low durability warning somewhere
- - [ ] Fix rounding issues -> mostly with the usage stats
+ - [x] Fix rounding issues -> mostly with the usage stats
+ - [ ] Use item command improvements
+   - [ ] Show probs after selecting type
+   - [x] Add a better prob distribution
+ - [x] Final checks (again)
+   - [x] /f-profile
+   - [x] /f-boat
+   - [x] /f-equipment
+   - [x] /f-use
+   - [x] /f-shop
+   - [x] /f-inventory
+   - [x] /f-fish
 
 
 
